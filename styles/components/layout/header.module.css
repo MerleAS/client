@@ -1,0 +1,35 @@
+.nav {
+    width: 100%;
+    height: 6rem;
+    position: absolute;
+    z-index: 10;
+    display: flex;
+    flex-direction: row;
+    color: white;
+}
+
+.logo {
+    display: flex;
+    font-size: 60px;
+    width: 70%;
+    align-items: center;
+    justify-content: center;
+}
+
+.navOptions {
+    display: flex;
+    width: 15%;
+    height: 100%;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.navOption {
+    font-size: 20px;
+    width: calc(100% / 2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

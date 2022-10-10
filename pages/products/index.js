@@ -10,7 +10,7 @@ import classes from "../../styles/pages/products.module.css";
 const Products = () => {
   return (
     <div>
-      <Header className={classes.header} />
+      <Header className={classes.header} color="black"/>
 
       <div className={classes.imagesContainer}>
           <Image

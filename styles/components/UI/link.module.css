@@ -1,0 +1,39 @@
+.black {
+  text-decoration: none;
+  color: black;
+}
+
+.black:hover {
+  text-decoration: none;
+  color: black;
+}
+
+.black:active {
+  text-decoration: none;
+  color: black;
+}
+
+.black:focus {
+  text-decoration: none;
+  color: black;
+}
+
+.white {
+  text-decoration: none;
+  color: white;
+}
+
+.white:hover {
+  text-decoration: none;
+  color: white;
+}
+
+.white:active {
+  text-decoration: none;
+  color: white;
+}
+
+.white:focus {
+  text-decoration: none;
+  color: white;
+}

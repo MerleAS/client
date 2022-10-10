@@ -4,23 +4,24 @@ import Image from "next/image";
 import classes from "../styles/index.module.css";
 
 import Footer from "../components/layout/footer";
-import Header from '../components/layout/header';
+import Header from "../components/layout/header";
+import Link from '../components/UI/link';
 
 import home from "../public/home-page/home.png";
 
-export default function Home() {
+const Home = () => {
+
   return (
     <div className={classes.container}>
       <Head>
         <title>MERLE.</title>
       </Head>
 
-      <Header />
+      <Header color="white" />
 
       <div className={classes.discoverContainer}>
-        <a className={classes.discover}>Discover Brands</a>
+        <Link href="/discover" color="black" className={classes.discover}>Discover Brands</Link>
       </div>
-
 
       <div className={classes.imagesContainer}>
         <Image src={home} alt="first image" className={classes.image} />
@@ -31,4 +32,6 @@ export default function Home() {
       <Footer />
     </div>
   );
-}
+};
+
+export default Home;

@@ -1,6 +1,6 @@
 import classes from "../../styles/components/layout/header.module.css";
 
-import Link from '../UI/link';
+import Anchor from '../UI/anchor';
 
 const Header = (props) => {
   const { className, color } = props;
@@ -8,10 +8,10 @@ const Header = (props) => {
   return (
     <nav className={`${classes.nav} ${className}`}>
       <div className={classes.navOptions}></div>
-      <Link className={classes.logo} href="/" color={color}>MERLE.</Link>
+      <Anchor className={classes.logo} href="/" color={color}>MERLE.</Anchor>
       <div className={classes.navOptions}>
-        <Link className={classes.navOption} color={color} href="/search">Search</Link>
-        <Link className={classes.navOption} color={color} href="/cart">Cart</Link>
+        <Anchor className={classes.navOption} color={color} href="/search">Search</Anchor>
+        <Anchor className={classes.navOption} color={color} href="/cart">Cart</Anchor>
       </div>
     </nav>
   );

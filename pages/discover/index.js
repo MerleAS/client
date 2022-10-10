@@ -2,7 +2,7 @@ import Image from "next/image";
 
 import Footer from "../../components/layout/footer";
 import Header from "../../components/layout/header";
-import Link from '../../components/UI/link';
+import Anchor from '../../components/UI/anchor';
 
 import classes from "../../styles/pages/discover.module.css";
 
@@ -14,9 +14,9 @@ const Discover = () => {
       <Header color="white"/>
 
       <div className={classes.discoverContainer}>
-        <Link className={classes.link} color="white" href="brands">BRANDS</Link>
-        <Link className={classes.link} color="white" href="products">PRODUCTS</Link>
-        <Link className={classes.link} color="white" >COMING SOON</Link>
+        <Anchor className={classes.link} color="white" href="brands">BRANDS</Anchor>
+        <Anchor className={classes.link} color="white" href="products">PRODUCTS</Anchor>
+        <Anchor className={classes.link} color="white" href="coming-soon">COMING SOON</Anchor>
       </div>
 
       <div className={classes.imagesContainer}>

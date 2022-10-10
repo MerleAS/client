@@ -1,9 +1,12 @@
 import "../styles/globals.css";
+import StateContextProvider from "../context/stateContext";
 
 function MyApp({ Component, pageProps }) {
   return (
     <>
-      <Component {...pageProps} />
+      <StateContextProvider>
+        <Component {...pageProps} />
+      </StateContextProvider>
     </>
   );
 }

@@ -9,25 +9,12 @@ import Footer from "../components/layout/footer";
 import Header from "../components/layout/header";
 import Anchor from "../components/UI/anchor";
 
-import axios from 'axios';
+import axios from "axios";
 
-const Home = () => {
+const Home = (props) => {
   const { isMobile, serverUrl } = useContext(StateContext);
-  const [pictureUrls, setPictureUrls] = useState([]);
-
-  useEffect(() => {
-    try {
-    const fetchDesktopPictures = async () => {
-      const response = await axios.get(serverUrl + '/home/desktop')
-      console.log(response.data);
-      setPictureUrls(response.data);
-    }
-    fetchDesktopPictures();
-    } catch (err) {
-      console.log(err)
-    }
-  },[])
-
+  
+  const { pictureUrls } = props;
 
   return (
     <div className={classes.container}>
@@ -44,8 +31,19 @@ const Home = () => {
       </div>
 
       <div className={classes.imagesContainer}>
-      {pictureUrls.map((pictureUrl, index) => {
-         return <Image key={index} loader={() => serverUrl + pictureUrl} width={500} height={300} layout="responsive"  src={serverUrl + pictureUrl} alt="image" className={classes.image} />
+        {pictureUrls.map((pictureUrl, index) => {
+          return (
+            <Image
+              key={index}
+              loader={() => serverUrl + pictureUrl}
+              width={500}
+              height={350}
+              layout="responsive"
+              src={serverUrl + pictureUrl}
+              alt="image"
+              className={classes.image}
+            />
+          );
         })}
       </div>
 
@@ -53,5 +51,15 @@ const Home = () => {
     </div>
   );
 };
+
+export async function getStaticProps() {
+  const response = await axios.get("http://localhost:8080/home/desktop");
+  return {
+    props: {
+      pictureUrls: response.data,
+    },
+    revalidate: 3600,
+  };
+}
 
 export default Home;

@@ -1,0 +1,26 @@
+.container {
+    height: 20px;
+    width: fit-content;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    padding-right: 3px;
+    padding-left: 3px;
+    margin-bottom: 8px;
+}
+
+.count {
+    outline: none;
+    border: none;
+    width: 20px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.button {
+    width: 15px;
+    color: black;
+    background-color: transparent;
+    border: none;
+}

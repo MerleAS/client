@@ -1,0 +1,32 @@
+.header {
+    position: relative!important;
+}
+
+.container {
+    width: 60%;
+    margin-left: 20%;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+
+.imageContainer {
+    width: 100%;
+    position: relative;
+}
+
+.image {
+    width: 100%
+}
+
+.brand {
+    position: absolute;
+    height: 50px;
+    width: 600px;
+    top: calc(50% - 25px);
+    left: calc(50% - 300px);
+    color: white;
+    font-size: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

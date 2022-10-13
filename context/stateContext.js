@@ -12,7 +12,7 @@ const StateContextProvider = (props) => {
   const [isMobile, setIsMobile] = useState(false);
   const [isAndroid, setIsAndroid] = useState(false);
   const [isIPhone, setIsIPhone] = useState(false);
-  const [serverUrl] = useState('http://localhost:8080');
+  const [serverUrl] = useState('http://localhost:8080/');
 
   useEffect(() => {
     if (navigator.userAgent.match("Android")) {

@@ -14,6 +14,8 @@ const Products = (props) => {
   const { products } = props;
   const router = useRouter();
 
+  console.log(products)
+
   const productClickHandler = (id) => {
     router.push(`/products/${id}`)
   };

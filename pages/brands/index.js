@@ -18,7 +18,7 @@ const Brands = (props) => {
     router.push(`/brands/${id}`)
   };
   return (
-    <div>
+    <>
       <Header color="black" className={classes.header}/>
       <div className={classes.container}>
         {brands.map((brand, index) => {
@@ -38,7 +38,7 @@ const Brands = (props) => {
         })}
       </div>
       <Footer />
-    </div>
+    </>
   );
 };
 

@@ -26,9 +26,10 @@ const Products = (props) => {
 
       {products.length > 0 && products.map((prod, index) => {
         return (
-          <div className={classes.imagesContainer} key={index} onClick={() => productClickHandler(prod._id)}>
+          <div className={classes.imageContainer} key={index} onClick={() => productClickHandler(prod._id)}>
             <Image
               loader={() => serverUrl + prod.imageUrl}
+              layout="intrinsic"
               width={700}
               height={400}
               src={serverUrl + prod.imageUrl}

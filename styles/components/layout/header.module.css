@@ -33,3 +33,49 @@
     align-items: center;
     justify-content: center;
 }
+
+.mobileLogo {
+    display: flex;
+    font-size: 30px;
+    width: 70%;
+    align-items: center;
+    justify-content: center;
+}
+
+.navIconContainer {
+    width: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navIcon {
+    width: 30px;
+    height: 30px;
+}
+
+.mobileNavMenu {
+    position: absolute;
+    width: 50%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    top: 6rem;
+    padding-bottom: 5px;
+}
+
+.mobileNavContainer {
+    border-bottom: 1px solid black;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+
+.navOptionMobile {
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

@@ -1,19 +1,28 @@
 import Head from "next/head";
 import Image from "next/image";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
 
 import { StateContext } from "../context/stateContext";
+import useIsMobile from "../components/util/useIsMobile";
 import classes from "../styles/index.module.css";
 
 import Footer from "../components/layout/footer";
-import Header from "../components/layout/header";
 import Anchor from "../components/UI/anchor";
 
-import axios from "axios";
-
 const Home = (props) => {
-  const { isMobile, serverUrl } = useContext(StateContext);
-  
+  const { serverUrl } = useContext(StateContext);
+  const isMobile = useIsMobile();
+  const [imageLayout, setImageLayout] = useState("responsive")
+
+  useEffect(() => {
+    if (isMobile) {
+      setImageLayout("fixed")
+    } else {
+      setImageLayout("responsive")
+    }
+  }, [isMobile]);
+
   const { pictureUrls } = props;
 
   return (
@@ -22,31 +31,34 @@ const Home = (props) => {
         <title>MERLE.</title>
       </Head>
 
-      <Header color="white" />
+      <div className={classes.header}>
+        <p>MERLE.</p>
+      </div>
 
       <div className={classes.discoverContainer}>
         <Anchor href="/discover" color="black" className={classes.discover}>
-          Discover Brands
+          DISCOVER PRODUCTS
         </Anchor>
       </div>
 
-      <div className={classes.imagesContainer}>
-        {pictureUrls.map((pictureUrl, index) => {
-          return (
-            <Image
-              key={index}
-              loader={() => serverUrl + pictureUrl}
-              width={500}
-              height={350}
-              layout="responsive"
-              src={serverUrl + pictureUrl}
-              alt="image"
-              className={classes.image}
-            />
-          );
-        })}
-      </div>
-
+      {
+        <div className={classes.imagesContainer}>
+          {pictureUrls.map((pictureUrl, index) => {
+            return (
+              <Image
+                key={index}
+                loader={() => serverUrl + pictureUrl}
+                layout={imageLayout}
+                width={1500}
+                height={1000}
+                src={serverUrl + pictureUrl}
+                alt="image"
+                className={classes.image}
+              />
+            );
+          })}
+        </div>
+      }
       <Footer />
     </div>
   );

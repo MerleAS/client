@@ -1,6 +1,9 @@
 .black {
   text-decoration: none;
   color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .black:hover {
@@ -21,6 +24,9 @@
 .white {
   text-decoration: none;
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .white:hover {

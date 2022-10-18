@@ -10,13 +10,14 @@
     align-items: center;
 }
 
-.inputContainer {
-    height: 50px;
+.searchContainer {
+    height: 40%;
     display: flex;
     flex-direction: row;
     column-gap: 20px;
     width: 100%;
     justify-content: center;
+    overflow: scroll;
 }
 
 .logoContainer {
@@ -32,9 +33,35 @@
     height: 30px;
 }
 
-.input {
+.inputContainer {
     width: 60%;
+    min-width: 300px;
+    height: 100%;
+}
+
+.input {
+    width: 100%;
     outline: none;
     font-size: 18px;
     padding-left: 15px;
+    height: 50px;
+}
+
+.input::-webkit-search-cancel-button{
+    background: black;
+    padding-right: 15px;    
+}
+
+.menuOptions {
+    width: 100%;
+    padding-left: 15px;
+}
+
+.menuOption {
+    border-bottom: 1px solid black;
+    width: 30%;
+    min-width: 200px;
+    font-size: 18px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

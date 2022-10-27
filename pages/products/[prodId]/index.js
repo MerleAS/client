@@ -7,27 +7,54 @@ import Header from "../../../components/layout/header";
 import Anchor from "../../../components/UI/anchor";
 import IncrementInput from "../../../components/UI/incrementInput";
 import SelectButton from "../../../components/UI/selectButton";
+import Modal from "../../../components/UI/modal";
 
 import classes from "../../../styles/pages/product.module.css";
 import { StateContext } from "../../../context/stateContext";
 
 const ProductDetail = (props) => {
   const [count, setCount] = useState(1);
+  const [selectedSize, setSelectedSize] = useState({ size: "", in_stock: "" });
   const [sizeDropdownActive, setSizeDropdownActive] = useState(false);
   const [descriptionDropdownActive, setDescriptionDropdownActive] =
     useState(false);
 
-  const { serverUrl } = useContext(StateContext);
+  const [error, setError] = useState(false);
+
+  const { serverUrl, addToCartHandler } = useContext(StateContext);
   const { product } = props;
 
-  console.log(product);
+  const sizeHandler = (item) => {
+    setSelectedSize(item);
+  };
+
+  const cartHandler = () => {
+    if (selectedSize.size === "") {
+      setError(true);
+      return;
+    }
+    const prod = {
+      brand: product.brand,
+      brandId: product.brandId,
+      imageUrl: product.imageUrl,
+      price: product.price,
+      type: product.type,
+      title: product.title,
+      _id: product._id,
+      amount: count,
+      size: selectedSize.size,
+    };
+    addToCartHandler(prod);
+  };
+
   return (
     <div>
       <Header color="black" className={classes.header} />
       <div className={classes.contentContainer}>
-  
-          <p className={classes.heading}>{product.brand} - {product.title}</p>
-        
+        <p className={classes.heading}>
+          {product.brand} - {product.title}
+        </p>
+
         <Image
           loader={() => serverUrl + product.imageUrl}
           width={1200}
@@ -38,7 +65,7 @@ const ProductDetail = (props) => {
         />
         <div className={classes.textContainer}>
           <div className={classes.text}>
-            <Anchor href="/how-to-wear" color="white">
+            <Anchor href="/how-to-wear" color="white" className={classes.link}>
               HOW TO WEAR {product.brand}?
             </Anchor>
           </div>
@@ -47,10 +74,12 @@ const ProductDetail = (props) => {
           dropdownActive={sizeDropdownActive}
           setDropdownActive={setSizeDropdownActive}
           type="select"
-          placeholder="SELECT SIZE"
+          placeholder={
+            selectedSize.size === "" ? "SELECT SIZE" : selectedSize.size
+          }
           options={product.stock}
-        >
-        </SelectButton>
+          onChange={sizeHandler}
+        ></SelectButton>
         <SelectButton
           dropdownActive={descriptionDropdownActive}
           setDropdownActive={setDescriptionDropdownActive}
@@ -63,11 +92,17 @@ const ProductDetail = (props) => {
           <p>material: {product.description.material}</p>
         </SelectButton>
         <IncrementInput count={count} setCount={setCount} />
-        <div className={classes.textContainer}>
+        <div className={classes.textContainer} onClick={cartHandler}>
           <p className={classes.text}>ADD TO CART</p>
         </div>
       </div>
       <Footer />
+      {error && (
+        <Modal onClose={() => setError(false)}>
+          <h4>PLEASE SELECT A SIZE</h4>
+          <button className={classes.button} onClick={() => setError(false)} >OK</button>
+        </Modal>
+      )}
     </div>
   );
 };

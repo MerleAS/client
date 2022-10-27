@@ -8,6 +8,7 @@ const SelectButton = (props) => {
     options,
     type,
     placeholder,
+    onChange,
   } = props;
 
   return (
@@ -32,9 +33,13 @@ const SelectButton = (props) => {
       {dropdownActive && (
         <div className={classes.dropdownContainer}>
           {type === "select" &&
-            options.map((item) => {
+            options.map((item, index) => {
               return (
-                <div className={classes.option}>
+                <div
+                  className={classes.option}
+                  onClick={() => onChange(item)}
+                  key={index}
+                >
                   <p>Size : {item.size}</p>
                   <p>In stock : {item.in_stock}</p>
                 </div>

@@ -25,7 +25,7 @@ const Brand = (props) => {
         products.map((prod, index) => {
           return (
             <div
-              className={classes.imagesContainer}
+              className={classes.imageContainer}
               key={index}
               onClick={() => productClickHandler(prod._id)}
             >

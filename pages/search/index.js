@@ -1,15 +1,21 @@
 import axios from "axios";
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { useRouter } from 'next/router';
 
 import classes from "../../styles/pages/search.module.css";
 import useIsMobile from "../../components/util/useIsMobile";
+import { StateContext } from '../../context/stateContext';
 
 import Header from "../../components/layout/header";
 import Footer from "../../components/layout/footer";
 
 const Search = () => {
   const [products, setProducts] = useState([]);
+  const [brands, setBrands] = useState([]);
   const isMobile = useIsMobile();
+
+  const router = useRouter();
+  const { serverUrl } = useContext(StateContext);
 
   const searchHandler = async (e) => {
     const query = e.target.value;
@@ -19,13 +25,21 @@ const Search = () => {
           `http://localhost:8080/products?query=${query}`
         );
         setProducts(prods.data.products);
-        console.log(prods.data.products);
+        const b = prods.data.products.map((prod) => {
+          return { brandId: prod.brandId, brand: prod.brand };
+        });
+        setBrands(b)
       } else {
         setProducts([]);
+        setBrands([]);
       }
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const routeHandler = (param) => {
+      router.push(param)
   };
 
   return (
@@ -58,10 +72,17 @@ const Search = () => {
               placeholder="Search"
             />
             <div className={classes.menuOptions}>
+              {brands.length > 0 && brands.map((brand, index) => {
+                return (
+                  <p key={index} className={classes.menuOption} onClick={() => routeHandler(`/brands/${brand.brandId}`)}>
+                    <strong>{brand.brand}</strong>
+                  </p>
+                )
+              })}
               {products.length > 0 &&
                 products.map((product, index) => {
                   return (
-                    <p key={index} className={classes.menuOption}>
+                    <p key={index} className={classes.menuOption} onClick={() => routeHandler(`/products/${product._id}`)}>
                       {product.brand} {product.type} - {product.title}
                     </p>
                   );

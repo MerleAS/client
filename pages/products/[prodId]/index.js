@@ -1,13 +1,15 @@
 import { useContext, useState } from "react";
 import axios from "axios";
-import Image from "next/image";
 
 import Footer from "../../../components/layout/footer";
 import Header from "../../../components/layout/header";
+import Cart from '../../../components/layout/cart';
+
 import Anchor from "../../../components/UI/anchor";
 import IncrementInput from "../../../components/UI/incrementInput";
 import SelectButton from "../../../components/UI/selectButton";
 import Modal from "../../../components/UI/modal";
+import SlideShow from "../../../components/UI/slideShow";
 
 import classes from "../../../styles/pages/product.module.css";
 import { StateContext } from "../../../context/stateContext";
@@ -22,7 +24,7 @@ const ProductDetail = (props) => {
   const [error, setError] = useState(false);
 
   const { serverUrl, addToCartHandler } = useContext(StateContext);
-  const { product } = props;
+  const { product, imageUrls } = props;
 
   const sizeHandler = (item) => {
     setSelectedSize(item);
@@ -36,7 +38,7 @@ const ProductDetail = (props) => {
     const prod = {
       brand: product.brand,
       brandId: product.brandId,
-      imageUrl: product.imageUrl,
+      imageUrls: product.imageUrls,
       price: product.price,
       type: product.type,
       title: product.title,
@@ -54,14 +56,10 @@ const ProductDetail = (props) => {
         <p className={classes.heading}>
           {product.brand} - {product.title}
         </p>
-
-        <Image
-          loader={() => serverUrl + product.imageUrl}
+        <SlideShow
+          imgs={imageUrls}
           width={1200}
           height={700}
-          src={serverUrl + product.imageUrl}
-          alt="product"
-          className={classes.image}
         />
         <div className={classes.textContainer}>
           <div className={classes.text}>
@@ -96,36 +94,52 @@ const ProductDetail = (props) => {
           <p className={classes.text}>ADD TO CART</p>
         </div>
       </div>
+      <Cart />
       <Footer />
       {error && (
         <Modal onClose={() => setError(false)}>
           <h4>PLEASE SELECT A SIZE</h4>
-          <button className={classes.button} onClick={() => setError(false)} >OK</button>
+          <button className={classes.button} onClick={() => setError(false)}>
+            OK
+          </button>
         </Modal>
       )}
     </div>
   );
 };
 
-export async function getStaticPaths() {
-  const prods = await axios.get("http://localhost:8080/products");
-  const queries = prods.data.products.map((prod) => {
+/* export async function getStaticPaths() {
+  const originalProds = await axios.get("http://localhost:8080/products");
+  const secondHandProds =  await axios.get("http://localhost:8080/second-hand/products")
+  const originalQueries = originalProds.data.products.map((prod) => {
     return { params: { prodId: prod._id } };
   });
+  const secondHandQueries = secondHandProds.data.products.map((prod) => {
+    return { params: { prodId: prod._id } };
+  });
+  const queries = [...originalQueries, ...secondHandQueries]
   return {
     fallback: false,
     paths: queries,
   };
-}
+} */
 
-export async function getStaticProps(context) {
+export async function getServerSideProps(context) {
   const prodId = context.params.prodId;
-  const product = await axios.get(
-    "http://localhost:8080/products/product/" + prodId
-  );
+  const site = context.query;
+  let product;
+  if (site === "original") {
+    product = await axios.get(
+      "http://localhost:8080/products/product/" + prodId
+    );
+  } else {
+    product = await axios.get("http://localhost:8080/second-hand/products/" + prodId);
+  }
+  const imageUrls = product.data.product.imageUrls.map(url => `http://localhost:8080/${url}`)
   return {
     props: {
       product: product.data.product,
+      imageUrls: imageUrls
     },
   };
 }

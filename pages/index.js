@@ -13,13 +13,13 @@ import Anchor from "../components/UI/anchor";
 const Home = (props) => {
   const { serverUrl } = useContext(StateContext);
   const isMobile = useIsMobile();
-  const [imageLayout, setImageLayout] = useState("responsive")
+  const [imageLayout, setImageLayout] = useState("responsive");
 
   useEffect(() => {
     if (isMobile) {
-      setImageLayout("fixed")
+      setImageLayout("fixed");
     } else {
-      setImageLayout("responsive")
+      setImageLayout("responsive");
     }
   }, [isMobile]);
 
@@ -28,16 +28,19 @@ const Home = (props) => {
   return (
     <div className={classes.container}>
       <Head>
-        <title>MERLE.</title>
+        <title>MERLE</title>
       </Head>
 
       <div className={classes.header}>
-        <p>MERLE.</p>
+        <p>MERLE</p>
       </div>
 
       <div className={classes.discoverContainer}>
-        <Anchor href="/discover" color="black" className={classes.discover}>
-          DISCOVER PRODUCTS
+        {/* <Anchor href="/products?site=original" color="black" className={classes.discover}>
+          DISCOVER
+        </Anchor>  */}
+        <Anchor href="/products?site=second-hand" color="black" className={classes.discover}>
+          DISCOVER
         </Anchor>
       </div>
 

@@ -8,6 +8,7 @@ import { StateContext } from '../../context/stateContext';
 
 import Header from "../../components/layout/header";
 import Footer from "../../components/layout/footer";
+import Cart from '../../components/layout/cart';
 
 const Search = () => {
   const [products, setProducts] = useState([]);
@@ -22,7 +23,7 @@ const Search = () => {
     try {
       if (query.length > 1) {
         const prods = await axios.get(
-          `http://localhost:8080/products?query=${query}`
+          `${serverUrl}products?query=${query}`
         );
         setProducts(prods.data.products);
         const b = prods.data.products.map((prod) => {
@@ -92,6 +93,7 @@ const Search = () => {
           {!isMobile && <div className={classes.logoContainer}></div>}
         </div>
       </div>
+      <Cart/>
       <Footer />
     </>
   );

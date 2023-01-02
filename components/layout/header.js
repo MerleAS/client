@@ -12,7 +12,7 @@ const Header = (props) => {
   const [btnIsHighlighted, setBtnIsHighlighted] = useState(false);
 
   const isMobile = useIsMobile();
-  const { cartItems } = useContext(StateContext);
+  const { cartItems, setCartIsActive } = useContext(StateContext);
 
   const cartClasses = `${classes.navOption} ${
     btnIsHighlighted ? classes.bump : ""
@@ -44,9 +44,7 @@ const Header = (props) => {
           <Anchor className={classes.navOption} color={color} href="/search">
             Search
           </Anchor>
-          <Anchor className={cartClasses} color={color} href="/cart">
-            Cart
-          </Anchor>
+          <p className={classes.navOption} onClick={() => setCartIsActive(true)}>Cart</p>
         </div>
       </nav>
     );
@@ -90,13 +88,7 @@ const Header = (props) => {
               </Anchor>
             </div>
             <div className={classes.mobileNavContainer}>
-              <Anchor
-                className={classes.navOptionMobile}
-                color={color}
-                href="/cart"
-              >
-                Cart
-              </Anchor>
+              <p className={classes.navOptionMobile} onClick={() => setCartIsActive(true)}>Cart</p>
             </div>
           </div>
         )}

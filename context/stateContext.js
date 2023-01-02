@@ -4,12 +4,14 @@ export const StateContext = createContext({
   addToCartHandler: () => {},
   removeFromCartHandler: () => {},
   clearCartHandler: () => {},
+  setCartIsActive: () => {}
 });
 
 const StateContextProvider = (props) => {
   const [serverUrl] = useState("http://localhost:8080/");
   const [cartItems, setCartItems] = useState([]);
   const [totalAmount, setTotalAmount] = useState(0);
+  const [cartIsActive, setCartIsActive] = useState(false);
 
   const addToCartHandler = (product) => {
     const productExist = cartItems.find(
@@ -35,16 +37,17 @@ const StateContextProvider = (props) => {
 
   const clearCartHandler = () => {};
 
-  console.log(cartItems, totalAmount);
   return (
     <StateContext.Provider
       value={{
         serverUrl,
         cartItems,
         totalAmount,
+        cartIsActive,
         addToCartHandler,
         removeFromCartHandler,
         clearCartHandler,
+        setCartIsActive
       }}
     >
       {props.children}

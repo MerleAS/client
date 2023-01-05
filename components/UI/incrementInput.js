@@ -5,13 +5,13 @@ const IncrementInput = (props) => {
 
   const decrementHandler = () => {
     if(count > 1) {
-        setCount((prev) => prev - 1)
+        setCount((prev) => prev - 1, 'decrement')
     }
   };
 
   const incrementHandler = () => {
     if (count < 10) {
-        setCount(prev => prev + 1)
+        setCount(prev => prev + 1, 'increment')
     }
   };  
 

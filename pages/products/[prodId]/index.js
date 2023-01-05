@@ -23,7 +23,7 @@ const ProductDetail = (props) => {
 
   const [error, setError] = useState(false);
 
-  const { serverUrl, addToCartHandler } = useContext(StateContext);
+  const { serverUrl, addToCartHandler, setCartIsActive } = useContext(StateContext);
   const { product, imageUrls } = props;
 
   const sizeHandler = (item) => {
@@ -47,6 +47,7 @@ const ProductDetail = (props) => {
       size: selectedSize.size,
     };
     addToCartHandler(prod);
+    setCartIsActive(true);
   };
 
   return (

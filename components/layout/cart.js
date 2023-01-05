@@ -1,20 +1,29 @@
+import { useContext } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
+
 import classes from "../../styles/components/layout/cart.module.css";
 import useIsMobile from "../util/useIsMobile";
-import { useContext } from "react";
 import { StateContext } from "../../context/stateContext";
+
+import IncrementInput from "../UI/incrementInput";
 
 const Cart = () => {
   const isMobile = useIsMobile();
   const router = useRouter();
 
-  const { cartIsActive, setCartIsActive, cartItems, serverUrl } =
-    useContext(StateContext);
+  const {
+    cartIsActive,
+    setCartIsActive,
+    cartItems,
+    serverUrl,
+    changeAmountHandler,
+  } = useContext(StateContext);
 
-  console.log(cartItems)
+  console.log(cartItems);
 
   const routeHandler = () => {
+    setCartIsActive(false);
     router.push("/checkout");
   };
 
@@ -24,7 +33,10 @@ const Cart = () => {
         <>
           {!isMobile && (
             <>
-              <div className={classes.backdrop}></div>
+              <div
+                className={classes.backdrop}
+                onClick={() => setCartIsActive(false)}
+              ></div>
               <div className={classes.container}>
                 <div className={classes.line}>
                   <div className={classes.crossContainer}></div>
@@ -49,18 +61,25 @@ const Cart = () => {
                 </div>
                 <div className={classes.cartItemsContainer}>
                   {cartItems.length > 0 &&
-                    cartItems.map((item) => (
-                      <div className={classes.cartItemContainer}>
+                    cartItems.map((item, index) => (
+                      <div className={classes.cartItemContainer} key={index}>
                         <Image
                           src={serverUrl + item.imageUrls[0]}
                           layout="fixed"
-                          width={150}
-                          height={100}
+                          width={225}
+                          height={150}
                         />
                         <div className={classes.cartItemInfo}>
                           <p className={classes.cartItemTitle}>{item.title}</p>
                           <p className={classes.text}>Size {item.size}</p>
-                          <p className={classes.text}>Amount {item.amount}</p>
+                          <IncrementInput
+                            count={item.amount}
+                            setCount={(value, type) =>
+                              changeAmountHandler(item, type)
+                            }
+                          />
+                        </div>
+                        <div className={classes.priceContainer}>
                           <p className={classes.text}>
                             Price: {item.price * item.amount}
                           </p>
@@ -69,9 +88,23 @@ const Cart = () => {
                     ))}
                 </div>
                 <div className={classes.footer}>
-                  <button className={classes.button} onClick={routeHandler}>
-                    CHECKOUT
-                  </button>
+                  <div className={classes.totalContainer}>
+                    <p>
+                      TOTAL: {" "}
+                      {cartItems.length > 0 &&
+                        cartItems.reduce((acc, cur) => {
+                          return cur.amount * cur.price;
+                        }, 0)}
+                      {cartItems.length === 0 && 0}
+                      {" "}
+                      Kr
+                    </p>
+                  </div>
+                  <div className={classes.buttonContainer}>
+                    <button className={classes.button} onClick={routeHandler}>
+                      CHECKOUT
+                    </button>
+                  </div>
                 </div>
               </div>
             </>

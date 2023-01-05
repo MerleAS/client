@@ -4,7 +4,8 @@ export const StateContext = createContext({
   addToCartHandler: () => {},
   removeFromCartHandler: () => {},
   clearCartHandler: () => {},
-  setCartIsActive: () => {}
+  setCartIsActive: () => {},
+  changeAmountHandler: () => {},
 });
 
 const StateContextProvider = (props) => {
@@ -21,21 +22,43 @@ const StateContextProvider = (props) => {
       (prod) => prod._id === product._id && prod.size === product.size
     );
     if (productExist) {
-      setCartItems(prev => {
-        prev[index].amount += product.amount
-        return [...prev]
-      })
+      setCartItems((prev) => {
+        prev[index].amount += product.amount;
+        return [...prev];
+      });
     } else {
       setCartItems((prev) => [...prev, product]);
     }
     setTotalAmount((prev) => prev + product.amount * product.price);
   };
 
-  const removeFromCartHandler = (product) => {
-
-  };
+  const removeFromCartHandler = (product) => {};
 
   const clearCartHandler = () => {};
+
+  const changeAmountHandler = (product, type) => {
+    const index = cartItems.findIndex(
+      (prod) => prod._id === product._id && prod.size === product.size
+    );
+    if (type === "increment") {
+      setCartItems((prev) => {
+        prev[index].amount += 1;
+        return [...prev];
+      });
+    } else if (type === "decrement") {
+      if (cartItems[index].amount > 1) {
+      setCartItems((prev) => {
+        prev[index].amount -= 1;
+        return [...prev];
+      });
+    } else {
+      setCartItems((prev) => {
+        delete prev[index]
+        return [...prev]
+      })
+    }
+    }
+  };
 
   return (
     <StateContext.Provider
@@ -47,7 +70,8 @@ const StateContextProvider = (props) => {
         addToCartHandler,
         removeFromCartHandler,
         clearCartHandler,
-        setCartIsActive
+        changeAmountHandler,
+        setCartIsActive,
       }}
     >
       {props.children}

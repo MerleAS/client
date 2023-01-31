@@ -1,3 +1,11 @@
+.container {
+    height: 100%;
+}
+
+.image {
+    max-height: 300px;
+}
+
 .indexContainer {
     width: 100%;
     display: flex;

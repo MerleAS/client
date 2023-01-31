@@ -23,13 +23,18 @@ const Search = () => {
     try {
       if (query.length > 1) {
         const prods = await axios.get(
-          `${serverUrl}products?query=${query}`
+          `${serverUrl}second-hand/products?query=${query}`
         );
         setProducts(prods.data.products);
-        const b = prods.data.products.map((prod) => {
-          return { brandId: prod.brandId, brand: prod.brand };
+        /* const brandsList = []
+        prods.data.products.forEach(prod => {
+          const b = { brandId: prod.brandId, brand: prod.brand };
+          const brandExists = brandsList.find(br => br.brandId === b.brandId)
+          if (!brandExists) {
+            brandsList.push(b)
+          }
         });
-        setBrands(b)
+        setBrands(brandsList) */
       } else {
         setProducts([]);
         setBrands([]);

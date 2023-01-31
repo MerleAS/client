@@ -45,6 +45,7 @@
     font-size: 18px;
     padding-left: 15px;
     height: 50px;
+    border: 1px solid black;
 }
 
 .input::-webkit-search-cancel-button{

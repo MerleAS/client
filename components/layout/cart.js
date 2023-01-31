@@ -17,10 +17,18 @@ const Cart = () => {
     setCartIsActive,
     cartItems,
     serverUrl,
+    getTotalAmount,
     changeAmountHandler,
+    removeFromCartHandler,
   } = useContext(StateContext);
 
-  console.log(cartItems);
+  const amountHandler = (item, type) => {
+    if (type === "increment" && item.amount + 1 <= item.in_stock) {
+      changeAmountHandler(item, type);
+    } else if (type === "decrement" && item.amount - 1 > 0) {
+      changeAmountHandler(item, type);
+    }
+  };
 
   const routeHandler = () => {
     setCartIsActive(false);
@@ -63,26 +71,39 @@ const Cart = () => {
                   {cartItems.length > 0 &&
                     cartItems.map((item, index) => (
                       <div className={classes.cartItemContainer} key={index}>
-                        <Image
-                          src={serverUrl + item.imageUrls[0]}
-                          layout="fixed"
-                          width={225}
-                          height={150}
-                        />
+                        <div className={classes.imageContainer}>
+                          <Image
+                            src={serverUrl + item.imageUrls[0]}
+                            layout="responsive"
+                            width={785}
+                            height={1490}
+                          />
+                        </div>
+
                         <div className={classes.cartItemInfo}>
                           <p className={classes.cartItemTitle}>{item.title}</p>
                           <p className={classes.text}>Size {item.size}</p>
                           <IncrementInput
                             count={item.amount}
                             setCount={(value, type) =>
-                              changeAmountHandler(item, type)
+                              amountHandler(item, type)
                             }
                           />
                         </div>
-                        <div className={classes.priceContainer}>
-                          <p className={classes.text}>
-                            Price: {item.price * item.amount}
-                          </p>
+                        <div className={classes.cartItemInfo2}>
+                          <div className={classes.priceContainer}>
+                            <p className={classes.text}>
+                              {item.price * item.amount} kr
+                            </p>
+                          </div>
+                          <div className={classes.removeItemContainer}>
+                            <p
+                              className={classes.removeItem}
+                              onClick={() => removeFromCartHandler(item)}
+                            >
+                              Remove
+                            </p>
+                          </div>
                         </div>
                       </div>
                     ))}
@@ -90,14 +111,10 @@ const Cart = () => {
                 <div className={classes.footer}>
                   <div className={classes.totalContainer}>
                     <p>
-                      TOTAL: {" "}
+                      TOTAL:{" "}
                       {cartItems.length > 0 &&
-                        cartItems.reduce((acc, cur) => {
-                          return cur.amount * cur.price;
-                        }, 0)}
-                      {cartItems.length === 0 && 0}
-                      {" "}
-                      Kr
+                        getTotalAmount()}
+                      {cartItems.length === 0 && 0} Kr
                     </p>
                   </div>
                   <div className={classes.buttonContainer}>
@@ -109,12 +126,16 @@ const Cart = () => {
               </div>
             </>
           )}
+
           {isMobile && (
             <div className={classes.mobileContainer}>
               <div className={classes.mobileHeadingContainer}>
                 <div className={classes.mobileCrossContainer}></div>
                 <p className={classes.mobileHeading}>Your Cart</p>
-                <div className={classes.mobileCrossContainer}>
+                <div
+                  className={classes.mobileCrossContainer}
+                  onClick={() => setCartIsActive(false)}
+                >
                   <svg
                     width="24"
                     height="24"
@@ -131,29 +152,57 @@ const Cart = () => {
               </div>
               <div className={classes.mobileCartItemsContainer}>
                 {cartItems.length > 0 &&
-                  cartItems.map((item) => (
-                    <div className={classes.cartItemContainer}>
-                      <Image
-                        src={serverUrl + item.imageUrl}
-                        layout="fixed"
-                        width={150}
-                        height={100}
-                      />
+                  cartItems.map((item, index) => (
+                    <div
+                      className={classes.mobileCartItemContainer}
+                      key={index}
+                    >
+                      <div className={classes.mobileImageContainer}>
+                        <Image
+                          src={serverUrl + item.imageUrls[0]}
+                          layout="responsive"
+                          width={785}
+                          height={1490}
+                        />
+                      </div>
                       <div className={classes.cartItemInfo}>
                         <p className={classes.cartItemTitle}>{item.title}</p>
                         <p className={classes.text}>Size {item.size}</p>
-                        <p className={classes.text}>Amount {item.amount}</p>
-                        <p className={classes.text}>
-                          Price: {item.price * item.amount}
-                        </p>
+                        <IncrementInput
+                          count={item.amount}
+                          setCount={(value, type) => amountHandler(item, type)}
+                        />
+                      </div>
+                      <div className={classes.cartItemInfo2}>
+                        <div className={classes.priceContainer}>
+                          <p className={classes.text}>
+                            {item.price * item.amount} kr
+                          </p>
+                        </div>
+                        <div className={classes.removeItemContainer}>
+                          <p
+                            className={classes.removeItem}
+                            onClick={() => removeFromCartHandler(item)}
+                          >
+                            Remove
+                          </p>
+                        </div>
                       </div>
                     </div>
                   ))}
-                <div className={classes.mobileFooter}>
-                  <button className={classes.button} onClick={routeHandler}>
-                    CHECKOUT
-                  </button>
+              </div>
+              <div className={classes.footer}>
+                <div className={classes.totalContainer}>
+                  <p className={classes.total}>
+                    TOTAL:{" "}
+                    {cartItems.length > 0 &&
+                      getTotalAmount()}
+                    {cartItems.length === 0 && 0} Kr
+                  </p>
                 </div>
+                <button className={classes.mobileButton} onClick={routeHandler}>
+                  CHECKOUT
+                </button>
               </div>
             </div>
           )}

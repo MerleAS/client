@@ -2,16 +2,19 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 import classes from "../../styles/components/UI/slideShow.module.css";
+import useIsMobile from "../util/useIsMobile";
 
-let walk = 0
+let walk = 0;
 
 const SlideShow = (props) => {
   const { imgs, width, height } = props;
+  const isMobile = useIsMobile();
 
+  const [pixelWalk, setPixelWalk] = useState(120);
   const [index, setIndex] = useState(0);
   const [isDown, setIsDown] = useState(false);
   const [startX, setStartX] = useState();
-  const [x, setX] = useState()
+  const [x, setX] = useState();
 
   const next = () => {
     if (index === imgs.length - 1) {
@@ -30,42 +33,57 @@ const SlideShow = (props) => {
   };
 
   const mouseDownHandler = (e) => {
-    const doc = document.getElementById('container')
-    setIsDown(true)
-    setStartX(e.pageX - doc.offsetLeft)
+    const doc = document.getElementById("container");
+    setIsDown(true);
+    if (!isMobile) {
+      setStartX(e.pageX - doc.offsetLeft);
+    } else if (isMobile) {
+      if (e.targetTouches) {
+        setStartX(e.targetTouches[0].pageX - doc.offsetLeft);
+      }
+    }
   };
 
   const mouseLeaveHandler = (e) => {
-    setIsDown(false)
-    setStartX(undefined)
-    setX(undefined)
-  }
+    setIsDown(false);
+    setStartX(undefined);
+    setX(undefined);
+  };
 
   const mouseMoveHandler = (e) => {
-    const doc = document.getElementById('container')
+    const doc = document.getElementById("container");
     if (!isDown) {
-      return
+      return;
     }
-    e.preventDefault()
-    setX(e.pageX - doc.offsetLeft)
+    /* e.preventDefault() */
+    if (!isMobile) {
+      setX(e.pageX - doc.offsetLeft);
+    } else if (isMobile) {
+      setX(e.targetTouches[0].pageX - doc.offsetLeft);
+    }
   };
 
   const indexHandler = (idx) => {
-    setIndex(idx)
-    setStartX(undefined)
-    setX(undefined)
+    setIndex(idx);
+    setStartX(undefined);
+    setX(undefined);
   };
 
   useEffect(() => {
-    walk = x - startX
-    console.log(walk)
-    if (walk > 120) {
-      prev()
-      setStartX(x)
+    if (isMobile) {
+      setPixelWalk(90);
     }
-    if (walk < -120) {
-      next()
-      setStartX(x)
+  });
+
+  useEffect(() => {
+    walk = x - startX;
+    if (walk > pixelWalk) {
+      prev();
+      setStartX(x);
+    }
+    if (walk < pixelWalk * -1) {
+      next();
+      setStartX(x);
     }
   }, [x, startX]);
 
@@ -76,8 +94,13 @@ const SlideShow = (props) => {
       onMouseLeave={mouseLeaveHandler}
       onMouseUp={() => setIsDown(false)}
       onMouseMove={mouseMoveHandler}
+      onTouchStart={mouseDownHandler}
+      onTouchCancel={mouseLeaveHandler}
+      onTouchEnd={() => setIsDown(false)}
+      onTouchMove={mouseMoveHandler}
     >
       <Image
+        className={classes.image}
         id="container"
         loader={() => imgs[index]}
         alt="product"
@@ -88,11 +111,17 @@ const SlideShow = (props) => {
       ></Image>
       <div className={classes.indexContainer}>
         {imgs.map((img, idx) => {
-          let style = classes.index
+          let style = classes.index;
           if (idx === index) {
-            style = `${classes.index} ${classes.indexActive}`
+            style = `${classes.index} ${classes.indexActive}`;
           }
-          return <div className={style} onClick={() => indexHandler(idx)}></div>
+          return (
+            <div
+              className={style}
+              key={idx}
+              onClick={() => indexHandler(idx)}
+            ></div>
+          );
         })}
       </div>
     </div>

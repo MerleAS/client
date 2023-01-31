@@ -1,50 +1,67 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
+import Head from 'next/head';
+import { useRouter } from "next/router";
 import classes from "../../styles/components/layout/header.module.css";
 
-import Anchor from "../UI/anchor";
 import useIsMobile from "../util/useIsMobile";
 import { StateContext } from "../../context/stateContext";
 
 const Header = (props) => {
   const { className, color } = props;
+  const router = useRouter();
 
   const [menuActive, setMenuActive] = useState(false);
-  const [btnIsHighlighted, setBtnIsHighlighted] = useState(false);
 
   const isMobile = useIsMobile();
-  const { cartItems, setCartIsActive } = useContext(StateContext);
+  const { setCartIsActive, routeStackHandler, routeStack } =
+    useContext(StateContext);
 
-  const cartClasses = `${classes.navOption} ${
-    btnIsHighlighted ? classes.bump : ""
-  }`;
-
-  useEffect(() => {
-    if (cartItems.length === 0) {
-      return;
-    } else {
-      setBtnIsHighlighted(true);
-    }
-    const timer = setTimeout(() => {
-      setBtnIsHighlighted(false);
-    }, 300);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [cartItems]);
+  const routeHandler = (routeObject, index) => {
+    router.push(routeObject.path);
+    routeStackHandler(routeObject, index);
+  };
 
   if (!isMobile) {
     return (
       <nav className={`${classes.nav} ${className}`}>
-        <div className={classes.navOptions}></div>
-        <Anchor className={classes.logo} href="/" color={color}>
+        <Head>
+          <title>MERLE</title>
+        </Head>
+        <div className={classes.routeOptions}>
+          {routeStack.map((route, index) => {
+            return (
+              <div
+                onClick={() => routeHandler(route, index)}
+                className={classes.routeContainer}
+                key={index}
+              >
+                <p className={classes.seperator}>/</p>
+                <p className={classes.label}>{route.label} </p>
+              </div>
+            );
+          })}
+        </div>
+        <div
+          className={classes.logo}
+          onClick={() => routeHandler({ path: "/", label: "Home" })}
+          color={color}
+        >
           MERLE
-        </Anchor>
+        </div>
         <div className={classes.navOptions}>
-          <Anchor className={classes.navOption} color={color} href="/search">
+          <div
+            className={classes.navOption}
+            color={color}
+            onClick={() => routeHandler({ path: "/search", label: "Search" })}
+          >
             Search
-          </Anchor>
-          <p className={classes.navOption} onClick={() => setCartIsActive(true)}>Cart</p>
+          </div>
+          <p
+            className={classes.navOption}
+            onClick={() => setCartIsActive(true)}
+          >
+            Cart
+          </p>
         </div>
       </nav>
     );
@@ -52,6 +69,9 @@ const Header = (props) => {
   if (isMobile) {
     return (
       <nav className={`${classes.nav} ${className}`}>
+        <Head>
+          <title>MERLE</title>
+        </Head>
         <div className={classes.navIconContainer}>
           <svg
             onClick={() => setMenuActive((prev) => !prev)}
@@ -79,22 +99,33 @@ const Header = (props) => {
         {menuActive && (
           <div className={classes.mobileNavMenu}>
             <div className={classes.mobileNavContainer}>
-              <Anchor
+              <div
                 className={classes.navOptionMobile}
                 color={color}
-                href="/search"
+                onClick={() =>
+                  routeHandler({ path: "/search", label: "Search" })
+                }
               >
                 Search
-              </Anchor>
+              </div>
             </div>
             <div className={classes.mobileNavContainer}>
-              <p className={classes.navOptionMobile} onClick={() => setCartIsActive(true)}>Cart</p>
+              <p
+                className={classes.navOptionMobile}
+                onClick={() => setCartIsActive(true)}
+              >
+                Cart
+              </p>
             </div>
           </div>
         )}
-        <Anchor className={classes.mobileLogo} href="/" color={color}>
+        <div
+          className={classes.mobileLogo}
+          color={color}
+          onClick={() => routeHandler({ path: "/", label: "Home" })}
+        >
           MERLE
-        </Anchor>
+        </div>
         <div className={classes.navIconContainer}></div>
       </nav>
     );

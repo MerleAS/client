@@ -1,49 +1,87 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 import axios from "axios";
 
 import Header from "../../components/layout/header";
 import Footer from "../../components/layout/footer";
-import Cart from '../../components/layout/cart';
+import Cart from "../../components/layout/cart";
+import SlideShow from "../../components/UI/slideShow";
 
 import { StateContext } from "../../context/stateContext";
+import useIsMobile from "../../components/util/useIsMobile";
 import classes from "../../styles/pages/products.module.css";
 
 const Products = (props) => {
-  const { serverUrl } = useContext(StateContext);
-  const { products, site } = props;
+  const { serverUrl, routeStackHandler } = useContext(StateContext);
+  const { products, site, brands } = props;
   const router = useRouter();
 
-  const productClickHandler = (id) => {
-    router.push(`/products/${id}?site=${site}`);
+  const isMobile = useIsMobile();
+
+  const [time, setTime] = useState(0);
+  const [collections, setCollections] = useState([]);
+
+  const mouseDownHandler = () => {
+    setTime(new Date());
+  };
+
+  const productClickHandler = (prod) => {
+    const newTime = new Date();
+    const diff = newTime - time;
+    if (diff < 300 || isMobile) {
+      router.push(`/products/${prod._id}?site=${site}`);
+      routeStackHandler({
+        path: `/products/${prod._id}?site=${site}`,
+        label: prod.title,
+      });
+    } else {
+      setTimer(0);
+    }
   };
 
   return (
     <div>
       <Header className={classes.header} color="black" />
 
-      {products.length > 0 &&
-        products.map((prod, index) => {
-          return (
-            <div
-              className={classes.imageContainer}
-              key={index}
-              onClick={() => productClickHandler(prod._id)}
-            >
-              <Image
-                loader={() => serverUrl + prod.imageUrls[0]}
-                layout="intrinsic"
-                width={700}
-                height={400}
-                src={serverUrl + prod.imageUrl}
-                alt="product"
-                className={classes.image}
-              />
-            </div>
-          );
-        })}
-
+      {!isMobile && (
+        <>
+          {products.length > 0 &&
+            products.map((prod, index) => {
+              const imageUrls = prod.imageUrls.map(
+                (url) => `http://localhost:8080/${url}`
+              );
+              return (
+                <div
+                  className={classes.imageContainer}
+                  key={index}
+                  onMouseDown={mouseDownHandler}
+                  onMouseUp={() => productClickHandler(prod)}
+                >
+                  <SlideShow width={785} height={1490} imgs={imageUrls} />
+                </div>
+              );
+            })}
+        </>
+      )}
+      {isMobile && (
+        <>
+          {products.length > 0 &&
+            products.map((prod, index) => {
+              const imageUrls = prod.imageUrls.map(
+                (url) => `http://localhost:8080/${url}`
+              );
+              return (
+                <div
+                  className={classes.mobileImageContainer}
+                  key={index}
+                  onClick={() => productClickHandler(prod)}
+                >
+                  <SlideShow width={785} height={1490} imgs={imageUrls} />
+                </div>
+              );
+            })}
+        </>
+      )}
       <Cart />
       <Footer />
     </div>
@@ -60,10 +98,19 @@ export async function getServerSideProps(context) {
   } else {
     prods = await axios.get("http://localhost:8080/second-hand/products");
   }
+  const brandsList = [];
+  prods.data.products.forEach((prod) => {
+    const b = { brandId: prod.brandId, brand: prod.brand };
+    const brandExists = brandsList.find((br) => br.brandId === b.brandId);
+    if (!brandExists) {
+      brandsList.push(b);
+    }
+  });
   return {
     props: {
       products: prods.data.products,
-      site: site
+      site: site,
+      brands: brandsList,
     },
   };
 }

@@ -2,7 +2,6 @@ import Image from "next/image";
 
 import Footer from "../../components/layout/footer";
 import Header from "../../components/layout/header";
-import Anchor from "../../components/UI/anchor";
 
 import classes from "../../styles/pages/discover.module.css";
 
@@ -15,15 +14,15 @@ const Discover = () => {
 
       <div className={classes.discoverWrapper}>
         <div className={classes.discoverContainer}>
-          <Anchor className={classes.link} color="white" href="brands">
+          <div className={classes.link} color="white" href="brands">
             BRANDS
-          </Anchor>
-          <Anchor className={classes.link} color="white" href="products">
+          </div>
+          <div className={classes.link} color="white" href="products">
             PRODUCTS
-          </Anchor>
-          <Anchor className={classes.link} color="white" href="coming-soon">
+          </div>
+          <div className={classes.link} color="white" href="coming-soon">
             COMING SOON
-          </Anchor>
+          </div>
         </div>
       </div>
 

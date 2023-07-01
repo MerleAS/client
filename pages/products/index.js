@@ -35,7 +35,7 @@ const Products = (props) => {
         label: prod.title,
       });
     } else {
-      setTimer(0);
+      setTime(0);
     }
   };
 
@@ -57,7 +57,7 @@ const Products = (props) => {
                   onMouseDown={mouseDownHandler}
                   onMouseUp={() => productClickHandler(prod)}
                 >
-                  <SlideShow width={785} height={1490} imgs={imageUrls} />
+                  <SlideShow width={1000} height={1500} imgs={imageUrls} />
                 </div>
               );
             })}
@@ -76,7 +76,7 @@ const Products = (props) => {
                   key={index}
                   onClick={() => productClickHandler(prod)}
                 >
-                  <SlideShow width={785} height={1490} imgs={imageUrls} />
+                  <SlideShow width={1000} height={1500} imgs={imageUrls} />
                 </div>
               );
             })}

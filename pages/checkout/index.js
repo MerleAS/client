@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { useContext, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
@@ -6,14 +7,20 @@ import { StateContext } from "../../context/stateContext";
 import useIsMobile from "../../components/util/useIsMobile";
 import classes from "../../styles/pages/checkout.module.css";
 
-import Header from "../../components/layout/header";
 import Modal from "../../components/UI/modal";
+import RadioButton from "../../components/UI/radioButton";
+import Input from "../../components/UI/input";
+
+import HeltHjem from "../../public/icons/SVG/heltHjem.svg";
+import Posten from "../../public/icons/SVG/posten.svg";
 
 const Checkout = () => {
   const { getTotalAmount, cartItems, serverUrl } = useContext(StateContext);
+  const router = useRouter();
   const isMobile = useIsMobile();
-  const [step, setStep] = useState(false);
+
   const [error, setError] = useState(false);
+  const [discountCode, setDiscountCode] = useState("");
 
   const [email, setEmail] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -24,26 +31,8 @@ const Checkout = () => {
   const [country, setCountry] = useState("");
   const [phone, setPhone] = useState("");
 
-  const stepHandler = (type) => {
-    if (type === "decrement") {
-      setStep(false);
-    } else if (type === "increment") {
-      if (
-        email.includes('@') &&
-        firstName !== "" &&
-        lastName !== "" &&
-        address !== "" &&
-        postalCode &&
-        city !== "" &&
-        country !== "" &&
-        phone
-      ) {
-        setStep(true);
-      } else {
-        setError(true);
-      }
-    }
-  };
+  const [shippingRadioValue, setShippingRadioValue] = useState("");
+  const [paymentRadioValue, setPaymentRadioValue] = useState("card");
 
   const orderHandler = async () => {
     try {
@@ -78,307 +67,351 @@ const Checkout = () => {
     }
   };
 
-  console.log(error);
+  const cardNotSelected =
+    paymentRadioValue === "card" ? "" : classes.cardNotSelected;
+  const vippsNotSelected =
+    paymentRadioValue === "vipps" ? "" : classes.vippsNotSelected;
+
+  const orderSummary = (
+    <>
+      <div className={classes.cartItemsContainer}>
+        {cartItems.length > 0 &&
+          cartItems.map((item, index) => (
+            <div className={classes.cartItemContainer} key={index}>
+              <div className={classes.imageContainer}>
+                <Image
+                  src={serverUrl + item.imageUrls[0]}
+                  loader={() => serverUrl + item.imageUrls[0]}
+                  layout="responsive"
+                  alt="image"
+                  width={1000}
+                  height={1500}
+                />
+              </div>
+              <div className={classes.cartItemInfoContainer}>
+                <div className={classes.cartItemInfo}>
+                  <p className={classes.textBold}>{item.title}</p>
+                  <p className={classes.textGrey}>{item.size}</p>
+                  <p className={classes.text}>{item.amount} item</p>
+                </div>
+                <div className={classes.cartItemInfo}>
+                  <p className={classes.text}></p>
+                  <p className={classes.text}></p>
+                  <p className={classes.text}>{item.price} kr</p>
+                </div>
+              </div>
+            </div>
+          ))}
+      </div>
+      <div className={classes.orderSummaryInfoContainer}>
+        <div className={classes.discountContainer}>
+          <Input
+            containerClass={classes.discountInputContainer}
+            inputClass={`${classes.input} ${classes.discountInput}`}
+            labelClass={classes.discountLabel}
+            label="Discount code"
+            value={discountCode}
+            onChange={(e) => setDiscountCode(e.target.value)}
+          />
+          <button className={classes.discountButton}>Apply</button>
+        </div>
+        <div className={classes.line}></div>
+        <div className={classes.orderSummaryInfoRow}>
+          <p className={classes.text2}>Subtotal</p>
+          <p className={classes.text2}>{getTotalAmount()}</p>
+        </div>
+        <div className={classes.orderSummaryInfoRow}>
+          <p className={classes.text2}>Shipping</p>
+          <p className={classes.text2}>?</p>
+        </div>
+        <div className={classes.line}></div>
+        <div className={classes.orderSummaryInfoRow}>
+          <p className={classes.text2}>Total</p>
+          <p className={classes.text2}>?</p>
+        </div>
+      </div>
+    </>
+  );
+
+  const customerInformationForm = (
+    <>
+      <div className={classes.inputHeading}>
+        <p className={classes.textBoldLarge}>Shipping information</p>
+      </div>
+      <div className={classes.inputContainer}>
+        <div className={classes.innerInputContainer}>
+          <div className={classes.emailContainer}>
+            <Input
+              label="Email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              type="email"
+              inputClass={classes.input}
+            />
+          </div>
+          <div className={classes.inputCluster}>
+            <Input
+              label="First name"
+              inputClass={classes.input}
+              onChange={(e) => setFirstName(e.target.value)}
+              value={firstName}
+            />
+            <Input
+              label="Last name"
+              inputClass={classes.input}
+              onChange={(e) => setLastName(e.target.value)}
+              value={lastName}
+            />
+          </div>
+          <div className={classes.inputCluster}>
+            <Input
+              label="Address"
+              inputClass={classes.input}
+              onChange={(e) => setAddress(e.target.value)}
+              value={address}
+            />
+            <Input
+              label="Postal Code"
+              inputClass={classes.input}
+              onChange={(e) => setPostalCode(e.target.value)}
+              value={postalCode}
+              type="number"
+            />
+          </div>
+          <div className={classes.inputCluster}>
+            <Input
+              label="City"
+              inputClass={classes.input}
+              onChange={(e) => setCity(e.target.value)}
+              value={city}
+            />
+            <Input
+              label="Country"
+              inputClass={classes.input}
+              onChange={(e) => setCountry(e.target.value)}
+              value={country}
+            />
+          </div>
+
+          <div className={classes.inputCluster2}>
+            <div className={classes.input}>
+              <p className={classes.phoneCode}>+47</p>
+            </div>
+            <Input
+              label="Phone Number"
+              inputClass={classes.input}
+              onChange={(e) => setPhone(e.target.value)}
+              value={phone}
+              type="number"
+            />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+
+  const shippingInformation = (
+    <>
+      <div className={classes.shippingHeading}>
+        <p className={classes.textBoldLarge}>Shipping</p>
+      </div>
+      <div className={classes.shippingInfoContainer}>
+        <div className={classes.shippingOptionContainer}>
+          <RadioButton
+            value="helt-hjem"
+            radioValue={shippingRadioValue}
+            setRadioValue={setShippingRadioValue}
+          />
+          <div className={classes.shippingInfo}>
+            <p className={classes.textBold}>Helt hjem</p>
+            <p className={classes.textGrey}>Leveres om 4-7 virkedager</p>
+          </div>
+          <div className={classes.shippingPrice}>
+            <p className={classes.text2}>80kr</p>
+          </div>
+          <div className={classes.shippingIcon}>
+            <HeltHjem height="35" width="35" />
+          </div>
+        </div>
+
+        <div className={classes.shippingOptionContainer}>
+          <RadioButton
+            value="posten"
+            radioValue={shippingRadioValue}
+            setRadioValue={setShippingRadioValue}
+          />
+          <div className={classes.shippingInfo}>
+            <p className={classes.textBold}>Posten</p>
+            <p className={classes.textGrey}>Leveres om 4-7 virkedager</p>
+          </div>
+          <div className={classes.shippingPrice}>
+            <p className={classes.text2}>80kr</p>
+          </div>
+          <div className={classes.shippingIcon}>
+            <Posten width="28" height="28" />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+
+  const paymentInformation = (
+    <>
+      <div className={classes.paymentHeading}>
+        <p className={classes.textBoldLarge}>Payments</p>
+      </div>
+
+      <div className={classes.paymentInfoContainer}>
+        <div className={classes.paymentHeadersContainer}>
+          <div
+            className={`${classes.paymentHeaderContainer} ${cardNotSelected}`}
+          >
+            <div className={classes.radioButtonContainer}>
+              <RadioButton
+                value="card"
+                radioValue={paymentRadioValue}
+                setRadioValue={setPaymentRadioValue}
+              />
+            </div>
+            <div className={classes.paymentHeader}>
+              Kredittkort eller debetkort
+            </div>
+          </div>
+          <div
+            className={`${classes.paymentHeaderContainer} ${vippsNotSelected}`}
+          >
+            <div className={classes.radioButtonContainer}>
+              <RadioButton
+                value="vipps"
+                radioValue={paymentRadioValue}
+                setRadioValue={setPaymentRadioValue}
+              />
+            </div>
+            <div className={classes.paymentHeader}>Vipps</div>
+          </div>
+        </div>
+
+        <div className={classes.paymentBodyContainer}>
+          <div className={classes.cardBody}></div>
+          <div className={classes.vippsBody}></div>
+        </div>
+      </div>
+    </>
+  );
+
+  const mobileCustomerInformationForm = (
+    <>
+      <div className={classes.inputHeading}>
+        <p className={classes.textBoldLarge}>Shipping information</p>
+      </div>
+      <div className={classes.inputContainer}>
+        <div className={classes.innerInputContainer}>
+            <Input
+              label="Email"
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
+              type="email"
+              inputClass={classes.input}
+            />
+            <Input
+              label="First name"
+              inputClass={classes.input}
+              onChange={(e) => setFirstName(e.target.value)}
+              value={firstName}
+            />
+            <Input
+              label="Last name"
+              inputClass={classes.input}
+              onChange={(e) => setLastName(e.target.value)}
+              value={lastName}
+            />
+            <Input
+              label="Address"
+              inputClass={classes.input}
+              onChange={(e) => setAddress(e.target.value)}
+              value={address}
+            />
+            <Input
+              label="Postal Code"
+              inputClass={classes.input}
+              onChange={(e) => setPostalCode(e.target.value)}
+              value={postalCode}
+              type="number"
+            />
+            <Input
+              label="City"
+              inputClass={classes.input}
+              onChange={(e) => setCity(e.target.value)}
+              value={city}
+            />
+            <Input
+              label="Country"
+              inputClass={classes.input}
+              onChange={(e) => setCountry(e.target.value)}
+              value={country}
+            />
+
+          <div className={classes.inputCluster2}>
+            <div className={classes.input}>
+              <p className={classes.phoneCode}>+47</p>
+            </div>
+            <Input
+              label="Phone Number"
+              inputClass={classes.input}
+              onChange={(e) => setPhone(e.target.value)}
+              value={phone}
+              type="number"
+            />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+
+
+
 
   return (
     <>
-      <Header color="black" className={classes.header} />
-
       {!isMobile && (
-        <div className={classes.contentContainer}>
-          {!step && (
-            <div className={classes.infoContainer}>
-              <p className={classes.heading}>Shipping information</p>
-              <div className={classes.inputContainer}>
-                <div className={classes.emailContainer}>
-                  <input
-                    placeholder="Email"
-                    className={classes.input}
-                    onChange={(e) => setEmail(e.target.value)}
-                    value={email}
-                    type="email"
-                  ></input>
-                </div>
-                <div className={classes.inputCluster}>
-                  <input
-                    placeholder="First Name"
-                    className={classes.input}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    value={firstName}
-                  ></input>
-                  <input
-                    placeholder="Last Name"
-                    className={classes.input}
-                    onChange={(e) => setLastName(e.target.value)}
-                    value={lastName}
-                  ></input>
-                </div>
-                <div className={classes.inputCluster}>
-                  <input
-                    placeholder="Address"
-                    className={classes.input}
-                    onChange={(e) => setAddress(e.target.value)}
-                    value={address}
-                  ></input>
-                  <input
-                    placeholder="Postal Code"
-                    className={classes.input}
-                    onChange={(e) => setPostalCode(e.target.value)}
-                    value={postalCode}
-                    type="number"
-                  ></input>
-                </div>
-                <div className={classes.inputCluster}>
-                  <input
-                    placeholder="City"
-                    className={classes.input}
-                    onChange={(e) => setCity(e.target.value)}
-                    value={city}
-                  ></input>
-                  <input
-                    placeholder="Country"
-                    className={classes.input}
-                    onChange={(e) => setCountry(e.target.value)}
-                    value={country}
-                  ></input>
-                </div>
-
-                <div className={classes.inputCluster2}>
-                  <div className={classes.input}>
-                    <p className={classes.phoneCode}>+47</p>
-                  </div>
-                  <input
-                    placeholder="Phone Number"
-                    className={classes.input}
-                    style={{ width: "auto" }}
-                    onChange={(e) => setPhone(e.target.value)}
-                    value={phone}
-                    type="number"
-                  ></input>
-                </div>
-              </div>
-              <div className={classes.deliveryButtonContainer}>
-                <button
-                  className={classes.deliveryButton}
-                  onClick={() => stepHandler("increment")}
-                >
-                  CONTINUE TO DELIVERY
-                </button>
-              </div>
-            </div>
-          )}
-
-          {step && (
-            <>
-              <div className={classes.shippingContainer}>
-                <h3>Shipping information</h3>
-                <div
-                  className={classes.shippingInfoContainer}
-                  onClick={() => stepHandler("decrement")}
-                >
-                  <p className={classes.text2}>
-                    {firstName} {lastName}
-                  </p>
-                  <p className={classes.text2}>{address}</p>
-                  <p className={classes.text2}>
-                    {postalCode} {city}
-                  </p>
-                  <p className={classes.text2}>{country}</p>
-
-                  <p className={classes.text2}>+47 {phone}</p>
-                  <p className={classes.text2}>{email}</p>
-                </div>
-                <h3>Delivery information</h3>
-                <div className={classes.shippingInfoContainer}>test</div>
-                <h3>Payment method</h3>
-                <div className={classes.shippingInfoContainer}>test</div>
-                <button onClick={orderHandler}>ORDER</button>
-              </div>
-            </>
-          )}
-
-          <div className={classes.checkoutContainer}>
-            <div className={classes.cartItemsContainer}>
-              {cartItems.length > 0 &&
-                cartItems.map((item, index) => (
-                  <div className={classes.cartItemContainer} key={index}>
-                    <div className={classes.imageContainer}>
-                      <Image
-                        src={serverUrl + item.imageUrls[0]}
-                        loader={() => serverUrl + item.imageUrls[0]}
-                        layout="responsive"
-                        alt="image"
-                        width={785}
-                        height={1490}
-                      />
-                    </div>
-                    <div className={classes.cartItemInfoContainer}>
-                      <div className={classes.cartItemInfo}>
-                        <p className={classes.text}>{item.title}</p>
-                        <p className={classes.text}>{item.size}</p>
-                      </div>
-                      <div className={classes.cartItemInfo}>
-                        <p className={classes.text}>{item.price}</p>
-                        <p className={classes.text}>{item.amount} item</p>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-            </div>
-            <div className={classes.checkoutInfoContainer}>
-              <div className={classes.line}></div>
-              <div className={classes.buttonContainer}>
-                <button className={classes.button}>DISCOUNT CODE</button>
-                <button className={classes.button}>APPLY</button>
-              </div>
-              <div className={classes.line}></div>
-              <div className={classes.checkoutInfoRow}>
-                <p className={classes.checkoutText}>Subtotal</p>
-                <p className={classes.checkoutText}>{getTotalAmount()}</p>
-              </div>
-              <div className={classes.checkoutInfoRow}>
-                <p className={classes.checkoutText}>Shipping</p>
-                <p className={classes.checkoutText}>?</p>
-              </div>
-              <div className={classes.line}></div>
-              <div className={classes.checkoutInfoRow}>
-                <p className={classes.checkoutText}>Total</p>
-                <p className={classes.checkoutText}>?</p>
-              </div>
-            </div>
+        <>
+          <div onClick={() => router.push("/")} className={classes.header}>
+            MERLE
           </div>
-        </div>
+          <div className={classes.contentContainer}>
+            <div className={classes.customerInformationContainer}>
+              {customerInformationForm}
+            </div>
+            <div className={classes.shippingContainer}>
+              {shippingInformation}
+            </div>
+            <div className={classes.paymentContainer}>{paymentInformation}</div>
+
+            <div className={classes.orderSummaryContainer}>{orderSummary}</div>
+          </div>
+        </>
       )}
 
       {isMobile && (
         <>
+          <div
+            onClick={() => router.push("/")}
+            className={classes.mobileHeader}
+          >
+            MERLE
+          </div>
+
           <div className={classes.mobileContentContainer}>
-            {!step && (
-              <>
-                <div className={classes.mobileInfoContainer}>
-                  <p className={classes.heading}>Shipping information</p>
-                  <div className={classes.mobileInputContainer}>
-                    <input
-                      placeholder="Email"
-                      className={classes.mobileInput}
-                      onChange={(e) => setEmail(e.target.value)}
-                      value={email}
-                      type="email"
-                    ></input>
-                    <input
-                      placeholder="First Name"
-                      className={classes.mobileInput}
-                      onChange={(e) => setFirstName(e.target.value)}
-                      value={firstName}
-                    ></input>
-                    <input
-                      placeholder="Last Name"
-                      className={classes.mobileInput}
-                      onChange={(e) => setLastName(e.target.value)}
-                      value={lastName}
-                    ></input>
-                    <input
-                      placeholder="Address"
-                      className={classes.mobileInput}
-                      onChange={(e) => setAddress(e.target.value)}
-                      value={address}
-                    ></input>
-                    <input
-                      placeholder="Postal Code"
-                      className={classes.mobileInput}
-                      onChange={(e) => setPostalCode(e.target.value)}
-                      value={postalCode}
-                      type="number"
-                    ></input>
-                    <input
-                      placeholder="City"
-                      className={classes.mobileInput}
-                      onChange={(e) => setCity(e.target.value)}
-                      value={city}
-                    ></input>
-                    <input
-                      placeholder="Country"
-                      className={classes.mobileInput}
-                      onChange={(e) => setCountry(e.target.value)}
-                      value={country}
-                    ></input>
-                  </div>
-                  <div className={classes.mobileInputCluster}>
-                    <div className={classes.mobileInput}>
-                      <p className={classes.phoneCode}>+47</p>
-                    </div>
-                    <input
-                      placeholder="Phone Number"
-                      className={classes.mobileInput}
-                      style={{ width: "auto" }}
-                      onChange={(e) => setPhone(e.target.value)}
-                      value={phone}
-                      type="number"
-                    ></input>
-                  </div>
-                  <div className={classes.deliveryButtonContainer}>
-                    <button
-                      className={classes.deliveryButton}
-                      onClick={() => stepHandler("increment")}
-                    >
-                      CONTINUE TO DELIVERY
-                    </button>
-                  </div>
-                </div>
-              </>
-            )}
+            <div className={classes.mobileOrderSummaryContainer}>
+              {orderSummary}
+            </div>
 
-            {step && <></>}
-
-            <div className={classes.mobileCheckoutContainer}>
-              <div className={classes.cartItemsContainer}>
-                {cartItems.length > 0 &&
-                  cartItems.map((item, index) => (
-                    <div className={classes.cartItemContainer} key={index}>
-                      <div className={classes.imageContainer}>
-                        <Image
-                          src={serverUrl + item.imageUrls[0]}
-                          loader={() => serverUrl + item.imageUrls[0]}
-                          layout="responsive"
-                          alt="image"
-                          width={785}
-                          height={1490}
-                        />
-                      </div>
-                      <div className={classes.cartItemInfoContainer}>
-                        <div className={classes.cartItemInfo}>
-                          <p className={classes.text}>{item.title}</p>
-                          <p className={classes.text}>{item.size}</p>
-                        </div>
-                        <div className={classes.cartItemInfo}>
-                          <p className={classes.text}>{item.price}</p>
-                          <p className={classes.text}>{item.amount} item</p>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-              <div className={classes.checkoutInfoContainer}>
-                <div className={classes.line}></div>
-                <div className={classes.buttonContainer}>
-                  <button className={classes.button}>DISCOUNT CODE</button>
-                  <button className={classes.button}>APPLY</button>
-                </div>
-                <div className={classes.line}></div>
-                <div className={classes.checkoutInfoRow}>
-                  <p className={classes.checkoutText}>Subtotal</p>
-                  <p className={classes.checkoutText}>{getTotalAmount()}</p>
-                </div>
-                <div className={classes.checkoutInfoRow}>
-                  <p className={classes.checkoutText}>Shipping</p>
-                  <p className={classes.checkoutText}>?</p>
-                </div>
-                <div className={classes.line}></div>
-                <div className={classes.checkoutInfoRow}>
-                  <p className={classes.checkoutText}>Total</p>
-                  <p className={classes.checkoutText}>?</p>
-                </div>
-              </div>
+            <div className={classes.mobileCustomerInformationContainer}>{mobileCustomerInformationForm}</div>
+            <div className={classes.mobileShippingContainer}>
+              {shippingInformation}
+            </div>
+            <div className={classes.mobilePaymentContainer}>
+              {paymentInformation}
             </div>
           </div>
         </>
@@ -386,7 +419,10 @@ const Checkout = () => {
       {error && (
         <Modal>
           <p>Please fill in all the shipping information</p>
-          <button className={classes.deliveryButton} onClick={() => setError(false)}>
+          <button
+            className={classes.deliveryButton}
+            onClick={() => setError(false)}
+          >
             Ok
           </button>
         </Modal>

@@ -1,0 +1,36 @@
+.radioButtonContainer {
+  display: flex;
+  width: 10%;
+  align-items: center;
+  justify-content: center;
+}
+.innerRadioButtonContainer {
+  display: flex;
+  border: 1px solid black;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+}
+.radioButton .radioCheckmark {
+  width: 18px;
+  height: 18px;
+  background-color: #fff;
+  display: inline-block;
+  border-radius: 50%;
+}
+.radioButton input:checked + .radioCheckmark {
+  width: 12px;
+  height: 12px;
+  display: inline-block;
+  background-color: black;
+  border: 3px solid white;
+  border-radius: 50%;
+}
+.radioButton input {
+  display: none;
+}
+.radioButton {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

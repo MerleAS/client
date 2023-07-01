@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
 
@@ -11,6 +11,8 @@ import IncrementInput from "../UI/incrementInput";
 const Cart = () => {
   const isMobile = useIsMobile();
   const router = useRouter();
+  const [isClosing, setIsClosing] = useState(false);
+  const [buttonDisabled, setButtonDisabled] = useState(false);
 
   const {
     cartIsActive,
@@ -35,6 +37,24 @@ const Cart = () => {
     router.push("/checkout");
   };
 
+  const cartCloseHandler = () => {
+    setIsClosing(true);
+    const time = isMobile ? 300 : 600
+    setTimeout(() => {
+      setIsClosing(false);
+      setCartIsActive(false);
+    }, time);
+  };
+
+  const containerStyles = isClosing ? classes.containerOut : classes.containerIn;
+  const backdropStyles = isClosing ? classes.backdropOut : classes.backdropIn;
+  const mobileContainerStyles = isClosing ? classes.mobileContainerDown : classes.mobileContainerUp;
+
+  
+  useEffect(() => {
+    setButtonDisabled(cartItems.length === 0)
+  },[cartItems])
+
   return (
     <>
       {cartIsActive && (
@@ -42,16 +62,16 @@ const Cart = () => {
           {!isMobile && (
             <>
               <div
-                className={classes.backdrop}
+                className={`${classes.backdrop} ${backdropStyles}`}
                 onClick={() => setCartIsActive(false)}
               ></div>
-              <div className={classes.container}>
+              <div className={`${classes.container} ${containerStyles}`}>
                 <div className={classes.line}>
                   <div className={classes.crossContainer}></div>
                   <p className={classes.heading}>Your Cart</p>
                   <div
                     className={classes.crossContainer}
-                    onClick={() => setCartIsActive(false)}
+                    onClick={cartCloseHandler}
                   >
                     <svg
                       width="24"
@@ -75,14 +95,14 @@ const Cart = () => {
                           <Image
                             src={serverUrl + item.imageUrls[0]}
                             layout="responsive"
-                            width={785}
-                            height={1490}
+                            width={1000}
+                            height={1500}
                           />
                         </div>
 
                         <div className={classes.cartItemInfo}>
                           <p className={classes.cartItemTitle}>{item.title}</p>
-                          <p className={classes.text}>Size {item.size}</p>
+                          <p className={classes.text}>{item.size}</p>
                           <IncrementInput
                             count={item.amount}
                             setCount={(value, type) =>
@@ -111,14 +131,12 @@ const Cart = () => {
                 <div className={classes.footer}>
                   <div className={classes.totalContainer}>
                     <p>
-                      TOTAL:{" "}
-                      {cartItems.length > 0 &&
-                        getTotalAmount()}
+                      TOTAL: {cartItems.length > 0 && getTotalAmount()}
                       {cartItems.length === 0 && 0} Kr
                     </p>
                   </div>
                   <div className={classes.buttonContainer}>
-                    <button className={classes.button} onClick={routeHandler}>
+                    <button className={classes.button} onClick={routeHandler} disabled={buttonDisabled}>
                       CHECKOUT
                     </button>
                   </div>
@@ -128,13 +146,13 @@ const Cart = () => {
           )}
 
           {isMobile && (
-            <div className={classes.mobileContainer}>
+            <div className={`${classes.mobileContainer} ${mobileContainerStyles}`}>
               <div className={classes.mobileHeadingContainer}>
                 <div className={classes.mobileCrossContainer}></div>
                 <p className={classes.mobileHeading}>Your Cart</p>
                 <div
                   className={classes.mobileCrossContainer}
-                  onClick={() => setCartIsActive(false)}
+                  onClick={cartCloseHandler}
                 >
                   <svg
                     width="24"
@@ -161,8 +179,8 @@ const Cart = () => {
                         <Image
                           src={serverUrl + item.imageUrls[0]}
                           layout="responsive"
-                          width={785}
-                          height={1490}
+                          width={1000}
+                          height={1500}
                         />
                       </div>
                       <div className={classes.cartItemInfo}>
@@ -194,13 +212,11 @@ const Cart = () => {
               <div className={classes.footer}>
                 <div className={classes.totalContainer}>
                   <p className={classes.total}>
-                    TOTAL:{" "}
-                    {cartItems.length > 0 &&
-                      getTotalAmount()}
+                    TOTAL: {cartItems.length > 0 && getTotalAmount()}
                     {cartItems.length === 0 && 0} Kr
                   </p>
                 </div>
-                <button className={classes.mobileButton} onClick={routeHandler}>
+                <button className={classes.mobileButton} onClick={routeHandler} disabled={buttonDisabled}>
                   CHECKOUT
                 </button>
               </div>

@@ -65,7 +65,7 @@ const ProductDetail = (props) => {
         <>
           <div className={classes.contentContainer}>
             <div className={classes.imageContainer}>
-              <SlideShow imgs={imageUrls} width={785} height={1490} />
+              <SlideShow imgs={imageUrls} width={1000} height={1500} />
             </div>
             <div className={classes.infoContainer}>
               <p className={classes.heading}>
@@ -150,7 +150,7 @@ const ProductDetail = (props) => {
         <>
           <div className={classes.mobileContentContainer}>
             <div className={classes.mobileImageContainer}>
-              <SlideShow imgs={imageUrls} width={785} height={1490} />
+              <SlideShow imgs={imageUrls} width={1000} height={1500} />
             </div>
             <div className={classes.mobileInfoContainer}>
               <p className={classes.heading}>

@@ -6,6 +6,9 @@ import classes from "../../styles/components/layout/header.module.css";
 import useIsMobile from "../util/useIsMobile";
 import { StateContext } from "../../context/stateContext";
 
+import Search from '../../public/icons/SVG/search.svg';
+import Cart from '../../public/icons/SVG/cart.svg';
+
 const Header = (props) => {
   const { className, color } = props;
   const router = useRouter();
@@ -54,13 +57,13 @@ const Header = (props) => {
             color={color}
             onClick={() => routeHandler({ path: "/search", label: "Search" })}
           >
-            Search
+            <Search width="20" height="20"/>
           </div>
           <p
             className={classes.navOption}
             onClick={() => setCartIsActive(true)}
           >
-            Cart
+            <Cart height="20" width="20" />
           </p>
         </div>
       </nav>

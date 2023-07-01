@@ -1,10 +1,40 @@
+@font-face {
+  font-family: "Inter";
+  font-weight: 300 500 600 700 800 900;
+  src: url("../public/fonts/Inter.var.woff2");
+}
+
+
 html {
   height: 100%;
+  font-family: 'Inter';
+}
+
+head {
+  font-family: 'Inter';
+}
+
+input {
+  font-family: 'Inter';
+}
+
+input::placeholder {
+  font-family: 'Inter';
+  color: white
+}
+
+button {
+  font-family: 'Inter';
 }
 
 body {
   margin: 0;
   height: 100%;
+  font-family: 'Inter';
+}
+
+title {
+  font-family: 'Inter';
 }
 
 #__next {

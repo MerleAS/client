@@ -1,10 +1,11 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
 export const StateContext = createContext({
   addToCartHandler: () => {},
   removeFromCartHandler: () => {},
   clearCartHandler: () => {},
   setCartIsActive: () => {},
+  setSearchIsActive: () => {},
   changeAmountHandler: () => {},
   getTotalAmount: () => {},
   setRouteStack: () => {},
@@ -15,6 +16,7 @@ const StateContextProvider = (props) => {
   const [serverUrl] = useState("http://localhost:8080/");
   const [cartItems, setCartItems] = useState([]);
   const [cartIsActive, setCartIsActive] = useState(false);
+  const [searchIsActive, setSearchIsActive] = useState(false);
   const [routeStack, setRouteStack] = useState([{ label: "Home", path: "/" }]);
 
   const addToCartHandler = (product) => {
@@ -29,10 +31,13 @@ const StateContextProvider = (props) => {
         if (prev[index].amount + product.amount <= product.in_stock) {
           prev[index].amount += product.amount;
         }
+        localStorage.setItem('cartItems', JSON.stringify([...prev]))
         return [...prev];
-      });
+      }
+      );
     } else {
       setCartItems((prev) => [...prev, product]);
+      localStorage.setItem('cartItems', JSON.stringify([...cartItems, product])) 
     }
   };
 
@@ -46,6 +51,7 @@ const StateContextProvider = (props) => {
       }
     });
     setCartItems(newCartItems);
+    localStorage.setItem('cartItems', JSON.stringify(newCartItems))
   };
 
   const clearCartHandler = () => {};
@@ -97,12 +103,21 @@ const StateContextProvider = (props) => {
     }
   };
 
+  useEffect(() => {
+    const savedCartItems = localStorage.getItem('cartItems')
+    if (savedCartItems) {
+      console.log('savedCartItems', savedCartItems);
+      setCartItems(JSON.parse(savedCartItems))
+    }
+  },[])
+
   return (
     <StateContext.Provider
       value={{
         serverUrl,
         cartItems,
         cartIsActive,
+        searchIsActive,
         routeStack,
         setRouteStack,
         routeStackHandler,
@@ -112,6 +127,7 @@ const StateContextProvider = (props) => {
         clearCartHandler,
         changeAmountHandler,
         setCartIsActive,
+        setSearchIsActive,
       }}
     >
       {props.children}

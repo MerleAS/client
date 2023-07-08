@@ -1,0 +1,27 @@
+.routeOptions {
+  display: flex;
+  width: 25%;
+  height: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  margin-left: 5%;
+}
+
+.routeContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.seperator {
+  margin-left: 5px;
+  margin-right: 5px;
+  color: black;
+  font-size: 12px;
+}
+
+.label {
+  margin-left: 5px;
+  margin-right: 5px;
+  color: black;
+  font-size: 12px;
+}

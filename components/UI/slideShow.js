@@ -6,8 +6,7 @@ import useIsMobile from "../util/useIsMobile";
 
 let walk = 0;
 
-const SlideShow = (props) => {
-  const { imgs, width, height } = props;
+const SlideShow = ({ imgs, width, height, containerStyle, containerClass }) => {
   const isMobile = useIsMobile();
 
   const [pixelWalk, setPixelWalk] = useState(120);
@@ -89,7 +88,8 @@ const SlideShow = (props) => {
 
   return (
     <div
-      className={classes.container}
+      className={`${classes.container} ${containerClass}`}
+      style={containerStyle}
       onMouseDown={mouseDownHandler}
       onMouseLeave={mouseLeaveHandler}
       onMouseUp={() => setIsDown(false)}

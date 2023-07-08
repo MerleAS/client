@@ -67,6 +67,20 @@ const Checkout = () => {
     }
   };
 
+  const stripeHandler = async () => {
+    try {
+      const response = await axios.post(
+        serverUrl + "orders/create-checkout-session",
+        {
+          cartItems: cartItems,
+        }
+      );
+      const url = response.data.url;
+      console.log(url);
+      window.location = url;
+    } catch (error) {}
+  };
+
   const cardNotSelected =
     paymentRadioValue === "card" ? "" : classes.cardNotSelected;
   const vippsNotSelected =
@@ -275,6 +289,7 @@ const Checkout = () => {
             </div>
             <div className={classes.paymentHeader}>
               Kredittkort eller debetkort
+              <button onClick={stripeHandler}>checkout</button>
             </div>
           </div>
           <div
@@ -306,50 +321,50 @@ const Checkout = () => {
       </div>
       <div className={classes.inputContainer}>
         <div className={classes.innerInputContainer}>
-            <Input
-              label="Email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              type="email"
-              inputClass={classes.input}
-            />
-            <Input
-              label="First name"
-              inputClass={classes.input}
-              onChange={(e) => setFirstName(e.target.value)}
-              value={firstName}
-            />
-            <Input
-              label="Last name"
-              inputClass={classes.input}
-              onChange={(e) => setLastName(e.target.value)}
-              value={lastName}
-            />
-            <Input
-              label="Address"
-              inputClass={classes.input}
-              onChange={(e) => setAddress(e.target.value)}
-              value={address}
-            />
-            <Input
-              label="Postal Code"
-              inputClass={classes.input}
-              onChange={(e) => setPostalCode(e.target.value)}
-              value={postalCode}
-              type="number"
-            />
-            <Input
-              label="City"
-              inputClass={classes.input}
-              onChange={(e) => setCity(e.target.value)}
-              value={city}
-            />
-            <Input
-              label="Country"
-              inputClass={classes.input}
-              onChange={(e) => setCountry(e.target.value)}
-              value={country}
-            />
+          <Input
+            label="Email"
+            onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            type="email"
+            inputClass={classes.input}
+          />
+          <Input
+            label="First name"
+            inputClass={classes.input}
+            onChange={(e) => setFirstName(e.target.value)}
+            value={firstName}
+          />
+          <Input
+            label="Last name"
+            inputClass={classes.input}
+            onChange={(e) => setLastName(e.target.value)}
+            value={lastName}
+          />
+          <Input
+            label="Address"
+            inputClass={classes.input}
+            onChange={(e) => setAddress(e.target.value)}
+            value={address}
+          />
+          <Input
+            label="Postal Code"
+            inputClass={classes.input}
+            onChange={(e) => setPostalCode(e.target.value)}
+            value={postalCode}
+            type="number"
+          />
+          <Input
+            label="City"
+            inputClass={classes.input}
+            onChange={(e) => setCity(e.target.value)}
+            value={city}
+          />
+          <Input
+            label="Country"
+            inputClass={classes.input}
+            onChange={(e) => setCountry(e.target.value)}
+            value={country}
+          />
 
           <div className={classes.inputCluster2}>
             <div className={classes.input}>
@@ -367,9 +382,6 @@ const Checkout = () => {
       </div>
     </>
   );
-
-
-
 
   return (
     <>
@@ -406,7 +418,9 @@ const Checkout = () => {
               {orderSummary}
             </div>
 
-            <div className={classes.mobileCustomerInformationContainer}>{mobileCustomerInformationForm}</div>
+            <div className={classes.mobileCustomerInformationContainer}>
+              {mobileCustomerInformationForm}
+            </div>
             <div className={classes.mobileShippingContainer}>
               {shippingInformation}
             </div>

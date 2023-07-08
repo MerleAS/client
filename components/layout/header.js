@@ -1,22 +1,22 @@
 import { useState, useContext } from "react";
-import Head from 'next/head';
+import Head from "next/head";
 import { useRouter } from "next/router";
 import classes from "../../styles/components/layout/header.module.css";
 
 import useIsMobile from "../util/useIsMobile";
 import { StateContext } from "../../context/stateContext";
 
-import Search from '../../public/icons/SVG/search.svg';
-import Cart from '../../public/icons/SVG/cart.svg';
+import SearchIcon from "../../public/icons/SVG/searchIcon.svg";
+import CartIcon from "../../public/icons/SVG/cartIcon.svg";
 
 const Header = (props) => {
-  const { className, color } = props;
+  const { className } = props;
   const router = useRouter();
 
   const [menuActive, setMenuActive] = useState(false);
 
   const isMobile = useIsMobile();
-  const { setCartIsActive, routeStackHandler, routeStack } =
+  const { setCartIsActive, setSearchIsActive, routeStackHandler } =
     useContext(StateContext);
 
   const routeHandler = (routeObject, index) => {
@@ -30,45 +30,31 @@ const Header = (props) => {
         <Head>
           <title>MERLE</title>
         </Head>
-        <div className={classes.routeOptions}>
-          {routeStack.map((route, index) => {
-            return (
-              <div
-                onClick={() => routeHandler(route, index)}
-                className={classes.routeContainer}
-                key={index}
-              >
-                <p className={classes.seperator}>/</p>
-                <p className={classes.label}>{route.label} </p>
-              </div>
-            );
-          })}
-        </div>
+        <div className={classes.navOptions}></div>
         <div
           className={classes.logo}
           onClick={() => routeHandler({ path: "/", label: "Home" })}
-          color={color}
         >
           MERLE
         </div>
         <div className={classes.navOptions}>
           <div
             className={classes.navOption}
-            color={color}
-            onClick={() => routeHandler({ path: "/search", label: "Search" })}
+            onClick={() => setSearchIsActive(true)}
           >
-            <Search width="20" height="20"/>
+            <SearchIcon width="20" height="20" />
           </div>
           <p
             className={classes.navOption}
             onClick={() => setCartIsActive(true)}
           >
-            <Cart height="20" width="20" />
+            <CartIcon height="20" width="20" />
           </p>
         </div>
       </nav>
     );
   }
+
   if (isMobile) {
     return (
       <nav className={`${classes.nav} ${className}`}>
@@ -104,10 +90,7 @@ const Header = (props) => {
             <div className={classes.mobileNavContainer}>
               <div
                 className={classes.navOptionMobile}
-                color={color}
-                onClick={() =>
-                  routeHandler({ path: "/search", label: "Search" })
-                }
+                onClick={() => setSearchIsActive(true)}
               >
                 Search
               </div>
@@ -124,7 +107,6 @@ const Header = (props) => {
         )}
         <div
           className={classes.mobileLogo}
-          color={color}
           onClick={() => routeHandler({ path: "/", label: "Home" })}
         >
           MERLE

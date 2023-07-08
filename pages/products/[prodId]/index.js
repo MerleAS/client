@@ -4,6 +4,7 @@ import axios from "axios";
 import Footer from "../../../components/layout/footer";
 import Header from "../../../components/layout/header";
 import Cart from "../../../components/layout/cart";
+import Search from '../../../components/layout/search';
 
 import IncrementInput from "../../../components/UI/incrementInput";
 import Modal from "../../../components/UI/modal";
@@ -59,7 +60,7 @@ const ProductDetail = (props) => {
 
   return (
     <div className={classes.container}>
-      <Header color="black" className={classes.header} />
+      <Header/>
 
       {!isMobile && (
         <>
@@ -233,6 +234,7 @@ const ProductDetail = (props) => {
 
       <Cart />
       <Footer />
+      <Search />
 
       {error && (
         <Modal onClose={() => setError(false)}>

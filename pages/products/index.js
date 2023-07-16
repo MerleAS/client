@@ -1,12 +1,12 @@
 import { useContext, useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
+import Image from "next/image";
 
 import Header from "../../components/layout/header";
 import Footer from "../../components/layout/footer";
 import Cart from "../../components/layout/cart";
-import Search from '../../components/layout/search';
-import SlideShow from "../../components/UI/slideShow";
+import Search from "../../components/layout/search";
 
 import { StateContext } from "../../context/stateContext";
 import useIsMobile from "../../components/util/useIsMobile";
@@ -14,61 +14,46 @@ import classes from "../../styles/pages/products.module.css";
 
 const Products = (props) => {
   const { routeStackHandler } = useContext(StateContext);
-  const { products, site, brands } = props;
+  const { products, site } = props;
   const router = useRouter();
+
+  const [imageIndex, setImageIndex] = useState(0);
 
   const isMobile = useIsMobile();
 
-  const [time, setTime] = useState(0);
-  const [productsPerRow, setProductsPerRow] = useState(4);
-
-  const mouseDownHandler = () => {
-    setTime(new Date());
-  };
-
-  const handleProductsPerRowChange = (value) => {
-    setProductsPerRow(parseInt(value));
-  };
-
   const productClickHandler = (prod) => {
-    const newTime = new Date();
-    const diff = newTime - time;
-    if (diff < 300 || isMobile) {
-      router.push(`/products/${prod._id}?site=${site}`);
-      routeStackHandler({
+    router.push(`/products/${prod._id}?site=${site}`);
+    /* routeStackHandler({
         path: `/products/${prod._id}?site=${site}`,
         label: prod.title,
-      });
+      }); */
+  };
+
+  const mouseHoverHandler = (type, id) => {
+    console.log(id)
+    if (type === "over") {
+      const prod = products.find((p) => p._id === id);
+      if (prod.imageUrls.length > 1) {
+        setImageIndex(1);
+      }
     } else {
-      setTime(0);
+      setImageIndex(0);
     }
   };
 
   const rep = () => {
     let fr;
-    if (productsPerRow === 1 || isMobile) {
-      fr = "1fr";
-    } else if (productsPerRow === 2) {
-      fr = "1fr 1fr";
-    } else if (productsPerRow === 3) {
-      fr = "1fr 1fr 1fr";
-    } else if (productsPerRow === 4) {
+    if (!isMobile) {
       fr = "1fr 1fr 1fr 1fr";
+    } else {
+      fr = "1fr";
     }
     return fr;
   };
 
   const getWidth = () => {
-    let pictureWidth;
-    if (productsPerRow === 1) {
-      pictureWidth = 30;
-    } else if (productsPerRow === 2) {
-      pictureWidth = 80;
-    } else if (productsPerRow === 3) {
-      pictureWidth = 90;
-    } else if (productsPerRow === 4) {
-      pictureWidth = 90;
-    }
+    let pictureWidth = 90;
+
     if (isMobile) {
       pictureWidth = 80;
     }
@@ -77,49 +62,45 @@ const Products = (props) => {
 
   return (
     <div>
-      <Header/>
-
-      {/* {!isMobile && (
-        <div className={classes.radioButtonContainer}>
-          <select
-            value={productsPerRow}
-            onChange={(event) => handleProductsPerRowChange(event.target.value)}
-          >
-            <option value={1}>1 product per row</option>
-            <option value={2}>2 products per row</option>
-            <option value={3}>3 products per row</option>
-            <option value={4}>4 products per row</option>
-          </select>
-        </div>
-      )} */}
-
+      <Header />
       <div
         className={classes.productsContainer}
         style={{ gridTemplateColumns: `${rep()}` }}
       >
         {products.length > 0 &&
           products.map((prod, index) => {
+            const totalStock = prod.stock.reduce((acc, cur) => {
+              return acc + cur.in_stock
+            },0)
+            if (totalStock === 0) {
+              return
+            }
+            console.log('totalStock', totalStock, prod)
             const imageUrls = prod.imageUrls.map(
               (url) => `http://localhost:8080/${url}`
             );
             const containerStyle = isMobile
-              ? classes.mobileImageContainer
-              : classes.imageContainer;
+              ? classes.mobileProductContainer
+              : classes.productContainer;
 
             return (
               <div
                 className={containerStyle}
                 key={index}
-                onMouseDown={mouseDownHandler}
-                onMouseUp={() => productClickHandler(prod)}
+                onMouseOver={() => mouseHoverHandler("over", prod._id)}
+                onMouseOut={() => mouseHoverHandler("out")}
+                /* onMouseDown={() => mouseDownHandler(prod._id)} */
+                onClick={() => productClickHandler(prod)}
               >
-                <SlideShow
-                  width={1000}
-                  height={1500}
-                  imgs={imageUrls}
-                  containerStyle={{ width: `${getWidth()}%` }}
-                />
-                <div className={classes.infoContainer} style={{ width: `${getWidth()}%` }} >
+                <div className={classes.imageContainer}>
+                  <Image
+                    width={1000}
+                    height={1500}
+                    src={imageUrls[imageIndex]}
+                    containerStyle={{ width: `${getWidth()}%` }}
+                  />
+                </div>
+                <div className={classes.infoContainer}>
                   <p>{prod.title}</p>
                   <p>{prod.price}kr</p>
                 </div>

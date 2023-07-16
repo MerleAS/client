@@ -8,9 +8,9 @@ import { StateContext } from "../../context/stateContext";
 
 import SearchIcon from "../../public/icons/SVG/searchIcon.svg";
 import CartIcon from "../../public/icons/SVG/cartIcon.svg";
+import Merle from '../../public/icons/SVG/merle.svg';
 
 const Header = (props) => {
-  const { className } = props;
   const router = useRouter();
 
   const [menuActive, setMenuActive] = useState(false);
@@ -26,7 +26,7 @@ const Header = (props) => {
 
   if (!isMobile) {
     return (
-      <nav className={`${classes.nav} ${className}`}>
+      <nav className={classes.nav}>
         <Head>
           <title>MERLE</title>
         </Head>
@@ -35,7 +35,7 @@ const Header = (props) => {
           className={classes.logo}
           onClick={() => routeHandler({ path: "/", label: "Home" })}
         >
-          MERLE
+          <Merle height="120" width="280"/>
         </div>
         <div className={classes.navOptions}>
           <div
@@ -57,7 +57,7 @@ const Header = (props) => {
 
   if (isMobile) {
     return (
-      <nav className={`${classes.nav} ${className}`}>
+      <nav className={classes.nav}>
         <Head>
           <title>MERLE</title>
         </Head>
@@ -109,7 +109,7 @@ const Header = (props) => {
           className={classes.mobileLogo}
           onClick={() => routeHandler({ path: "/", label: "Home" })}
         >
-          MERLE
+          <Merle height="100" width="250"/>
         </div>
         <div className={classes.navIconContainer}></div>
       </nav>

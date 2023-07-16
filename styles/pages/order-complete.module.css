@@ -1,0 +1,148 @@
+.textGrey {
+    font-size: 10px;
+    color: #717171;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  column-gap: 5%;
+  margin-left: 10%;
+}
+
+.contentContainer {
+  width: 45%;
+}
+
+.header {
+  margin-top: 10%;
+  margin-bottom: 5%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.orderSummaryContainer {
+  width: 100%;
+  height: fit-content;
+  max-height: 45%;
+  overflow: scroll;
+  border: 1px solid black;
+  border-radius: 2px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdownButtonContainer {
+  height: 40px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.dropdownHeader {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 4%;
+}
+
+.arrowIconContainer {
+  height: 100%;
+  margin-right: 4%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.productsContainer {
+  height: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 3%;
+  row-gap: 3%;
+  margin: 4%;
+  margin-bottom: 0;
+  overflow: scroll;
+}
+
+/* Content block 2 styles */
+
+.contentContainer2 {
+    width: 30%;
+    margin-top: 5%;
+    margin-right: 10%;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+}
+
+.customerInformationContainer {
+    width: 100%;
+    height: 80%;
+    border: 1px solid black;
+    border-radius: 2px;
+    margin-right: 10%;
+    display: flex;
+    flex-direction: column;
+}
+
+.customerInformationHeader {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttonContainer {
+    width: 100%;
+    height: 20%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    background-color: black;
+    color: white;
+    width: 40%;
+    min-width: 150px;
+    min-height: 30px; 
+    border: 1px solid black;
+    border-radius: 2px;
+}
+
+
+
+/* Mobile Classes */
+
+.mobileContainer {
+  width: 90%;
+  height: 100%;
+  margin-left: 5%;
+}
+
+.mobileContentContainer {
+  width: 100%;
+  height: 100%;
+}
+
+.mobileHeader {
+    width: 100%;
+    height: 15%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+.mobileOrderSummaryContainer {
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 2px;
+}

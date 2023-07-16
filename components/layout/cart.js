@@ -8,6 +8,7 @@ import { StateContext } from "../../context/stateContext";
 
 import IncrementInput from "../UI/incrementInput";
 import SideModal from "../UI/sideModal";
+import ProductList from "../views/productList";
 
 const Cart = () => {
   const isMobile = useIsMobile();
@@ -34,7 +35,7 @@ const Cart = () => {
 
   const routeHandler = () => {
     setCartIsActive(false);
-    router.push("/checkout");
+    router.push(`/checkout?cartItems=${encodeURIComponent(JSON.stringify(cartItems))}`);
   };
 
   useEffect(() => {
@@ -45,41 +46,12 @@ const Cart = () => {
 
   const bodyContent = (
     <div className={classes.cartItemsContainer}>
-      {cartItems.length > 0 &&
-        cartItems.map((item, index) => (
-          <div className={classes.cartItemContainer} key={index}>
-            <div className={classes.imageContainer}>
-              <Image
-                src={serverUrl + item.imageUrls[0]}
-                layout="responsive"
-                width={1000}
-                height={1500}
-              />
-            </div>
-
-            <div className={classes.cartItemInfo}>
-              <p className={classes.cartItemTitle}>{item.title}</p>
-              <p className={classes.text}>{item.size}</p>
-              <IncrementInput
-                count={item.amount}
-                setCount={(value, type) => amountHandler(item, type)}
-              />
-            </div>
-            <div className={classes.cartItemInfo2}>
-              <div className={classes.priceContainer}>
-                <p className={classes.text}>{item.price * item.amount} kr</p>
-              </div>
-              <div className={classes.removeItemContainer}>
-                <p
-                  className={classes.removeItem}
-                  onClick={() => removeFromCartHandler(item)}
-                >
-                  Remove
-                </p>
-              </div>
-            </div>
-          </div>
-        ))}
+      <ProductList
+        products={cartItems}
+        type={2}
+        amountHandler={amountHandler}
+        removeFromCartHandler={removeFromCartHandler}
+      />
     </div>
   );
 

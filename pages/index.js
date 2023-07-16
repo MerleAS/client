@@ -9,6 +9,7 @@ import useIsMobile from "../components/util/useIsMobile";
 import classes from "../styles/index.module.css";
 
 import Footer from "../components/layout/footer";
+import Merle from "../public/icons/SVG/merle.svg";
 
 const Home = (props) => {
   const { serverUrl, routeStackHandler } = useContext(StateContext);
@@ -28,7 +29,7 @@ const Home = (props) => {
         <title>MERLE</title>
       </Head>
       <div className={classes.header}>
-        <p>MERLE</p>
+        <Merle height="120" width="280" />
       </div>
       <div className={classes.discoverContainer}>
         {/* <Anchor href="/products?site=original" color="black" className={classes.discover}>
@@ -59,7 +60,7 @@ const Home = (props) => {
             );
           })}
         </div>
-      )}{" "}
+      )}
       {isMobile && (
         <div className={classes.imagesContainer}>
           {mobilePictureUrls.map((mobilePictureUrl, index) => {

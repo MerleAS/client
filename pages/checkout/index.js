@@ -1,121 +1,167 @@
 import { useRouter } from "next/router";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
 import axios from "axios";
-import Image from "next/image";
 
 import { StateContext } from "../../context/stateContext";
-import useIsMobile from "../../components/util/useIsMobile";
 import classes from "../../styles/pages/checkout.module.css";
+import useIsMobile from "../../components/util/useIsMobile";
 
 import Modal from "../../components/UI/modal";
-import RadioButton from "../../components/UI/radioButton";
 import Input from "../../components/UI/input";
+
+import RadioCheckbox from "../../components/views/radioCheckbox";
+import CheckoutForm from "../../components/views/checkoutForm";
+import ProductList from "../../components/views/productList";
 
 import HeltHjem from "../../public/icons/SVG/heltHjem.svg";
 import Posten from "../../public/icons/SVG/posten.svg";
+import Card from "../../public/icons/SVG/card.svg";
+import Vipps from "../../public/icons/SVG/vipps.svg";
+import Merle from "../../public/icons/SVG/merle.svg";
 
-const Checkout = () => {
+// Option arrays for payments and shipping
+
+const paymentOptions = [
+  {
+    label: "Card",
+    value: "card",
+    icon: <Card height="30" width="30" />,
+    description: "Ingen ekstra kostnader",
+    price: null,
+  },
+  {
+    label: "Vipps",
+    value: "vipps",
+    icon: <Vipps height="30" width="30" />,
+    description: "Ingen ekstra kostnader",
+    price: null,
+  },
+];
+
+const shippingOptions = [
+  {
+    label: "Helt Hjem",
+    value: "helt-hjem",
+    icon: <HeltHjem height="30" width="30" />,
+    description: "Leveres om 4-7 virkedager",
+    price: "80",
+  },
+  {
+    label: "Posten",
+    value: "posten",
+    icon: <Posten height="30" width="30" />,
+    description: "Leveres om 4-7 virkedager",
+    price: "80",
+  },
+];
+
+const Checkout = ({ publishableKey, clientSecret }) => {
   const { getTotalAmount, cartItems, serverUrl } = useContext(StateContext);
-  const router = useRouter();
-  const isMobile = useIsMobile();
-
-  const [error, setError] = useState(false);
-  const [discountCode, setDiscountCode] = useState("");
 
   const [email, setEmail] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [city, setCity] = useState("");
   const [country, setCountry] = useState("");
   const [phone, setPhone] = useState("");
+  const [shippingRadioValue, setShippingRadioValue] = useState({
+    label: "",
+    price: null,
+  });
+  const [paymentRadioValue, setPaymentRadioValue] = useState({
+    label: "card",
+    price: null,
+  });
 
-  const [shippingRadioValue, setShippingRadioValue] = useState("");
-  const [paymentRadioValue, setPaymentRadioValue] = useState("card");
+  const [error, setError] = useState(false);
+  const [discountCode, setDiscountCode] = useState("");
+  const [stripePromise, setStripePromise] = useState(null);
 
-  const orderHandler = async () => {
-    try {
-      if (
-        email.includes("@") &&
-        firstName !== "" &&
-        lastName !== "" &&
-        address !== "" &&
-        postalCode &&
-        city !== "" &&
-        country !== "" &&
-        phone !== "" &&
-        cartItems.length > 0
-      ) {
-        const response = await axios.post(serverUrl + "orders/create-order", {
-          cartItems: cartItems,
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-          address: address,
-          postalCode: postalCode,
-          city: city,
-          country: country,
-          phone: phone,
-        });
-        console.log(response);
-      } else {
-        throw new Error("Missing customer information");
-      }
-    } catch (err) {
-      console.log(err);
+  const router = useRouter();
+  const isMobile = useIsMobile();
+
+
+  const vippsHandler = async () => {
+    console.log("vipps");
+  };
+
+  const stripeHandler = async (e, stripe, elements, setIsLoading) => {
+    e.preventDefault();
+    if (!stripe || !elements) {
+      return;
     }
+    setIsLoading(true);
+
+    if (
+      !email.includes("@") ||
+      phone === "" ||
+      name === "" ||
+      address === "" ||
+      postalCode === "" ||
+      city === "" ||
+      country === "" ||
+      shippingRadioValue.label === "" ||
+      paymentRadioValue.label === "" ||
+      cartItems.length === 0
+    ) {
+      setError(true);
+      setIsLoading(false);
+      return;
+    }
+
+    localStorage.clear();
+
+    const order = {
+      email: email,
+      phone: phone,
+      name: name,
+      country: country,
+      city: city,
+      address: address,
+      postalCode: postalCode,
+      shipping: shippingRadioValue,
+      paymentMethod: paymentRadioValue,
+      cartItems: cartItems,
+    };
+
+    const { error } = await stripe.confirmPayment({
+      type: "card",
+      elements,
+      confirmParams: {
+        return_url: `${serverUrl}orders/order-complete?order=${encodeURIComponent(
+          JSON.stringify(order)
+        )}`,
+      },
+      shipping: {
+        address: {
+          line1: address,
+          city: city,
+          postal_code: postalCode,
+          country: country,
+        },
+      },
+    });
+
+    if (error.type === "card_error" || error.type === "validation_error") {
+      console.log("error", error);
+    } else {
+      console.log("error2", error);
+    }
+
+    setIsLoading(false);
   };
 
-  const stripeHandler = async () => {
-    try {
-      const response = await axios.post(
-        serverUrl + "orders/create-checkout-session",
-        {
-          cartItems: cartItems,
-        }
-      );
-      const url = response.data.url;
-      console.log(url);
-      window.location = url;
-    } catch (error) {}
-  };
-
-  const cardNotSelected =
-    paymentRadioValue === "card" ? "" : classes.cardNotSelected;
-  const vippsNotSelected =
-    paymentRadioValue === "vipps" ? "" : classes.vippsNotSelected;
+  useEffect(() => {
+    setStripePromise(loadStripe(publishableKey));
+  }, []);
 
   const orderSummary = (
     <>
       <div className={classes.cartItemsContainer}>
-        {cartItems.length > 0 &&
-          cartItems.map((item, index) => (
-            <div className={classes.cartItemContainer} key={index}>
-              <div className={classes.imageContainer}>
-                <Image
-                  src={serverUrl + item.imageUrls[0]}
-                  loader={() => serverUrl + item.imageUrls[0]}
-                  layout="responsive"
-                  alt="image"
-                  width={1000}
-                  height={1500}
-                />
-              </div>
-              <div className={classes.cartItemInfoContainer}>
-                <div className={classes.cartItemInfo}>
-                  <p className={classes.textBold}>{item.title}</p>
-                  <p className={classes.textGrey}>{item.size}</p>
-                  <p className={classes.text}>{item.amount} item</p>
-                </div>
-                <div className={classes.cartItemInfo}>
-                  <p className={classes.text}></p>
-                  <p className={classes.text}></p>
-                  <p className={classes.text}>{item.price} kr</p>
-                </div>
-              </div>
-            </div>
-          ))}
+        <ProductList products={cartItems} type={1} />
       </div>
       <div className={classes.orderSummaryInfoContainer}>
         <div className={classes.discountContainer}>
@@ -132,304 +178,100 @@ const Checkout = () => {
         <div className={classes.line}></div>
         <div className={classes.orderSummaryInfoRow}>
           <p className={classes.text2}>Subtotal</p>
-          <p className={classes.text2}>{getTotalAmount()}</p>
+          <p className={classes.text2}>{getTotalAmount() + " kr"}</p>
         </div>
         <div className={classes.orderSummaryInfoRow}>
           <p className={classes.text2}>Shipping</p>
-          <p className={classes.text2}>?</p>
+          <p className={classes.text2}>
+            {shippingRadioValue.price + " kr" || "?"}
+          </p>
         </div>
         <div className={classes.line}></div>
         <div className={classes.orderSummaryInfoRow}>
           <p className={classes.text2}>Total</p>
-          <p className={classes.text2}>?</p>
+          <p className={classes.text2}>
+            {parseInt(getTotalAmount()) +
+              parseInt(shippingRadioValue.price) +
+              " kr" || getTotalAmount() + " " + "+ shipping"}
+          </p>
         </div>
       </div>
     </>
   );
 
-  const customerInformationForm = (
-    <>
-      <div className={classes.inputHeading}>
-        <p className={classes.textBoldLarge}>Shipping information</p>
-      </div>
-      <div className={classes.inputContainer}>
-        <div className={classes.innerInputContainer}>
-          <div className={classes.emailContainer}>
-            <Input
-              label="Email"
-              onChange={(e) => setEmail(e.target.value)}
-              value={email}
-              type="email"
-              inputClass={classes.input}
-            />
-          </div>
-          <div className={classes.inputCluster}>
-            <Input
-              label="First name"
-              inputClass={classes.input}
-              onChange={(e) => setFirstName(e.target.value)}
-              value={firstName}
-            />
-            <Input
-              label="Last name"
-              inputClass={classes.input}
-              onChange={(e) => setLastName(e.target.value)}
-              value={lastName}
-            />
-          </div>
-          <div className={classes.inputCluster}>
-            <Input
-              label="Address"
-              inputClass={classes.input}
-              onChange={(e) => setAddress(e.target.value)}
-              value={address}
-            />
-            <Input
-              label="Postal Code"
-              inputClass={classes.input}
-              onChange={(e) => setPostalCode(e.target.value)}
-              value={postalCode}
-              type="number"
-            />
-          </div>
-          <div className={classes.inputCluster}>
-            <Input
-              label="City"
-              inputClass={classes.input}
-              onChange={(e) => setCity(e.target.value)}
-              value={city}
-            />
-            <Input
-              label="Country"
-              inputClass={classes.input}
-              onChange={(e) => setCountry(e.target.value)}
-              value={country}
-            />
-          </div>
+  // dynamic classes
 
-          <div className={classes.inputCluster2}>
-            <div className={classes.input}>
-              <p className={classes.phoneCode}>+47</p>
-            </div>
-            <Input
-              label="Phone Number"
-              inputClass={classes.input}
-              onChange={(e) => setPhone(e.target.value)}
-              value={phone}
-              type="number"
-            />
-          </div>
-        </div>
-      </div>
-    </>
-  );
-
-  const shippingInformation = (
-    <>
-      <div className={classes.shippingHeading}>
-        <p className={classes.textBoldLarge}>Shipping</p>
-      </div>
-      <div className={classes.shippingInfoContainer}>
-        <div className={classes.shippingOptionContainer}>
-          <RadioButton
-            value="helt-hjem"
-            radioValue={shippingRadioValue}
-            setRadioValue={setShippingRadioValue}
-          />
-          <div className={classes.shippingInfo}>
-            <p className={classes.textBold}>Helt hjem</p>
-            <p className={classes.textGrey}>Leveres om 4-7 virkedager</p>
-          </div>
-          <div className={classes.shippingPrice}>
-            <p className={classes.text2}>80kr</p>
-          </div>
-          <div className={classes.shippingIcon}>
-            <HeltHjem height="35" width="35" />
-          </div>
-        </div>
-
-        <div className={classes.shippingOptionContainer}>
-          <RadioButton
-            value="posten"
-            radioValue={shippingRadioValue}
-            setRadioValue={setShippingRadioValue}
-          />
-          <div className={classes.shippingInfo}>
-            <p className={classes.textBold}>Posten</p>
-            <p className={classes.textGrey}>Leveres om 4-7 virkedager</p>
-          </div>
-          <div className={classes.shippingPrice}>
-            <p className={classes.text2}>80kr</p>
-          </div>
-          <div className={classes.shippingIcon}>
-            <Posten width="28" height="28" />
-          </div>
-        </div>
-      </div>
-    </>
-  );
-
-  const paymentInformation = (
-    <>
-      <div className={classes.paymentHeading}>
-        <p className={classes.textBoldLarge}>Payments</p>
-      </div>
-
-      <div className={classes.paymentInfoContainer}>
-        <div className={classes.paymentHeadersContainer}>
-          <div
-            className={`${classes.paymentHeaderContainer} ${cardNotSelected}`}
-          >
-            <div className={classes.radioButtonContainer}>
-              <RadioButton
-                value="card"
-                radioValue={paymentRadioValue}
-                setRadioValue={setPaymentRadioValue}
-              />
-            </div>
-            <div className={classes.paymentHeader}>
-              Kredittkort eller debetkort
-              <button onClick={stripeHandler}>checkout</button>
-            </div>
-          </div>
-          <div
-            className={`${classes.paymentHeaderContainer} ${vippsNotSelected}`}
-          >
-            <div className={classes.radioButtonContainer}>
-              <RadioButton
-                value="vipps"
-                radioValue={paymentRadioValue}
-                setRadioValue={setPaymentRadioValue}
-              />
-            </div>
-            <div className={classes.paymentHeader}>Vipps</div>
-          </div>
-        </div>
-
-        <div className={classes.paymentBodyContainer}>
-          <div className={classes.cardBody}></div>
-          <div className={classes.vippsBody}></div>
-        </div>
-      </div>
-    </>
-  );
-
-  const mobileCustomerInformationForm = (
-    <>
-      <div className={classes.inputHeading}>
-        <p className={classes.textBoldLarge}>Shipping information</p>
-      </div>
-      <div className={classes.inputContainer}>
-        <div className={classes.innerInputContainer}>
-          <Input
-            label="Email"
-            onChange={(e) => setEmail(e.target.value)}
-            value={email}
-            type="email"
-            inputClass={classes.input}
-          />
-          <Input
-            label="First name"
-            inputClass={classes.input}
-            onChange={(e) => setFirstName(e.target.value)}
-            value={firstName}
-          />
-          <Input
-            label="Last name"
-            inputClass={classes.input}
-            onChange={(e) => setLastName(e.target.value)}
-            value={lastName}
-          />
-          <Input
-            label="Address"
-            inputClass={classes.input}
-            onChange={(e) => setAddress(e.target.value)}
-            value={address}
-          />
-          <Input
-            label="Postal Code"
-            inputClass={classes.input}
-            onChange={(e) => setPostalCode(e.target.value)}
-            value={postalCode}
-            type="number"
-          />
-          <Input
-            label="City"
-            inputClass={classes.input}
-            onChange={(e) => setCity(e.target.value)}
-            value={city}
-          />
-          <Input
-            label="Country"
-            inputClass={classes.input}
-            onChange={(e) => setCountry(e.target.value)}
-            value={country}
-          />
-
-          <div className={classes.inputCluster2}>
-            <div className={classes.input}>
-              <p className={classes.phoneCode}>+47</p>
-            </div>
-            <Input
-              label="Phone Number"
-              inputClass={classes.input}
-              onChange={(e) => setPhone(e.target.value)}
-              value={phone}
-              type="number"
-            />
-          </div>
-        </div>
-      </div>
-    </>
-  );
+  const headerClass = isMobile ? classes.mobileHeader : classes.header;
+  const contentContainerClass = isMobile
+    ? classes.mobileContentContainer
+    : classes.contentContainer;
+  const orderSummaryContainerClass = isMobile
+    ? classes.mobileOrderSummaryContainer
+    : classes.orderSummaryContainer;
+  const shippingContainerClass = isMobile
+    ? classes.mobileShippingContainer
+    : classes.shippingContainer;
+  const paymentContainerClass = isMobile
+    ? classes.mobilePaymentContainer
+    : classes.paymentContainer;
+  const buttonContainerClass = isMobile
+    ? `${classes.buttonContainer} ${classes.mobileButtonContainer}`
+    : classes.buttonContainer;
+  const buttonClass = isMobile
+    ? `${classes.button} ${classes.mobileButton}`
+    : classes.button;
 
   return (
     <>
-      {!isMobile && (
-        <>
-          <div onClick={() => router.push("/")} className={classes.header}>
-            MERLE
+      <>
+        <div onClick={() => router.push("/")} className={headerClass}>
+          <Merle height="80" width="200" />
+        </div>
+        <div className={contentContainerClass}>
+          <div className={orderSummaryContainerClass}>{orderSummary}</div>
+          <div className={shippingContainerClass}>
+            <RadioCheckbox
+              optionList={shippingOptions}
+              title="Shipping"
+              setRadioValue={setShippingRadioValue}
+              radioValue={shippingRadioValue}
+            />
           </div>
-          <div className={classes.contentContainer}>
-            <div className={classes.customerInformationContainer}>
-              {customerInformationForm}
-            </div>
-            <div className={classes.shippingContainer}>
-              {shippingInformation}
-            </div>
-            <div className={classes.paymentContainer}>{paymentInformation}</div>
-
-            <div className={classes.orderSummaryContainer}>{orderSummary}</div>
+          <div className={paymentContainerClass}>
+            <RadioCheckbox
+              title="Payments"
+              optionList={paymentOptions}
+              setRadioValue={setPaymentRadioValue}
+              radioValue={paymentRadioValue}
+            />
           </div>
-        </>
-      )}
-
-      {isMobile && (
-        <>
-          <div
-            onClick={() => router.push("/")}
-            className={classes.mobileHeader}
-          >
-            MERLE
+          <div className={classes.stripeContainer}>
+            {stripePromise && clientSecret && (
+              <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <CheckoutForm
+                  pm={paymentRadioValue.label}
+                  setEmail={setEmail}
+                  setName={setName}
+                  setPhone={setPhone}
+                  setCountry={setCountry}
+                  setCity={setCity}
+                  setAddress={setAddress}
+                  setPostalCode={setPostalCode}
+                  handleSubmit={stripeHandler}
+                />
+              </Elements>
+            )}
           </div>
+          {paymentRadioValue.label === "vipps" && (
+            <div className={buttonContainerClass}>
+              <button className={buttonClass} onClick={vippsHandler}>
+                Buy
+              </button>
+            </div>
+          )}
+        </div>
+      </>
 
-          <div className={classes.mobileContentContainer}>
-            <div className={classes.mobileOrderSummaryContainer}>
-              {orderSummary}
-            </div>
-
-            <div className={classes.mobileCustomerInformationContainer}>
-              {mobileCustomerInformationForm}
-            </div>
-            <div className={classes.mobileShippingContainer}>
-              {shippingInformation}
-            </div>
-            <div className={classes.mobilePaymentContainer}>
-              {paymentInformation}
-            </div>
-          </div>
-        </>
-      )}
       {error && (
         <Modal>
           <p>Please fill in all the shipping information</p>
@@ -446,3 +288,23 @@ const Checkout = () => {
 };
 
 export default Checkout;
+
+export async function getServerSideProps(context) {
+  const cartItems = context.query.cartItems;
+  const serverUrl = "http://localhost:8080/";
+
+  const publishableKeyResponse = await axios.get(`${serverUrl}orders/get-publishable-key`);
+  const publishableKey = publishableKeyResponse.data.publishableKey;
+
+  const clientSecretResponse = await axios.post(`${serverUrl}orders/client-secret`, {
+    cartItems: JSON.parse(cartItems),
+  });
+  const clientSecret = clientSecretResponse.data.clientSecret;
+
+  return {
+    props: {
+      publishableKey: publishableKey,
+      clientSecret: clientSecret,
+    },
+  };
+}

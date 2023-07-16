@@ -29,81 +29,6 @@
   margin: 0;
 }
 
-
-
-.header {
-  width: 50%;
-  height: 50px;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  margin-left: 10%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 40px;
-}
-
-.contentContainer {
-  display: flex;
-  flex-direction: column;
-  row-gap: 5%;
-  margin-top: 30px;
-  margin-left: 10%;
-  padding-bottom: 5%;
-  height: 180%;
-  width: 50%;
-}
-
-.customerInformationContainer {
-  width: 100%;
-  height: 40%;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-}
-
-.inputHeading {
-  height: 11.25%;
-  margin-left: 5%;
-}
-
-.inputContainer {
-  border: 1px solid #7c7b7b;
-  border-radius: 2px;
-  width: 100%;
-  height: 88.75%;
-}
-
-.innerInputContainer {
-  height: 90%;
-  width: 90%;
-  margin: 5%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-around;
-}
-
-.emailContainer {
-  width: 100%;
-  display: flex;
-  align-items: flex-start;
-} 
-
-.inputCluster {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  column-gap: 40px;
-}
-
-.inputCluster2 {
-  display: grid;
-  grid-template-columns: 1fr 5fr;
-  width: 100%;
-  column-gap: 40px;
-}
-
 .input {
   width: 100%;
   min-height: 20px;
@@ -117,154 +42,47 @@
   outline: none;
 }
 
-.input::placeholder {
-  color: #7c7b7b;
-}
 
-.phoneCode {
-  margin: 0;
-  height: 100%;
-  width: 100%;
+.header {
+  width: 45%;
+  height: 50px;
+  margin-bottom: 10px;
+  margin-top: 5%;
+  margin-left: 10%;
   display: flex;
   align-items: center;
+  justify-content: center;
+  font-size: 40px;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  row-gap: 5%;
+  margin-top: 30px;
+  margin-left: 10%;
+  padding-bottom: 15%;
+  height: 200%;
+  width: 45%;
 }
 
 
-/* Shipping classes */
+/* Shipping, Payment and stripe container classes */
 
 .shippingContainer {
   width: 100%;
   height: 20%;
 }
 
-.shippingHeading {
-  height: 22.5%;
-  width: 100%;
-  margin-left: 5%;
-}
-
-.shippingInfoContainer {
-  height: 77.5%;
-  width: 100%;
-  background-color: white;
-  border: 1px solid #7c7b7b;
-  border-radius: 2px;
-  display: flex;
-  flex-direction: column;
-}
-
-.shippingOptionContainer {
-  height: 50%;
-  width: 95%;
-  margin-left: 2%;
-  margin-right: 2%;
-  display: flex;
-  flex-direction: row;
-}
-
-.shippingInfo {
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-  row-gap: 6%;
-  justify-content: center;
-}
-
-.shippingPrice {
-  width: 10%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.shippingIcon {
-  width: 10%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-
-/* Payment classes */
-
 .paymentContainer {
   width: 100%;
-  height: 30%;
-  display: flex;
-  flex-direction: column;
-}
-
-.paymentHeading {
-  height: 15%;
-  width: 100%;
-  margin-left: 5%;
-}
-
-.paymentInfoContainer {
-  height: 85%;
-  width: 100%;
-  background-color: white;
-  border: 1px solid #7c7b7b;
-  border-radius: 2px;
-  display: flex;
-  flex-direction: column;
-}
-
-.paymentHeadersContainer {
   height: 20%;
+  display: flex;
+  flex-direction: column;
+}
+
+.stripeContainer {
   width: 100%;
-  display: flex;
-  flex-direction: row;
-}
-
-.paymentHeaderContainer {
-  height: 100%;
-  width: 50%;
-  display: flex;
-  flex-direction: row;
-}
-
-.cardNotSelected {
-  border-bottom: 1px solid #7c7b7b;
-  border-right: 1px solid #7c7b7b;
-}
-
-.vippsNotSelected {
-  border-bottom: 1px solid #7c7b7b;
-  border-left: 1px solid #7c7b7b;
-}
-
-.radioButtonContainer {
-  width: 30%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.paymentHeader {
-  width: 70%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-}
-
-.paymentBodyContainer {
-  height: 80%;
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-}
-
-.cardBody {
-  height: 100%;
-  width: 50%;
-}
-
-.vippsBody {
-  height: 100%;
-  width: 50%;
 }
 
 
@@ -275,6 +93,7 @@
   top: 4rem;
   right: 10%;
   height: 80%;
+  min-width: 250px;
   width: 25%;
   border: 1px solid #7c7b7b;
   border-radius: 2px;
@@ -284,50 +103,14 @@
 }
 
 .cartItemsContainer {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
   row-gap: 3%;
   margin: 4%;
   margin-bottom: 0;
   min-height: 0;
   max-height: 60%;
   overflow: scroll;
-}
-
-.cartItemContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 100%;
-  column-gap: 5%;
-  margin-bottom: 10px;
-}
-
-.imageContainer {
-  width: 25%;
-  height: 100%;
-}
-
-.image {
-  min-width: 40%;
-  max-width: 50%;
-  max-height: 100%;
-  height: auto;
-}
-
-.cartItemInfoContainer {
-  display: flex;
-  flex-direction: row;
-  width: 70%;
-  height: 100%;
-  justify-content: space-between;
-}
-
-.cartItemInfo {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
 }
 
 .orderSummaryInfoContainer {
@@ -356,13 +139,17 @@
 }
 
 .discountInputContainer {
-  margin-left: 10%;
-  width: 50%;
-  min-width: 120px;
+  margin-left: 5%;
+  min-width: 150px;
+  max-width: 50%;
 }
 
 .discountInput {
   width: 100%;
+}
+
+.discountInput::placeholder {
+  color: #717171;
 }
 
 .discountLabel {
@@ -387,9 +174,21 @@
   justify-content: space-between;
 }
 
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-
-
+.button {
+  background-color: black;
+  width: 25%;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 2px;
+  color: white;
+}
 
 
 
@@ -426,16 +225,6 @@
   flex-direction: column;
 }
 
-.mobileCustomerInformationContainer {
-  width: 100%;
-  height: 40%;
-  max-height: 40%;
-  margin-bottom: 10%;
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-}
-
 .mobileShippingContainer {
     width: 100%;
     height: 15%;
@@ -447,5 +236,13 @@
   height: 20%;
   display: flex;
   flex-direction: column;
+  margin-bottom: 10%;
 }
 
+.mobileButtonContainer {
+  margin-top: 10%;
+}
+
+.mobileButton {
+  width: 50%;
+}

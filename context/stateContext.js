@@ -106,7 +106,6 @@ const StateContextProvider = (props) => {
   useEffect(() => {
     const savedCartItems = localStorage.getItem('cartItems')
     if (savedCartItems) {
-      console.log('savedCartItems', savedCartItems);
       setCartItems(JSON.parse(savedCartItems))
     }
   },[])

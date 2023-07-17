@@ -1,7 +1,6 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 
-import { StateContext } from "../../context/stateContext";
 import useIsMobile from "../../components/util/useIsMobile";
 import classes from "../../styles/pages/order-complete.module.css";
 
@@ -12,12 +11,11 @@ import Merle from "../../public/icons/SVG/merle.svg";
 import ProductList from "../../components/views/productList";
 
 const OrderComplete = () => {
-  const { serverUrl } = useContext(StateContext);
   const router = useRouter();
-  let order = undefined
+  let order = undefined;
   if (router.query.order) {
     order = JSON.parse(router.query.order);
-    console.log(order)
+    console.log(order);
   }
   const isMobile = useIsMobile();
 
@@ -62,16 +60,33 @@ const OrderComplete = () => {
         <div className={classes.contentContainer2}>
           <div className={classes.customerInformationContainer}>
             <div className={classes.customerInformationHeader}>
-              Customer information
+              <p className={classes.heading}>Customer information</p>
             </div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+            <div className={classes.infoContainer}>
+            <p className={classes.textBold}>Contact information</p>
+              <p className={classes.text}>{order.name}</p>
+              <p className={classes.text}>{order.email}</p>
+              <p className={classes.text}>{order.phone}</p>
+            </div>
+            <div className={classes.infoContainer}>
+              <p className={classes.textBold}>Shipping address</p>
+              <p className={classes.text}>{order.country}</p>
+              <p className={classes.text}>{order.city}</p>
+              <p className={classes.text}>{order.address}</p>
+              <p className={classes.text}>{order.postalCode}</p>
+            </div>
+            <div>
+              <p className={classes.textBold}>Shipping method</p>
+              <p className={classes.text}>{order.shipping.label} - {order.shipping.price} kr</p>
+            </div>
+            <div>
+              <p className={classes.textBold}>Payment method</p>
+              <p className={classes.text}>{order.paymentMethod.label}</p>
+            </div>
+            
           </div>
           <div className={classes.buttonContainer}>
-            <button className={classes.button}>Continue Shopping</button>
+            <button className={classes.button} onClick={() => router.push("/products?site=second-hand")}>Continue Shopping</button>
             <p className={classes.textGrey}>Need help? Contact us</p>
           </div>
         </div>

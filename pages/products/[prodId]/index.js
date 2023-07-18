@@ -270,15 +270,15 @@ export async function getServerSideProps(context) {
   let product;
   if (site === "original") {
     product = await axios.get(
-      "http://localhost:8080/products/product/" + prodId
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/products/product/` + prodId
     );
   } else {
     product = await axios.get(
-      "http://localhost:8080/second-hand/products/" + prodId
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/second-hand/products/` + prodId
     );
   }
   const imageUrls = product.data.product.imageUrls.map(
-    (url) => `http://localhost:8080/${url}`
+    (url) => `${process.env.NEXT_PUBLIC_SERVER_URL}/${url}`
   );
   return {
     props: {

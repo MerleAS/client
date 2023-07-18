@@ -24,7 +24,7 @@ const Search = () => {
     try {
       if (query.length > 1) {
         const prods = await axios.get(
-          `${serverUrl}second-hand/products?query=${query}`
+          `${serverUrl}/second-hand/products?query=${query}`
         );
         setProducts(prods.data.products);
         /* const brandsList = []

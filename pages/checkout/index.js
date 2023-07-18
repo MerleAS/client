@@ -132,7 +132,7 @@ const Checkout = ({ publishableKey, clientSecret }) => {
       type: "card",
       elements,
       confirmParams: {
-        return_url: `${serverUrl}orders/order-complete?order=${encodeURIComponent(
+        return_url: `${serverUrl}/orders/order-complete?order=${encodeURIComponent(
           JSON.stringify(order)
         )}`,
       },
@@ -292,12 +292,11 @@ export default Checkout;
 
 export async function getServerSideProps(context) {
   const cartItems = context.query.cartItems;
-  const serverUrl = "http://localhost:8080/";
 
-  const publishableKeyResponse = await axios.get(`${serverUrl}orders/get-publishable-key`);
+  const publishableKeyResponse = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/orders/get-publishable-key`);
   const publishableKey = publishableKeyResponse.data.publishableKey;
 
-  const clientSecretResponse = await axios.post(`${serverUrl}orders/client-secret`, {
+  const clientSecretResponse = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/orders/client-secret`, {
     cartItems: JSON.parse(cartItems),
   });
   const clientSecret = clientSecretResponse.data.clientSecret;

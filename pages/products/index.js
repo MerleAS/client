@@ -77,7 +77,7 @@ const Products = (props) => {
             }
             console.log('totalStock', totalStock, prod)
             const imageUrls = prod.imageUrls.map(
-              (url) => `http://localhost:8080/${url}`
+              (url) => `${process.env.NEXT_PUBLIC_SERVER_URL}/${url}`
             );
             const containerStyle = isMobile
               ? classes.mobileProductContainer
@@ -121,9 +121,9 @@ export async function getServerSideProps(context) {
   const site = context.query.site;
   let prods;
   if (site === "original") {
-    prods = await axios.get("http://localhost:8080/products");
+    prods = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/products`);
   } else {
-    prods = await axios.get("http://localhost:8080/second-hand/products");
+    prods = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/second-hand/products`);
   }
   const brandsList = [];
   prods.data.products.forEach((prod) => {

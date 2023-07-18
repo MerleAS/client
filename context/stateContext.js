@@ -13,7 +13,7 @@ export const StateContext = createContext({
 });
 
 const StateContextProvider = (props) => {
-  const [serverUrl] = useState("http://localhost:8080/");
+  const [serverUrl] = useState(process.env.NEXT_PUBLIC_SERVER_URL);
   const [cartItems, setCartItems] = useState([]);
   const [cartIsActive, setCartIsActive] = useState(false);
   const [searchIsActive, setSearchIsActive] = useState(false);

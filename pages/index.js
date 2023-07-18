@@ -50,11 +50,11 @@ const Home = (props) => {
             return (
               <Image
                 key={index}
-                loader={() => serverUrl + pictureUrl}
+                loader={() => serverUrl + '/' + pictureUrl}
                 layout={"responsive"}
                 width={1500}
                 height={1000}
-                src={serverUrl + pictureUrl}
+                src={serverUrl + '/' + pictureUrl}
                 alt="image"
                 className={classes.image}
               />
@@ -68,11 +68,11 @@ const Home = (props) => {
             return (
               <Image
                 key={index}
-                loader={() => serverUrl + mobilePictureUrl}
+                loader={() => serverUrl + '/' + mobilePictureUrl}
                 layout={"responsive"}
                 width={1000}
                 height={1550}
-                src={serverUrl + mobilePictureUrl}
+                src={serverUrl + '/' + mobilePictureUrl}
                 alt="image"
                 className={classes.image}
               />
@@ -86,8 +86,8 @@ const Home = (props) => {
 };
 
 export async function getStaticProps() {
-  const response = await axios.get("http://localhost:8080/home/desktop");
-  const result = await axios.get("http://localhost:8080/home/mobile");
+  const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/home/desktop`);
+  const result = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/home/mobile`);
   return {
     props: {
       pictureUrls: response.data,

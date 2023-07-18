@@ -12,7 +12,23 @@ import ProductList from "../../components/views/productList";
 
 const OrderComplete = () => {
   const router = useRouter();
-  let order = undefined;
+  let order = {
+    name: "",
+    email: "",
+    country: "Norge",
+    city: "",
+    address: "",
+    postalCode: "",
+    cartItems: [],
+    shipping: {
+      label: "",
+      price: null
+    },
+    paymentMethod: {
+      label: "",
+      price: 0
+    }
+  };
   if (router.query.order) {
     order = JSON.parse(router.query.order);
     console.log(order);
@@ -49,7 +65,7 @@ const OrderComplete = () => {
               </div>
             </div>
 
-            {dropdownActive && order && (
+            {dropdownActive && order.cartItems.length > 0 && (
               <div className={classes.productsContainer}>
                 <ProductList products={order.cartItems} type={1} />
               </div>

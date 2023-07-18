@@ -75,11 +75,9 @@ const Products = (props) => {
             if (totalStock === 0) {
               return
             }
-            console.log('totalStock', totalStock, prod)
             const imageUrls = prod.imageUrls.map(
               (url) => `${process.env.NEXT_PUBLIC_SERVER_URL}/${url}`
             );
-            console.log('imageUrls', imageUrls)
             const containerStyle = isMobile
               ? classes.mobileProductContainer
               : classes.productContainer;

@@ -24,6 +24,7 @@ const ProductList = ({
               <div className={classes.imageContainer}>
                 <Image
                   src={serverUrl + '/' + prod.imageUrls[0]}
+                  loader={() => serverUrl + '/' + prod.imageUrls[0]}
                   layout="responsive"
                   width={1000}
                   height={1500}

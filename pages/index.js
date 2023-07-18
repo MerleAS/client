@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useContext } from "react";
 import axios from "axios";
 
+
 import { StateContext } from "../context/stateContext";
 import useIsMobile from "../components/util/useIsMobile";
 import classes from "../styles/index.module.css";

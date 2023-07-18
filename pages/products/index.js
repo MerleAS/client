@@ -79,6 +79,7 @@ const Products = (props) => {
             const imageUrls = prod.imageUrls.map(
               (url) => `${process.env.NEXT_PUBLIC_SERVER_URL}/${url}`
             );
+            console.log('imageUrls', imageUrls)
             const containerStyle = isMobile
               ? classes.mobileProductContainer
               : classes.productContainer;
@@ -97,6 +98,7 @@ const Products = (props) => {
                     width={1000}
                     height={1500}
                     src={imageUrls[imageIndex]}
+                    loader={() => imageUrls[imageIndex]}
                     containerStyle={{ width: `${getWidth()}%` }}
                   />
                 </div>

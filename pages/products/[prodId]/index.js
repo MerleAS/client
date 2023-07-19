@@ -14,7 +14,7 @@ import useIsMobile from "../../../components/util/useIsMobile";
 import classes from "../../../styles/pages/product.module.css";
 import { StateContext } from "../../../context/stateContext";
 
-const ProductDetail = (props) => {
+const ProductDetail = ({ product, imageUrls}) => {
   const [count, setCount] = useState(1);
   const [selectedSize, setSelectedSize] = useState({ size: "", in_stock: "" });
   const [descriptionDropdownActive, setDescriptionDropdownActive] =
@@ -24,9 +24,7 @@ const ProductDetail = (props) => {
 
   const { serverUrl, addToCartHandler, setCartIsActive } =
     useContext(StateContext);
-
-  const { product, imageUrls } = props;
-
+    
   const isMobile = useIsMobile();
 
   const countHandler = (val, type) => {

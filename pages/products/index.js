@@ -30,7 +30,6 @@ const Products = (props) => {
   };
 
   const mouseHoverHandler = (type, id) => {
-    console.log(id)
     if (type === "over") {
       const prod = products.find((p) => p._id === id);
       if (prod.imageUrls.length > 1) {

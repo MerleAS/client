@@ -16,7 +16,8 @@
     "next": "12.3.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "stripe": "^12.13.0"
+    "stripe": "^12.13.0",
+    "swiper": "^10.0.4"
   },
   "devDependencies": {
     "eslint": "8.25.0",

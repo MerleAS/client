@@ -17,7 +17,7 @@ const Products = (props) => {
   const { products, site } = props;
   const router = useRouter();
 
-  const [imageIndex, setImageIndex] = useState(0);
+  const [imageIndex, setImageIndex] = useState({index: 0, id: null}); 
 
   const isMobile = useIsMobile();
 
@@ -33,10 +33,10 @@ const Products = (props) => {
     if (type === "over") {
       const prod = products.find((p) => p._id === id);
       if (prod.imageUrls.length > 1) {
-        setImageIndex(1);
+        setImageIndex({index: 1, id: prod._id});
       }
     } else {
-      setImageIndex(0);
+      setImageIndex({index: 0, id: null});
     }
   };
 
@@ -69,11 +69,18 @@ const Products = (props) => {
         {products.length > 0 &&
           products.map((prod, index) => {
             const totalStock = prod.stock.reduce((acc, cur) => {
-              return acc + cur.in_stock
-            },0)
+              return acc + cur.in_stock;
+            }, 0);
             if (totalStock === 0) {
-              return
+              return;
             }
+            let idx = 0
+            if (imageIndex.id === prod._id) {
+              idx = 1
+            } else {
+              idx = 0
+            }
+
             const imageUrls = prod.imageUrls.map(
               (url) => `${process.env.NEXT_PUBLIC_SERVER_URL}/${url}`
             );
@@ -94,8 +101,8 @@ const Products = (props) => {
                   <Image
                     width={1000}
                     height={1500}
-                    src={imageUrls[imageIndex]}
-                    loader={() => imageUrls[imageIndex]}
+                    src={imageUrls[idx]}
+                    loader={() => imageUrls[idx]}
                     containerStyle={{ width: `${getWidth()}%` }}
                     alt=""
                   />
@@ -123,7 +130,9 @@ export async function getServerSideProps(context) {
   if (site === "original") {
     prods = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/products`);
   } else {
-    prods = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/second-hand/products`);
+    prods = await axios.get(
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/second-hand/products`
+    );
   }
   const brandsList = [];
   prods.data.products.forEach((prod) => {

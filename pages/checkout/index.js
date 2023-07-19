@@ -126,14 +126,7 @@ const Checkout = ({ publishableKey, clientSecret }) => {
       cartItems: cartItems,
     };
 
-    console.log(
-      "url",
-      `${serverUrl}/orders/order-complete?order=${encodeURIComponent(
-        JSON.stringify(order)
-      )}`
-    );
-
-   /*  const { error } = await stripe.confirmPayment({
+    const { error } = await stripe.confirmPayment({
       type: "card",
       elements,
       confirmParams: {
@@ -149,7 +142,7 @@ const Checkout = ({ publishableKey, clientSecret }) => {
           country: country,
         },
       },
-    }); */
+    });
 
     if (error.type === "card_error" || error.type === "validation_error") {
       console.log("error", error);

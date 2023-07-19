@@ -100,8 +100,8 @@ const Products = (props) => {
                   />
                 </div>
                 <div className={classes.infoContainer}>
-                  <p>{prod.title}</p>
-                  <p>{prod.price}kr</p>
+                  <p className={classes.text}>{prod.title}</p>
+                  <p className={classes.text}>{prod.price}kr</p>
                 </div>
               </div>
             );

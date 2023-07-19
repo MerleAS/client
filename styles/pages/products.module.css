@@ -1,14 +1,18 @@
+.text {
+  margin-top: 0;
+}
+
 .productsContainer {
   margin-top: 5%;
   margin-bottom: 10%;
   display: grid;
-  gap: 10px; 
+  gap: 1%;
   position: relative;
   overflow-x: hidden;
   align-items: center;
   justify-content: center;
-  width: 98%;
-  margin-left: 1%;
+  width: 96%;
+  margin-left: 2%;
 }
 
 .productContainer {
@@ -17,6 +21,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-bottom: 3%;
 }
 
 .imageContainer {
@@ -25,17 +30,20 @@
 }
 
 .infoContainer {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
 }
 
 .mobileProductContainer {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
+  width: 94%;
+  margin-left: 3%;
+  margin-right: 3%;
+  gap: 3%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

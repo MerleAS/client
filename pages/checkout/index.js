@@ -4,7 +4,6 @@ import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
 import axios from "axios";
 
-
 import { StateContext } from "../../context/stateContext";
 import classes from "../../styles/pages/checkout.module.css";
 import useIsMobile from "../../components/util/useIsMobile";
@@ -84,7 +83,6 @@ const Checkout = ({ publishableKey, clientSecret }) => {
   const router = useRouter();
   const isMobile = useIsMobile();
 
-
   const vippsHandler = async () => {
     console.log("vipps");
   };
@@ -127,6 +125,13 @@ const Checkout = ({ publishableKey, clientSecret }) => {
       paymentMethod: paymentRadioValue,
       cartItems: cartItems,
     };
+
+    console.log(
+      "url",
+      `${serverUrl}/orders/order-complete?order=${encodeURIComponent(
+        JSON.stringify(order)
+      )}`
+    );
 
     const { error } = await stripe.confirmPayment({
       type: "card",
@@ -293,12 +298,17 @@ export default Checkout;
 export async function getServerSideProps(context) {
   const cartItems = context.query.cartItems;
 
-  const publishableKeyResponse = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/orders/get-publishable-key`);
+  const publishableKeyResponse = await axios.get(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/orders/get-publishable-key`
+  );
   const publishableKey = publishableKeyResponse.data.publishableKey;
 
-  const clientSecretResponse = await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/orders/client-secret`, {
-    cartItems: JSON.parse(cartItems),
-  });
+  const clientSecretResponse = await axios.post(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/orders/client-secret`,
+    {
+      cartItems: JSON.parse(cartItems),
+    }
+  );
   const clientSecret = clientSecretResponse.data.clientSecret;
 
   return {

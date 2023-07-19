@@ -28,6 +28,7 @@ const ProductList = ({
                   layout="responsive"
                   width={1000}
                   height={1500}
+                  alt=""
                 />
               </div>
 

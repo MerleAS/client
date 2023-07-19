@@ -155,7 +155,7 @@ const Checkout = ({ publishableKey, clientSecret }) => {
 
   useEffect(() => {
     setStripePromise(loadStripe(publishableKey));
-  }, []);
+  }, [publishableKey]);
 
   const orderSummary = (
     <>

@@ -72,7 +72,7 @@ const SlideShow = ({ imgs, width, height, containerStyle, containerClass }) => {
     if (isMobile) {
       setPixelWalk(90);
     }
-  });
+  },[pixelWalk]);
 
   useEffect(() => {
     walk = x - startX;
@@ -84,7 +84,7 @@ const SlideShow = ({ imgs, width, height, containerStyle, containerClass }) => {
       next();
       setStartX(x);
     }
-  }, [x, startX]);
+  }, [x, startX, next, prev, pixelWalk]);
 
   return (
     <div

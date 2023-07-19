@@ -97,6 +97,7 @@ const Products = (props) => {
                     src={imageUrls[imageIndex]}
                     loader={() => imageUrls[imageIndex]}
                     containerStyle={{ width: `${getWidth()}%` }}
+                    alt=""
                   />
                 </div>
                 <div className={classes.infoContainer}>

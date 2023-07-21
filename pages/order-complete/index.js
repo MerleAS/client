@@ -22,12 +22,12 @@ const OrderComplete = () => {
     cartItems: [],
     shipping: {
       label: "",
-      price: null
+      price: null,
     },
     paymentMethod: {
       label: "",
-      price: 0
-    }
+      price: 0,
+    },
   };
   if (router.query.order) {
     order = JSON.parse(router.query.order);
@@ -45,6 +45,10 @@ const OrderComplete = () => {
   const orderSummaryContainerClass = isMobile
     ? classes.mobileOrderSummaryContainer
     : classes.orderSummaryContainer;
+
+  const contentContainerClass2 = isMobile
+    ? classes.mobileContentContainer2
+    : classes.contentContainer2;
 
   return (
     <>
@@ -73,36 +77,44 @@ const OrderComplete = () => {
           </div>
         </div>
 
-        <div className={classes.contentContainer2}>
+        <div className={contentContainerClass2}>
           <div className={classes.customerInformationContainer}>
-            <div className={classes.customerInformationHeader}>
-              <p className={classes.heading}>Customer information</p>
+            <div className={classes.innerCustomerInformationContainer}>
+              <div className={classes.customerInformationHeader}>
+                <p className={classes.heading}>Customer information</p>
+              </div>
+              <div className={classes.infoContainer}>
+                <p className={classes.textBold}>Contact information</p>
+                <p className={classes.text}>{order.name}</p>
+                <p className={classes.text}>{order.email}</p>
+                <p className={classes.text}>{order.phone}</p>
+              </div>
+              <div className={classes.infoContainer}>
+                <p className={classes.textBold}>Shipping address</p>
+                <p className={classes.text}>{order.country}</p>
+                <p className={classes.text}>{order.city}</p>
+                <p className={classes.text}>{order.address}</p>
+                <p className={classes.text}>{order.postalCode}</p>
+              </div>
+              <div>
+                <p className={classes.textBold}>Shipping method</p>
+                <p className={classes.text}>
+                  {order.shipping.label} - {order.shipping.price} kr
+                </p>
+              </div>
+              <div>
+                <p className={classes.textBold}>Payment method</p>
+                <p className={classes.text}>{order.paymentMethod.label}</p>
+              </div>
             </div>
-            <div className={classes.infoContainer}>
-            <p className={classes.textBold}>Contact information</p>
-              <p className={classes.text}>{order.name}</p>
-              <p className={classes.text}>{order.email}</p>
-              <p className={classes.text}>{order.phone}</p>
-            </div>
-            <div className={classes.infoContainer}>
-              <p className={classes.textBold}>Shipping address</p>
-              <p className={classes.text}>{order.country}</p>
-              <p className={classes.text}>{order.city}</p>
-              <p className={classes.text}>{order.address}</p>
-              <p className={classes.text}>{order.postalCode}</p>
-            </div>
-            <div>
-              <p className={classes.textBold}>Shipping method</p>
-              <p className={classes.text}>{order.shipping.label} - {order.shipping.price} kr</p>
-            </div>
-            <div>
-              <p className={classes.textBold}>Payment method</p>
-              <p className={classes.text}>{order.paymentMethod.label}</p>
-            </div>
-            
           </div>
           <div className={classes.buttonContainer}>
-            <button className={classes.button} onClick={() => router.push("/products?site=second-hand")}>Continue Shopping</button>
+            <button
+              className={classes.button}
+              onClick={() => router.push("/products?site=second-hand")}
+            >
+              Continue Shopping
+            </button>
             <p className={classes.textGrey}>Need help? Contact us</p>
           </div>
         </div>

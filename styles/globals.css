@@ -52,6 +52,12 @@ input[type="number"]::-webkit-outer-spin-button {
   appearance: none;
 }
 
+.swiper-pagination-bullet {
+  height: 2px!important;
+  width: 40px!important;
+  border-radius: 0!important;
+}
+
 .swiper-pagination-bullet-active {
   background-color: black!important;
 }

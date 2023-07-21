@@ -13,8 +13,8 @@
 }
 
 .textGrey {
-    font-size: 10px;
-    color: #717171;
+  font-size: 10px;
+  color: #717171;
 }
 
 .container {
@@ -22,12 +22,12 @@
   height: 100%;
   display: flex;
   flex-direction: row;
-  column-gap: 5%;
+  column-gap: 15%;
   margin-left: 10%;
 }
 
 .contentContainer {
-  width: 45%;
+  width: 35%;
 }
 
 .header {
@@ -76,7 +76,7 @@
 .productsContainer {
   height: auto;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   column-gap: 3%;
   row-gap: 3%;
   margin: 4%;
@@ -87,33 +87,38 @@
 /* Content block 2 styles */
 
 .contentContainer2 {
-    width: 30%;
-    margin-top: 5%;
-    margin-right: 10%;
-    height: 80%;
-    display: flex;
-    flex-direction: column;
+  width: 30%;
+  margin-top: 5%;
+  margin-right: 10%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
 }
 
 .customerInformationContainer {
-    width: 100%;
-    height: 80%;
-    border: 1px solid black;
-    border-radius: 2px;
-    margin-right: 10%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    padding: 4%;
+  width: 100%;
+  height: 100%;
+  border: 1px solid black;
+  border-radius: 2px;
+  margin-right: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-bottom: 10%;
+}
+
+.innerCustomerInformationContainer {
+  width: 100%;
+  height: 100%;
+  padding: 4%;
 }
 
 .customerInformationHeader {
-    width: 100%;
-    height: 10%;
-    display: flex;
-    justify-content: center;
+  width: 100%;
+  height: 10%;
+  display: flex;
+  justify-content: center;
 }
-
 
 .heading {
   font-size: 18px;
@@ -128,25 +133,23 @@
 }
 
 .buttonContainer {
-    width: 100%;
-    height: 20%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  height: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .button {
-    background-color: black;
-    color: white;
-    width: 40%;
-    min-width: 150px;
-    min-height: 30px; 
-    border: 1px solid black;
-    border-radius: 2px;
+  background-color: black;
+  color: white;
+  width: 40%;
+  min-width: 150px;
+  min-height: 30px;
+  border: 1px solid black;
+  border-radius: 2px;
 }
-
-
 
 /* Mobile Classes */
 
@@ -158,19 +161,27 @@
 
 .mobileContentContainer {
   width: 100%;
-  height: 100%;
+  margin-bottom: 10%;
 }
 
 .mobileHeader {
-    width: 100%;
-    height: 15%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  width: 100%;
+  height: 15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .mobileOrderSummaryContainer {
   width: 100%;
   border: 1px solid black;
   border-radius: 2px;
 }
+
+/* Mobile contentContaine2class */
+
+.mobileContentContainer2 {
+  width: 100%;
+  margin-bottom: 10%;
+}
+

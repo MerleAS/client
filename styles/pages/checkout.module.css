@@ -150,7 +150,7 @@
 }
 
 .discountLabel {
-  left: calc(10% + 15px) !important;
+  left: 15px!important;
 }
 
 .discountButton {

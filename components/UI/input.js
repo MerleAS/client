@@ -4,6 +4,7 @@ const Input = ({
   type,
   value,
   onChange,
+  onBlur,
   label,
   containerClass,
   inputClass,
@@ -22,6 +23,7 @@ const Input = ({
       <input
         type={type}
         onChange={onChange}
+        onBlur={onBlur}
         value={value}
         placeholder={label}
         className={`${inputStyles} ${inputClass}`}

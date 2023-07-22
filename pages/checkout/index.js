@@ -46,18 +46,18 @@ const shippingOptions = [
     value: "helt-hjem",
     icon: <HeltHjem height="30" width="30" />,
     description: "Leveres om 4-7 virkedager",
-    price: "80",
+    price: 80,
   },
   {
     label: "Posten",
     value: "posten",
     icon: <Posten height="30" width="30" />,
     description: "Leveres om 4-7 virkedager",
-    price: "80",
+    price: 80,
   },
 ];
 
-const Checkout = ({ publishableKey, clientSecret }) => {
+const Checkout = ({ publishableKey, clientSecret, paymentIntentId }) => {
   const { getTotalAmount, cartItems, serverUrl } = useContext(StateContext);
 
   const [email, setEmail] = useState("");
@@ -69,15 +69,20 @@ const Checkout = ({ publishableKey, clientSecret }) => {
   const [phone, setPhone] = useState("");
   const [shippingRadioValue, setShippingRadioValue] = useState({
     label: "",
-    price: null,
+    price: 0,
   });
   const [paymentRadioValue, setPaymentRadioValue] = useState({
     label: "card",
     price: null,
   });
 
-  const [error, setError] = useState(false);
-  const [discountCode, setDiscountCode] = useState("");
+  const [errorObject, setErrorObject] = useState({ message: "", error: false });
+  const [discountCode, setDiscountCode] = useState({
+    label: "",
+    valid: false,
+    value: 0,
+    _id: null,
+  });
   const [stripePromise, setStripePromise] = useState(null);
 
   const router = useRouter();
@@ -106,7 +111,10 @@ const Checkout = ({ publishableKey, clientSecret }) => {
       paymentRadioValue.label === "" ||
       cartItems.length === 0
     ) {
-      setError(true);
+      setErrorObject({
+        error: true,
+        message: "Please fill in all the input forms",
+      });
       setIsLoading(false);
       return;
     }
@@ -124,6 +132,7 @@ const Checkout = ({ publishableKey, clientSecret }) => {
       shipping: shippingRadioValue,
       paymentMethod: paymentRadioValue,
       cartItems: cartItems,
+      discountCode: discountCode,
     };
 
     const { error } = await stripe.confirmPayment({
@@ -153,9 +162,52 @@ const Checkout = ({ publishableKey, clientSecret }) => {
     setIsLoading(false);
   };
 
+  const updatePaymentIntent = async (type, shipping) => {
+    try {
+      let discount = { ...discountCode };
+      console.log('discount1', discount);
+      if (type === "discount") {
+        const response = await axios.post(
+          `${serverUrl}/discount/validate-discount-code`,
+          {
+            discountCode: discountCode,
+          }
+        );
+        discount = response.data.discount;
+        console.log("discount2", discount);
+        if (!discount.valid) {
+          setErrorObject({ message: "Invalid Discount code", error: true });
+          return;
+        } else {
+          setDiscountCode(discount);
+        }
+      }
+      const result = await axios.post(
+        `${serverUrl}/orders/update-payment-intent`,
+        {
+          cartItems: cartItems,
+          discount: discount,
+          id: paymentIntentId,
+          shipping: shipping,
+        }
+      ); 
+    } catch (error) {
+      console.log(error);
+      setErrorObject({
+        message: "An error occured, please try again",
+        error: true,
+      });
+    }
+  };
+
   useEffect(() => {
     setStripePromise(loadStripe(publishableKey));
   }, [publishableKey]);
+
+  const shippingHandler = (e) => {
+    setShippingRadioValue(e);
+    updatePaymentIntent("shipping", e);
+  };
 
   const orderSummary = (
     <>
@@ -169,10 +221,19 @@ const Checkout = ({ publishableKey, clientSecret }) => {
             inputClass={`${classes.input} ${classes.discountInput}`}
             labelClass={classes.discountLabel}
             label="Discount code"
-            value={discountCode}
-            onChange={(e) => setDiscountCode(e.target.value)}
+            value={discountCode.label}
+            onChange={(e) =>
+              setDiscountCode((prev) => ({ ...prev, label: e.target.value }))
+            }
           />
-          <button className={classes.discountButton}>Apply</button>
+          <button
+            className={classes.discountButton}
+            onClick={() =>
+              updatePaymentIntent("discount", { ...shippingRadioValue })
+            }
+          >
+            Apply
+          </button>
         </div>
         <div className={classes.line}></div>
         <div className={classes.orderSummaryInfoRow}>
@@ -182,16 +243,29 @@ const Checkout = ({ publishableKey, clientSecret }) => {
         <div className={classes.orderSummaryInfoRow}>
           <p className={classes.text2}>Shipping</p>
           <p className={classes.text2}>
-            {shippingRadioValue.price + " kr" || "?"}
+            {shippingRadioValue.price ? shippingRadioValue.price + " kr" : "?"}
           </p>
         </div>
+        {discountCode.valid && (
+          <div className={classes.orderSummaryInfoRow}>
+            <p className={classes.text2}>Discount</p>
+            <p className={classes.text2}>
+              -{getTotalAmount() * discountCode.value + " kr"}
+            </p>
+          </div>
+        )}
+
         <div className={classes.line}></div>
         <div className={classes.orderSummaryInfoRow}>
           <p className={classes.text2}>Total</p>
           <p className={classes.text2}>
-            {parseInt(getTotalAmount()) +
-              parseInt(shippingRadioValue.price) +
-              " kr" || getTotalAmount() + " " + "+ shipping"}
+            {shippingRadioValue.price
+              ? parseInt(getTotalAmount()) * (1 - discountCode.value) +
+                parseInt(shippingRadioValue.price) +
+                " kr"
+              : getTotalAmount() * (1 - discountCode.value) +
+                " " +
+                "+ shipping"}
           </p>
         </div>
       </div>
@@ -232,7 +306,7 @@ const Checkout = ({ publishableKey, clientSecret }) => {
             <RadioCheckbox
               optionList={shippingOptions}
               title="Shipping"
-              setRadioValue={setShippingRadioValue}
+              setRadioValue={shippingHandler}
               radioValue={shippingRadioValue}
             />
           </div>
@@ -271,12 +345,18 @@ const Checkout = ({ publishableKey, clientSecret }) => {
         </div>
       </>
 
-      {error && (
+      {errorObject.error && (
         <Modal>
-          <p>Please fill in all the shipping information</p>
+          <p
+            className={classes.textBoldLarge}
+            style={{ marginBottom: "5%", marginTop: "5%" }}
+          >
+            {errorObject.message}
+          </p>
           <button
-            className={classes.deliveryButton}
-            onClick={() => setError(false)}
+            className={buttonClass}
+            style={{ marginBottom: "5%" }}
+            onClick={() => setErrorObject({ error: false, message: "" })}
           >
             Ok
           </button>
@@ -303,11 +383,13 @@ export async function getServerSideProps(context) {
     }
   );
   const clientSecret = clientSecretResponse.data.clientSecret;
+  const paymentIntentId = clientSecretResponse.data.paymentIntentId;
 
   return {
     props: {
       publishableKey: publishableKey,
       clientSecret: clientSecret,
+      paymentIntentId: paymentIntentId,
     },
   };
 }

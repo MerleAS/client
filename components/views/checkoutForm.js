@@ -42,7 +42,7 @@ const CheckoutForm = ({
         </div>
         <AddressElement
           options={{
-            style: { base: { fontSize: "16px", height: "20px" } },
+            style: { base: { fontSize: "8px!important", height: "20px", fontFamily: "Helvetica" }},
             mode: "shipping",
             allowedCountries: ["NO"],
             fields: {

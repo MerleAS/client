@@ -1,68 +1,52 @@
 .backdrop {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 20;
-    background: rgba(23, 30, 68, 0.18);
-    backdrop-filter: blur(1px);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .modal {
-    position: fixed;
-    min-block-size: min-content;
-    height: fit-content;
-    width: 26rem;
-    max-width: 36rem;
-    left: calc(50% - 13rem);
-    top: 20%;
-    bottom: 30%;
-    background-color: white;
-    padding: 1rem;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-    z-index: 30;
-    animation: slide-down 100ms ease-out forwards;
-  }
-  
-  .mobileModal {
-    position: fixed;
-    min-block-size: min-content;
-    height: fit-content;
-    width: 16rem;
-    max-width: 36rem;
-    left: calc(50% - 8rem);
-    top: 20%;
-    bottom: 30%;
-    background-color: white;
-    padding: 0.5rem;
-    border-radius: 2px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
-    z-index: 30;
-    animation: slide-down 100ms ease-out forwards;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 20;
+  background: rgba(23, 30, 68, 0.18);
+  backdrop-filter: blur(1px);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) !important;
+  min-block-size: -moz-min-content;
+  min-block-size: min-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  width: 26rem;
+  max-width: 36rem;
+  background-color: white;
+  padding: 1rem;
+  border-radius: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 30;
+  animation: slide-down 100ms ease-out forwards;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
   }
 
-  .content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
-  
-  
-  @keyframes slide-down {
-    from {
-      opacity: 0;
-      transform: translateY(-3rem);
-    }
-  
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
+}

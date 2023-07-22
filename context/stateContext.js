@@ -10,6 +10,7 @@ export const StateContext = createContext({
   getTotalAmount: () => {},
   setRouteStack: () => {},
   routeStackHandler: () => {},
+  setErrorObject: () => {},
 });
 
 const StateContextProvider = (props) => {
@@ -18,6 +19,7 @@ const StateContextProvider = (props) => {
   const [cartIsActive, setCartIsActive] = useState(false);
   const [searchIsActive, setSearchIsActive] = useState(false);
   const [routeStack, setRouteStack] = useState([{ label: "Home", path: "/" }]);
+  const [errorObject, setErrorObject] = useState({error: false, message: ""})
 
   const addToCartHandler = (product) => {
     const productExist = cartItems.find(
@@ -118,6 +120,7 @@ const StateContextProvider = (props) => {
         cartIsActive,
         searchIsActive,
         routeStack,
+        errorObject,
         setRouteStack,
         routeStackHandler,
         addToCartHandler,
@@ -127,6 +130,7 @@ const StateContextProvider = (props) => {
         changeAmountHandler,
         setCartIsActive,
         setSearchIsActive,
+        setErrorObject,
       }}
     >
       {props.children}

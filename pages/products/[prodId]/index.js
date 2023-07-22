@@ -246,22 +246,6 @@ const ProductDetail = ({ product, imageUrls}) => {
   );
 };
 
-/* export async function getStaticPaths() {
-  const originalProds = await axios.get("http://localhost:8080/products");
-  const secondHandProds =  await axios.get("http://localhost:8080/second-hand/products")
-  const originalQueries = originalProds.data.products.map((prod) => {
-    return { params: { prodId: prod._id } };
-  });
-  const secondHandQueries = secondHandProds.data.products.map((prod) => {
-    return { params: { prodId: prod._id } };
-  });
-  const queries = [...originalQueries, ...secondHandQueries]
-  return {
-    fallback: false,
-    paths: queries,
-  };
-} */
-
 export async function getServerSideProps(context) {
   const prodId = context.params.prodId;
   const site = context.query;

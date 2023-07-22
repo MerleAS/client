@@ -8,7 +8,7 @@ import { StateContext } from "../../context/stateContext";
 import classes from "../../styles/pages/checkout.module.css";
 import useIsMobile from "../../components/util/useIsMobile";
 
-import Modal from "../../components/UI/modal";
+import Error from "../../components/layout/error";
 import Input from "../../components/UI/input";
 
 import RadioCheckbox from "../../components/views/radioCheckbox";
@@ -58,7 +58,7 @@ const shippingOptions = [
 ];
 
 const Checkout = ({ publishableKey, clientSecret, paymentIntentId }) => {
-  const { getTotalAmount, cartItems, serverUrl } = useContext(StateContext);
+  const { getTotalAmount, cartItems, serverUrl, setErrorObject } = useContext(StateContext);
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -76,7 +76,6 @@ const Checkout = ({ publishableKey, clientSecret, paymentIntentId }) => {
     price: null,
   });
 
-  const [errorObject, setErrorObject] = useState({ message: "", error: false });
   const [discountCode, setDiscountCode] = useState({
     label: "",
     valid: false,
@@ -165,7 +164,7 @@ const Checkout = ({ publishableKey, clientSecret, paymentIntentId }) => {
   const updatePaymentIntent = async (type, shipping) => {
     try {
       let discount = { ...discountCode };
-      console.log('discount1', discount);
+      console.log("discount1", discount);
       if (type === "discount") {
         const response = await axios.post(
           `${serverUrl}/discount/validate-discount-code`,
@@ -190,7 +189,7 @@ const Checkout = ({ publishableKey, clientSecret, paymentIntentId }) => {
           id: paymentIntentId,
           shipping: shipping,
         }
-      ); 
+      );
     } catch (error) {
       console.log(error);
       setErrorObject({
@@ -345,23 +344,7 @@ const Checkout = ({ publishableKey, clientSecret, paymentIntentId }) => {
         </div>
       </>
 
-      {errorObject.error && (
-        <Modal>
-          <p
-            className={classes.textBoldLarge}
-            style={{ marginBottom: "5%", marginTop: "5%" }}
-          >
-            {errorObject.message}
-          </p>
-          <button
-            className={buttonClass}
-            style={{ marginBottom: "5%" }}
-            onClick={() => setErrorObject({ error: false, message: "" })}
-          >
-            Ok
-          </button>
-        </Modal>
-      )}
+      <Error />
     </>
   );
 };

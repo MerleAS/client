@@ -6,7 +6,7 @@ import Modal from "../UI/modal";
 
 import classes from "../../styles/components/layout/error.module.css";
 
-const error = () => {
+const Error = () => {
   const { errorObject, setErrorObject } = useContext(StateContext);
 
   
@@ -27,4 +27,4 @@ const error = () => {
   );
 };
 
-export default error;
+export default Error;

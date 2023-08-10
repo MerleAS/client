@@ -9,7 +9,7 @@ import SideModal from "../UI/sideModal";
 import classes from "../../styles/components/layout/search.module.css";
 
 const Search = () => {
-  const { setSearchIsActive, searchIsActive, serverUrl } =
+  const { setSearchIsActive, searchIsActive } =
     useContext(StateContext);
 
   const router = useRouter();
@@ -24,7 +24,7 @@ const Search = () => {
     try {
       if (query.length > 1) {
         const prods = await axios.get(
-          `${serverUrl}/second-hand/products?query=${query}`
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/second-hand/products?query=${query}`
         );
         setProducts(prods.data.products);
         /* const brandsList = []

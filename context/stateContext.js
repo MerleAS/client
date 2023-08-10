@@ -14,7 +14,6 @@ export const StateContext = createContext({
 });
 
 const StateContextProvider = (props) => {
-  const [serverUrl] = useState(process.env.NEXT_PUBLIC_SERVER_URL);
   const [cartItems, setCartItems] = useState([]);
   const [cartIsActive, setCartIsActive] = useState(false);
   const [searchIsActive, setSearchIsActive] = useState(false);
@@ -115,7 +114,6 @@ const StateContextProvider = (props) => {
   return (
     <StateContext.Provider
       value={{
-        serverUrl,
         cartItems,
         cartIsActive,
         searchIsActive,

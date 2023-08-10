@@ -22,7 +22,7 @@ const ProductDetail = ({ product, imageUrls}) => {
 
   const [error, setError] = useState(false);
 
-  const { serverUrl, addToCartHandler, setCartIsActive } =
+  const { addToCartHandler, setCartIsActive } =
     useContext(StateContext);
     
   const isMobile = useIsMobile();

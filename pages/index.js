@@ -1,10 +1,8 @@
-import { useRouter } from "next/router";
 import Head from "next/head";
 import Image from "next/image";
-import { useContext } from "react";
+import Link from "next/link";
 import axios from "axios";
 
-import { StateContext } from "../context/stateContext";
 import useIsMobile from "../components/util/useIsMobile";
 import classes from "../styles/index.module.css";
 
@@ -12,16 +10,17 @@ import Footer from "../components/layout/footer";
 import Merle from "../public/icons/SVG/merle.svg";
 
 const Home = (props) => {
-  const { serverUrl, routeStackHandler } = useContext(StateContext);
-  const isMobile = useIsMobile();
-  const router = useRouter();
-
-  const { pictureUrls, mobilePictureUrls } = props;
-
+  /* const { routeStackHandler } = useContext(StateContext);
   const routeHandler = (path) => {
     router.push(path);
     routeStackHandler({ path: path, label: "Products" });
-  };
+  }; */
+
+
+  const isMobile = useIsMobile();
+
+  const { pictureUrls, mobilePictureUrls } = props;
+  
 
   return (
     <div className={classes.container}>
@@ -35,13 +34,15 @@ const Home = (props) => {
         {/* <Anchor href="/products?site=original" color="black" className={classes.discover}>
           DISCOVER
         </Anchor>  */}
-        <div
+        {/* <div
           onClick={() => routeHandler("/products?site=second-hand")}
           color="black"
           className={classes.discover}
         >
-          DISCOVER
-        </div>
+        </div> */}
+        <Link href="/products?site=second-hand" className={classes.discover}>
+          <a className={classes.discover}>DISCOVER</a>
+        </Link>
       </div>
       {!isMobile && (
         <div className={classes.imagesContainer}>
@@ -49,11 +50,13 @@ const Home = (props) => {
             return (
               <Image
                 key={index}
-                loader={() => serverUrl + '/' + pictureUrl}
+                src={process.env.NEXT_PUBLIC_SERVER_URL + "/" + pictureUrl}
+                loader={() =>
+                  process.env.NEXT_PUBLIC_SERVER_URL + "/" + pictureUrl
+                }
                 layout={"responsive"}
                 width={1500}
                 height={1000}
-                src={serverUrl + '/' + pictureUrl}
                 alt="image"
                 className={classes.image}
               />
@@ -67,11 +70,15 @@ const Home = (props) => {
             return (
               <Image
                 key={index}
-                loader={() => serverUrl + '/' + mobilePictureUrl}
+                src={
+                  process.env.NEXT_PUBLIC_SERVER_URL + "/" + mobilePictureUrl
+                }
+                loader={() =>
+                  process.env.NEXT_PUBLIC_SERVER_URL + "/" + mobilePictureUrl
+                }
                 layout={"responsive"}
                 width={1000}
                 height={1550}
-                src={serverUrl + '/' + mobilePictureUrl}
                 alt="image"
                 className={classes.image}
               />
@@ -84,16 +91,19 @@ const Home = (props) => {
   );
 };
 
-export async function getStaticProps() {
-  const response = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/home/desktop`);
-  const result = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/home/mobile`);
+export async function getServerSideProps() {
+  const response = await axios.get(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/home/desktop`
+  );
+  const result = await axios.get(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/home/mobile`
+  );
   return {
     props: {
       pictureUrls: response.data,
       mobilePictureUrls: result.data,
     },
-    revalidate: 3600,
-  };
+  }; 
 }
 
 export default Home;

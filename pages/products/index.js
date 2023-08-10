@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Image from "next/image";
@@ -8,16 +8,15 @@ import Footer from "../../components/layout/footer";
 import Cart from "../../components/layout/cart";
 import Search from "../../components/layout/search";
 
-import { StateContext } from "../../context/stateContext";
 import useIsMobile from "../../components/util/useIsMobile";
 import classes from "../../styles/pages/products.module.css";
 
 const Products = (props) => {
-  const { routeStackHandler } = useContext(StateContext);
+  /* const { routeStackHandler } = useContext(StateContext); */
   const { products, site } = props;
   const router = useRouter();
 
-  const [imageIndex, setImageIndex] = useState({index: 0, id: null}); 
+  const [imageIndex, setImageIndex] = useState({ index: 0, id: null });
 
   const isMobile = useIsMobile();
 
@@ -33,10 +32,10 @@ const Products = (props) => {
     if (type === "over") {
       const prod = products.find((p) => p._id === id);
       if (prod.imageUrls.length > 1) {
-        setImageIndex({index: 1, id: prod._id});
+        setImageIndex({ index: 1, id: prod._id });
       }
     } else {
-      setImageIndex({index: 0, id: null});
+      setImageIndex({ index: 0, id: null });
     }
   };
 
@@ -74,11 +73,11 @@ const Products = (props) => {
             if (totalStock === 0) {
               return;
             }
-            let idx = 0
+            let idx = 0;
             if (imageIndex.id === prod._id) {
-              idx = 1
+              idx = 1;
             } else {
-              idx = 0
+              idx = 0;
             }
 
             const imageUrls = prod.imageUrls.map(

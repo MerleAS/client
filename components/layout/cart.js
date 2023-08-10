@@ -1,17 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
-import Image from "next/image";
 
 import classes from "../../styles/components/layout/cart.module.css";
-import useIsMobile from "../util/useIsMobile";
 import { StateContext } from "../../context/stateContext";
 
-import IncrementInput from "../UI/incrementInput";
 import SideModal from "../UI/sideModal";
 import ProductList from "../views/productList";
 
 const Cart = () => {
-  const isMobile = useIsMobile();
   const router = useRouter();
   const [buttonDisabled, setButtonDisabled] = useState(false);
 
@@ -19,7 +15,6 @@ const Cart = () => {
     cartIsActive,
     setCartIsActive,
     cartItems,
-    serverUrl,
     getTotalAmount,
     changeAmountHandler,
     removeFromCartHandler,
@@ -35,7 +30,9 @@ const Cart = () => {
 
   const routeHandler = () => {
     setCartIsActive(false);
-    router.push(`/checkout?cartItems=${encodeURIComponent(JSON.stringify(cartItems))}`);
+    router.push(
+      `/checkout?cartItems=${encodeURIComponent(JSON.stringify(cartItems))}`
+    );
   };
 
   useEffect(() => {

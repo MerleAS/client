@@ -58,7 +58,7 @@ const shippingOptions = [
 ];
 
 const Checkout = ({ publishableKey, clientSecret, paymentIntentId }) => {
-  const { getTotalAmount, cartItems, serverUrl, setErrorObject } = useContext(StateContext);
+  const { getTotalAmount, cartItems, setErrorObject } = useContext(StateContext);
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -138,7 +138,7 @@ const Checkout = ({ publishableKey, clientSecret, paymentIntentId }) => {
       type: "card",
       elements,
       confirmParams: {
-        return_url: `${serverUrl}/orders/order-complete?order=${encodeURIComponent(
+        return_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/orders/order-complete?order=${encodeURIComponent(
           JSON.stringify(order)
         )}`,
       },
@@ -167,7 +167,7 @@ const Checkout = ({ publishableKey, clientSecret, paymentIntentId }) => {
       console.log("discount1", discount);
       if (type === "discount") {
         const response = await axios.post(
-          `${serverUrl}/discount/validate-discount-code`,
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/discount/validate-discount-code`,
           {
             discountCode: discountCode,
           }
@@ -182,7 +182,7 @@ const Checkout = ({ publishableKey, clientSecret, paymentIntentId }) => {
         }
       }
       const result = await axios.post(
-        `${serverUrl}/orders/update-payment-intent`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/orders/update-payment-intent`,
         {
           cartItems: cartItems,
           discount: discount,

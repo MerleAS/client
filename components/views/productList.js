@@ -1,7 +1,4 @@
 import Image from "next/image";
-import { useContext } from "react";
-
-import { StateContext } from "../../context/stateContext";
 
 import IncrementInput from "../UI/incrementInput";
 
@@ -13,7 +10,6 @@ const ProductList = ({
   amountHandler,
   removeFromCartHandler,
 }) => {
-  const { serverUrl } = useContext(StateContext);
 
   return (
     <>
@@ -23,8 +19,8 @@ const ProductList = ({
             <div className={classes.cartItemContainer} key={index}>
               <div className={classes.imageContainer}>
                 <Image
-                  src={serverUrl + "/" + prod.imageUrls[0]}
-                  loader={() => serverUrl + "/" + prod.imageUrls[0]}
+                  src={process.env.NEXT_PUBLIC_SERVER_URL + "/" + prod.imageUrls[0]}
+                  loader={() => process.env.NEXT_PUBLIC_SERVER_URL + "/" + prod.imageUrls[0]}
                   layout="responsive"
                   width={1000}
                   height={1500}

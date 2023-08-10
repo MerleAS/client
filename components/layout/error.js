@@ -9,6 +9,7 @@ import classes from "../../styles/components/layout/error.module.css";
 const error = () => {
   const { errorObject, setErrorObject } = useContext(StateContext);
 
+  
   return (
     <>
       {errorObject.error && (

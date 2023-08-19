@@ -58,7 +58,8 @@ const shippingOptions = [
 ];
 
 const Checkout = ({ publishableKey, clientSecret, paymentIntentId }) => {
-  const { getTotalAmount, cartItems, setErrorObject } = useContext(StateContext);
+  const { getTotalAmount, cartItems, setErrorObject } =
+    useContext(StateContext);
 
   const [email, setEmail] = useState("");
   const [name, setName] = useState("");
@@ -138,7 +139,9 @@ const Checkout = ({ publishableKey, clientSecret, paymentIntentId }) => {
       type: "card",
       elements,
       confirmParams: {
-        return_url: `${process.env.NEXT_PUBLIC_SERVER_URL}/orders/order-complete?order=${encodeURIComponent(
+        return_url: `${
+          process.env.NEXT_PUBLIC_SERVER_URL
+        }/orders/order-complete?order=${encodeURIComponent(
           JSON.stringify(order)
         )}`,
       },

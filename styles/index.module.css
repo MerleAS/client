@@ -15,6 +15,31 @@
   position: fixed;
 }
 
+.videoContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.contentContainer {
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+.textContainer {
+  width: 40%;
+  padding-left: 10%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .discoverContainer {
   width: fit-content;
   position: absolute;
@@ -28,7 +53,7 @@
 }
 
 .discover {
-  font-size: 30px;
+  font-size: 24px;
   padding-left: 2%;
   padding-right: 2%;
   width: 100%;
@@ -39,19 +64,15 @@
   outline: none;
 }
 
-.imagesContainer {
-  display: grid;
-  grid-template-columns: 1fr;
-  position: relative;
-  overflow-x: hidden;
-  align-items: center;
-  justify-content: center;
-}
-
 .imageContainer {
-  margin: 0;
+  position: absolute; 
+  top: 110%;
+  right: 0;
+  width: 30%; /* Set width to 100% to cover the screen */
+  height: 100%; /* Set height to 100% to cover the screen */
 }
 
 .image {
   height: 100% !important;
+  width: 40%;
 }

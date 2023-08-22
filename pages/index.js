@@ -9,18 +9,14 @@ import classes from "../styles/index.module.css";
 import Footer from "../components/layout/footer";
 import Merle from "../public/icons/SVG/merle.svg";
 
-const Home = (props) => {
-  /* const { routeStackHandler } = useContext(StateContext);
-  const routeHandler = (path) => {
-    router.push(path);
-    routeStackHandler({ path: path, label: "Products" });
-  }; */
+import intro1 from "../public/videos/intro1.mp4";
+import intro2 from "../public/videos/intro2.mp4";
+import mobileIntro from "../public/videos/mobile-intro.mp4";
 
+import { Suspense } from "react";
 
+const Home = () => {
   const isMobile = useIsMobile();
-
-  const { pictureUrls, mobilePictureUrls } = props;
-  
 
   return (
     <div className={classes.container}>
@@ -30,68 +26,95 @@ const Home = (props) => {
       <div className={classes.header}>
         <Merle height="120" width="280" />
       </div>
-      <div className={classes.discoverContainer}>
-        {/* <Anchor href="/products?site=original" color="black" className={classes.discover}>
-          DISCOVER
-        </Anchor>  */}
-        {/* <div
-          onClick={() => routeHandler("/products?site=second-hand")}
-          color="black"
-          className={classes.discover}
-        >
-        </div> */}
-        <Link href="/products?site=second-hand" className={classes.discover}>
-          <a className={classes.discover}>DISCOVER</a>
-        </Link>
-      </div>
-      {!isMobile && (
-        <div className={classes.imagesContainer}>
-          {pictureUrls.map((pictureUrl, index) => {
-            return (
-              <Image
-                key={index}
-                src={process.env.NEXT_PUBLIC_SERVER_URL + "/" + pictureUrl}
-                loader={() =>
-                  process.env.NEXT_PUBLIC_SERVER_URL + "/" + pictureUrl
-                }
-                layout={"responsive"}
-                width={1500}
-                height={1000}
-                alt="image"
-                className={classes.image}
-              />
-            );
-          })}
+      {isMobile && (
+        <div className={classes.discoverContainer}>
+          <Link href="/products?site=second-hand" className={classes.discover}>
+            <a className={classes.discover}>DISCOVER</a>
+          </Link>
         </div>
       )}
-      {isMobile && (
-        <div className={classes.imagesContainer}>
-          {mobilePictureUrls.map((mobilePictureUrl, index) => {
-            return (
-              <Image
-                key={index}
-                src={
-                  process.env.NEXT_PUBLIC_SERVER_URL + "/" + mobilePictureUrl
-                }
-                loader={() =>
-                  process.env.NEXT_PUBLIC_SERVER_URL + "/" + mobilePictureUrl
-                }
-                layout={"responsive"}
-                width={1000}
-                height={1550}
-                alt="image"
-                className={classes.image}
+
+      {!isMobile && (
+        <>
+          <div className={classes.videoContainer}>
+            <Suspense fallback="loading...">
+              <video
+                loop
+                autoPlay
+                muted
+                playsinline
+                preload="none"
+                src={intro1}
+                type="video/mp4"
               />
-            );
-          })}
-        </div>
+            </Suspense>
+          </div>
+          <div className={classes.contentContainer}>
+            <div className={classes.textContainer}>
+              <h2>Welcome to MERLE</h2>
+              <p>
+                We share our interest in fashion, and sell popular second hand
+                and vintage products from well known brands
+              </p>
+              <Link
+                href="/products?site=second-hand"
+                className={classes.discover}
+              >
+                <a className={classes.discover} style={{marginTop: "5%"}}>DISCOVER</a>
+              </Link>
+            </div>
+            <div className={classes.imageContainer}>
+              <Image
+                className={classes.image}
+                src="/images/landing-page-image.PNG"
+                loader={() => "/images/landing-page-image.PNG"}
+                /* height={230}
+              width={250} */
+                layout="fill" // Set layout to fill
+                objectFit="cover" // Cover the container while maintaining aspect ratio
+                priority={true}
+              />
+            </div>
+          </div>
+          <div className={classes.videoContainer}>
+            <Suspense fallback="loading...">
+              <video
+                loop
+                autoPlay
+                muted
+                playsinline
+                preload="none"
+                src={intro2}
+                type="video/mp4"
+              />
+            </Suspense>
+          </div>
+        </>
+      )}
+
+      {isMobile && (
+        <>
+          <div className={classes.videoContainer}>
+            <Suspense fallback="loading...">
+              <video
+                loop
+                autoPlay
+                muted
+                playsinline
+                preload="none"
+                src={mobileIntro}
+                type="video/mp4"
+              />
+            </Suspense>
+          </div>
+        </>
       )}
       <Footer />
     </div>
   );
 };
 
-export async function getServerSideProps() {
+/* export async function getServerSideProps() {
   const response = await axios.get(
     `${process.env.NEXT_PUBLIC_SERVER_URL}/home/desktop`
   );
@@ -103,7 +126,7 @@ export async function getServerSideProps() {
       pictureUrls: response.data,
       mobilePictureUrls: result.data,
     },
-  }; 
-}
+  };
+} */
 
 export default Home;

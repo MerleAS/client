@@ -43,7 +43,7 @@ const Home = () => {
                 autoPlay
                 muted
                 playsinline
-                preload="none"
+                preload="auto"
                 src={intro1}
                 type="video/mp4"
               />
@@ -83,7 +83,7 @@ const Home = () => {
                 autoPlay
                 muted
                 playsinline
-                preload="none"
+                preload="auto"
                 src={intro2}
                 type="video/mp4"
               />

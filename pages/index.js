@@ -42,7 +42,7 @@ const Home = () => {
                 loop
                 autoPlay
                 muted
-                playsinline
+                playsInline
                 preload="auto"
                 src={intro1}
                 type="video/mp4"
@@ -82,7 +82,7 @@ const Home = () => {
                 loop
                 autoPlay
                 muted
-                playsinline
+                playsInline
                 preload="auto"
                 src={intro2}
                 type="video/mp4"
@@ -100,8 +100,8 @@ const Home = () => {
                 loop
                 autoPlay
                 muted
-                playsinline
-                preload="none"
+                playsInline
+                preload="auto"
                 src={mobileIntro}
                 type="video/mp4"
               />

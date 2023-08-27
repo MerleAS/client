@@ -14,6 +14,7 @@ import mobileIntro from "../public/videos/mobile-intro.mp4";
 
 import { Suspense } from "react";
 
+
 const Home = () => {
   const isMobile = useIsMobile();
 

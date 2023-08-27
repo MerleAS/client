@@ -1,5 +1,57 @@
 .container {
-    height: 16rem;
+  height: 24rem;
+  width: 100%;
+  background-color: black;
+}
+
+.innerContainer {
+  width: 90%;
+  height: 100%;
+  margin-left: 5%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.heading {
+    margin-top: 4%;
     width: 100%;
-    background-color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.contentContainer {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.subHeading {
+    font-size: 14px;
+    font-weight: 400;
+    color: white;
+}
+
+.bottomContainer {
+  margin-bottom: 20px;
+}
+
+.line {
+  width: 100%;
+  border-bottom: 1px solid white;
+}
+
+.finalContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text {
+  color: white;
+  font-size: 10px;
 }

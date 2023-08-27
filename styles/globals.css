@@ -6,6 +6,7 @@
 
 html {
   height: 100%;
+  width: 100%;
   font-family: "Inter";
 }
 
@@ -14,6 +15,14 @@ head {
 }
 
 input {
+  font-family: "Inter";
+}
+
+textarea {
+  font-family: "Inter";
+}
+
+textarea::placeholder {
   font-family: "Inter";
 }
 

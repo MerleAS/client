@@ -1,7 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import axios from "axios";
 
 import useIsMobile from "../components/util/useIsMobile";
 import classes from "../styles/index.module.css";
@@ -27,9 +26,12 @@ const Home = () => {
         <Merle height="120" width="280" />
       </div>
       {isMobile && (
-        <div className={classes.discoverContainer}>
-          <Link href="/products?site=second-hand" className={classes.discover}>
-            <a className={classes.discover}>DISCOVER</a>
+        <div className={classes.mobileDiscoverContainer}>
+          <Link
+            href="/products?site=second-hand"
+            className={classes.mobileDiscover}
+          >
+            <a className={classes.mobileDiscover}>DISCOVER</a>
           </Link>
         </div>
       )}
@@ -51,23 +53,53 @@ const Home = () => {
           </div>
           <div className={classes.contentContainer}>
             <div className={classes.textContainer}>
-              <h2>Welcome to MERLE</h2>
-              <p>
+              <h2
+                className={classes.heading}
+              >
+                Welcome to MERLE!
+              </h2>
+              <p className={classes.paragraph}>
                 We share our interest in fashion, and sell popular second hand
                 and vintage products from well known brands
               </p>
-              <Link
-                href="/products?site=second-hand"
-                className={classes.discover}
-              >
-                <a className={classes.discover} style={{marginTop: "5%"}}>DISCOVER</a>
-              </Link>
+              <div className={classes.discoverContainer}>
+                <Link
+                  href="/products?site=second-hand"
+                  className={classes.discover}
+                >
+                  <a className={classes.discover}>DISCOVER</a>
+                </Link>
+              </div>
             </div>
             <div className={classes.imageContainer}>
               <Image
                 className={classes.image}
-                src="/images/landing-page-image.PNG"
-                loader={() => "/images/landing-page-image.PNG"}
+                src="/images/landing-page-image2.png"
+                loader={() => "/images/landing-page-image2.png"}
+                /* height={230}
+              width={250} */
+                layout="fill" // Set layout to fill
+                objectFit="cover" // Cover the container while maintaining aspect ratio
+                priority={true}
+              />
+            </div>
+            <div className={classes.imageContainer}>
+              <Image
+                className={classes.image}
+                src="/images/landing-page-image3.png"
+                loader={() => "/images/landing-page-image3.png"}
+                /* height={230}
+              width={250} */
+                layout="fill" // Set layout to fill
+                objectFit="cover" // Cover the container while maintaining aspect ratio
+                priority={true}
+              />
+            </div>
+            <div className={classes.imageContainer}>
+              <Image
+                className={classes.image}
+                src="/images/landing-page-image.png"
+                loader={() => "/images/landing-page-image.png"}
                 /* height={230}
               width={250} */
                 layout="fill" // Set layout to fill

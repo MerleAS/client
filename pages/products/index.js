@@ -11,9 +11,8 @@ import Search from "../../components/layout/search";
 import useIsMobile from "../../components/util/useIsMobile";
 import classes from "../../styles/pages/products.module.css";
 
-const Products = (props) => {
+const Products = ({ products, site }) => {
   /* const { routeStackHandler } = useContext(StateContext); */
-  const { products, site } = props;
   const router = useRouter();
 
   const [imageIndex, setImageIndex] = useState({ index: 0, id: null });

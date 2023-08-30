@@ -1,7 +1,9 @@
 import { useState } from "react";
+import axios from "axios";
 
 import Footer from "../../components/layout/footer";
 import Header from "../../components/layout/header";
+import Modal from "../../components/UI/modal";
 
 import classes from "../../styles/pages/contact.module.css";
 
@@ -9,14 +11,53 @@ const Contact = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState(null);
+  const [phoneNumber, setPhoneNumber] = useState("");
 
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
 
-  const submitHandler = () => {
-    console.log("johs")
-  }
+  console.log("message", message);
+
+  const [modal, setModal] = useState({ isActive: false, message: "" });
+
+  const submitHandler = async () => {
+    if (
+      firstName !== "" &&
+      lastName !== "" &&
+      email !== "" &&
+      phoneNumber !== "" &&
+      subject !== "" &&
+      message !== ""
+    ) {
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/question/post-question`,
+        {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          number: phoneNumber,
+          subject: subject,
+          question: message,
+        }
+      );
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setPhoneNumber("");
+      setSubject("");
+      setMessage("");
+      setModal({
+        isActive: true,
+        message: "Your request has successfully been submited",
+      });
+    } else
+      setModal({
+        isActive: true,
+        message: "Please fill in all the inputs",
+      });
+  };
+
+  console.log(modal);
 
   return (
     <>
@@ -72,11 +113,24 @@ const Contact = () => {
             />
           </div>
           <div className={classes.buttonContainer}>
-            <button className={classes.button} onClick={submitHandler}>Submit</button>
+            <button className={classes.button} onClick={submitHandler}>
+              Submit
+            </button>
           </div>
         </div>
       </div>
       <Footer />
+      {modal.isActive && (
+        <Modal onClose={() => setModal({ isActive: false, message: "" })}>
+          <p>{modal.message}</p>
+          <button
+            onClick={() => setModal({ isActive: false, message: "" })}
+            className={classes.modalButton}
+          >
+            OK
+          </button>
+        </Modal>
+      )}
     </>
   );
 };

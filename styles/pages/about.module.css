@@ -1,0 +1,40 @@
+.container {
+  width: 90%;
+  margin-left: 5%;
+  margin-bottom: 5%;
+}
+
+.heading {
+  font-size: 20px;
+  font-weight: 300;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5%;
+}
+
+.textContainer {
+  width: 40%;
+  padding-bottom: 5%;
+  border: 1px solid black;
+}
+
+@media (max-width: 800px) {
+  .textContainer {
+    width: 80%;
+    margin-left: 10%;
+  }
+}
+
+.paragraph {
+  padding: 2% 8% 2% 8%;
+  line-height: 28px;
+}
+
+.imageContainer {
+  width: 80%;
+  margin-left: 10%;
+  margin-top: 5%;
+  margin-bottom: 10%;
+}

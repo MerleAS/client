@@ -23,7 +23,7 @@
 .contentContainer {
   width: 80%;
   padding: 2%;
-  margin-left: 10%;
+  margin-left: 8%;
   margin-bottom: 10%;
   border: 1px solid #d9d9d9;
   display: flex;
@@ -59,10 +59,10 @@
 }
 
 .inputGroup2 {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    row-gap: 60px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  row-gap: 60px;
 }
 
 .input {
@@ -72,19 +72,27 @@
 }
 
 .input::placeholder {
-  color:  #b6b4b4
+  color: #b6b4b4;
 }
 
 .buttonContainer {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .button {
-    padding: 1% 5% 1% 5%;
-    background-color: #d9d9d9;
-    border: 1px solid #d9d9d9;
-    border-radius: 2px;
+  padding: 1% 5% 1% 5%;
+  background-color: #d9d9d9;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+}
+
+.modalButton {
+  padding: 1% 5% 1% 5%;
+  background-color: black;
+  border: 1px solid black;
+  border-radius: 2px;
+  color: white
 }

@@ -21,7 +21,7 @@ const Footer = () => {
               <Link href="/about">About MERLE</Link>
             </p>
             <p className={classes.text}>
-              <Link href="delivery-and-returns">Delivery and returns</Link>
+              <Link href="/faq?qry=delivery-and-returns">Delivery and returns</Link>
             </p>
           </div>
           <div>

@@ -7,6 +7,7 @@ import Instagram from "../../public/icons/SVG/instagram.svg";
 import Tiktok from "../../public/icons/SVG/tiktok.svg";
 
 const Footer = () => {
+
   return (
     <div className={classes.container}>
       <div className={classes.innerContainer}>
@@ -39,12 +40,8 @@ const Footer = () => {
           <div className={classes.finalContainer}>
             <p className={classes.text}>All rights reserved Merle AS 2023</p>
             <div className={classes.iconContainer}>
-              <Link href="/">
-                <Instagram height={20} width={20} />
-              </Link>
-              <Link href="/">
-                <Tiktok height={20} width={20} />
-              </Link>
+              <Instagram height={20} width={20} onClick={() => window.location.href = "https://www.instagram.com/merle__no/"}/>
+              <Tiktok height={20} width={20} onClick={() => window.location.href = "https://www.tiktok.com/@merle__no"}/>
             </div>
           </div>
         </div>

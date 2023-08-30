@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import classes from "../../styles/components/layout/cart.module.css";
 import { StateContext } from "../../context/stateContext";
 
-import SideModal from "../UI/sideModal";
+import Sidebar from "../UI/sidebar";
 import ProductList from "../views/productList";
 
 const Cart = () => {
@@ -73,7 +73,7 @@ const Cart = () => {
   );
 
   return (
-    <SideModal
+    <Sidebar
       isActive={cartIsActive}
       setIsActive={setCartIsActive}
       headerContent={headerContent}

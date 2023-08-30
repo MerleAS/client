@@ -101,7 +101,7 @@ const Products = ({ products, site }) => {
                     height={1500}
                     src={imageUrls[idx]}
                     loader={() => imageUrls[idx]}
-                    containerStyle={{ width: `${getWidth()}%` }}
+                    /* containerStyle={{ width: `${getWidth()}%` }} */
                     alt=""
                   />
                 </div>

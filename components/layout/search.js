@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import { StateContext } from "../../context/stateContext";
 
-import SideModal from "../UI/sideModal";
+import Sidebar from "../UI/sidebar";
 
 import classes from "../../styles/components/layout/search.module.css";
 
@@ -91,7 +91,7 @@ const Search = () => {
   );
 
   return (
-    <SideModal
+    <Sidebar
       isActive={searchIsActive}
       setIsActive={setSearchIsActive}
       title="Search"

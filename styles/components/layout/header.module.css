@@ -46,39 +46,105 @@
 
 .navIconContainer {
   width: 25%;
+  column-gap: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.navIcon {
-  width: 30px;
-  height: 30px;
-}
-
-.mobileNavMenu {
+.navMenuContainer {
   position: absolute;
-  width: 50%;
+  height: 50vh;
   background-color: white;
   display: flex;
   flex-direction: column;
   left: 0;
-  top: 6rem;
-  padding-bottom: 5px;
+  padding: 1rem;
+  box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.08), 0 0 4px rgba(0, 0, 0, 0.08),
+    4px -4px 4px rgba(0, 0, 0, 0.08);
 }
 
-.mobileNavContainer {
-  border-bottom: 1px solid black;
+.navMenu {
   height: 40px;
   display: flex;
   align-items: center;
-  padding-left: 10px;
+  padding-left: 1rem;
+  padding-top: 1rem;
 }
 
-.navOptionMobile {
+.menuOption {
   font-size: 16px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: black;
+}
+
+.backdrop {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  opacity: 0.3;
+  background-color: black;
+  transition: 600ms ease-in-out forwards;
+}
+
+.containerIn {
+  animation: slide-inn 600ms ease-in-out forwards;
+}
+
+.containerOut {
+  animation: slide-out 600ms ease-in-out forwards;
+}
+
+@keyframes slide-inn {
+  from {
+    opacity: 0.5;
+    transform: translateX(-100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0.5;
+    transform: translateX(-100%);
+  }
+}
+
+.backdropIn {
+  animation: in 600ms ease-out forwards;
+}
+
+.backdropOut {
+  animation: out 600ms ease-out forwards;
+}
+
+@keyframes in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 0.3;
+  }
+}
+
+@keyframes out {
+  from {
+    opacity: 0.3;
+  }
+
+  to {
+    opacity: 0;
+  }
 }

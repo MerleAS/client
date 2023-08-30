@@ -55,3 +55,8 @@
   color: white;
   font-size: 10px;
 }
+
+.iconContainer {
+  display: flex;
+  column-gap: 20px;
+}

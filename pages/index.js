@@ -14,7 +14,6 @@ import mobileIntro from "../public/videos/mobile-intro.mp4";
 
 import { Suspense } from "react";
 
-
 const Home = () => {
   const isMobile = useIsMobile();
 
@@ -54,11 +53,7 @@ const Home = () => {
           </div>
           <div className={classes.contentContainer}>
             <div className={classes.textContainer}>
-              <h2
-                className={classes.heading}
-              >
-                Welcome to MERLE!
-              </h2>
+              <h2 className={classes.heading}>Welcome to MERLE!</h2>
               <p className={classes.paragraph}>
                 We share our interest in fashion, and sell popular second hand
                 and vintage products from well known brands
@@ -77,10 +72,8 @@ const Home = () => {
                 className={classes.image}
                 src="/images/landing-page-image2.png"
                 loader={() => "/images/landing-page-image2.png"}
-                /* height={230}
-              width={250} */
-                layout="fill" // Set layout to fill
-                objectFit="cover" // Cover the container while maintaining aspect ratio
+                layout="fill"
+                objectFit="cover"
                 priority={true}
               />
             </div>
@@ -89,10 +82,8 @@ const Home = () => {
                 className={classes.image}
                 src="/images/landing-page-image3.png"
                 loader={() => "/images/landing-page-image3.png"}
-                /* height={230}
-              width={250} */
-                layout="fill" // Set layout to fill
-                objectFit="cover" // Cover the container while maintaining aspect ratio
+                layout="fill"
+                objectFit="cover"
                 priority={true}
               />
             </div>
@@ -101,10 +92,8 @@ const Home = () => {
                 className={classes.image}
                 src="/images/landing-page-image.png"
                 loader={() => "/images/landing-page-image.png"}
-                /* height={230}
-              width={250} */
-                layout="fill" // Set layout to fill
-                objectFit="cover" // Cover the container while maintaining aspect ratio
+                layout="fill"
+                objectFit="cover"
                 priority={true}
               />
             </div>

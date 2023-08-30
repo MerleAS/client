@@ -1,7 +1,10 @@
 import Link from "next/link";
 
 import classes from "../../styles/components/layout/footer.module.css";
+
 import Merle2 from "../../public/icons/SVG/merle2.svg";
+import Instagram from "../../public/icons/SVG/instagram.svg";
+import Tiktok from "../../public/icons/SVG/tiktok.svg";
 
 const Footer = () => {
   return (
@@ -21,7 +24,9 @@ const Footer = () => {
               <Link href="/about">About MERLE</Link>
             </p>
             <p className={classes.text}>
-              <Link href="/faq?qry=delivery-and-returns">Delivery and returns</Link>
+              <Link href="/faq?qry=delivery-and-returns">
+                Delivery and returns
+              </Link>
             </p>
           </div>
           <div>
@@ -33,7 +38,14 @@ const Footer = () => {
           <div className={classes.line} />
           <div className={classes.finalContainer}>
             <p className={classes.text}>All rights reserved Merle AS 2023</p>
-            <div className={classes.text}>icon</div>
+            <div className={classes.iconContainer}>
+              <Link href="/">
+                <Instagram height={20} width={20} />
+              </Link>
+              <Link href="/">
+                <Tiktok height={20} width={20} />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

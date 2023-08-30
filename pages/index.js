@@ -120,7 +120,7 @@ const Home = () => {
           <div className={classes.videoContainer}>
             <Suspense fallback="loading...">
               <video
-                poster=""
+                poster="/images/landing-page-image3.png"
                 loop
                 autoPlay
                 muted
@@ -130,6 +130,7 @@ const Home = () => {
               >
                 <source src={mobileIntro} type="video/mp4" />
                 <source src={mobileIntroWebm} type="video/webm" />
+                Your browser does not support the video tag
               </video>
             </Suspense>
           </div>

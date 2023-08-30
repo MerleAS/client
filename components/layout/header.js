@@ -89,7 +89,7 @@ const Header = () => {
               width="20"
               onClick={() => setMenuActive((prev) => !prev)}
             />
-            <SearchIcon width="20" height="20" />
+            <SearchIcon width="20" height="20" onClick={() => setSearchIsActive(true)}/>
           </div>
           <div
             className={classes.mobileLogo}
@@ -98,7 +98,7 @@ const Header = () => {
             <Merle height="100" width="250" />
           </div>
           <div className={classes.navIconContainer}>
-            <CartIcon height="20" width="20" />
+            <CartIcon height="20" width="20" onClick={() => setCartIsActive(true)}/>
           </div>
         </>
       )}

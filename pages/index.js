@@ -8,9 +8,10 @@ import classes from "../styles/index.module.css";
 import Footer from "../components/layout/footer";
 import Merle from "../public/icons/SVG/merle.svg";
 
-import intro1 from "../public/videos/intro1.mp4";
-import intro2 from "../public/videos/intro2.mp4";
-import mobileIntro from "../public/videos/mobile-intro.mp4";
+import intro1 from "../public/videos/mp4/intro1.mp4";
+import intro2 from "../public/videos/mp4/intro2.mp4";
+import mobileIntro from "../public/videos/mp4/mobile-intro.mp4";
+import mobileIntroWebm from "../public/videos/webm/mobile-intro.webm";
 
 import { Suspense } from "react";
 
@@ -119,14 +120,17 @@ const Home = () => {
           <div className={classes.videoContainer}>
             <Suspense fallback="loading...">
               <video
+                poster=""
                 loop
                 autoPlay
                 muted
                 playsInline
                 preload="auto"
-                src={mobileIntro}
                 type="video/mp4"
-              />
+              >
+                <source src={mobileIntro} type="video/mp4" />
+                <source src={mobileIntroWebm} type="video/webm" />
+              </video>
             </Suspense>
           </div>
         </>

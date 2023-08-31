@@ -53,12 +53,13 @@
 }
 
 .navMenuContainer {
-  position: absolute;
+  position: fixed;
   height: 50vh;
   background-color: white;
   display: flex;
   flex-direction: column;
   left: 0;
+  z-index: 50;
   padding: 1rem;
   box-shadow: -4px 4px 4px rgba(0, 0, 0, 0.08), 0 0 4px rgba(0, 0, 0, 0.08),
     4px -4px 4px rgba(0, 0, 0, 0.08);
@@ -87,6 +88,7 @@
   opacity: 0.3;
   background-color: black;
   transition: 600ms ease-in-out forwards;
+  z-index: 15;
 }
 
 .containerIn {

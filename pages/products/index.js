@@ -48,15 +48,6 @@ const Products = ({ products, site }) => {
     return fr;
   };
 
-  const getWidth = () => {
-    let pictureWidth = 90;
-
-    if (isMobile) {
-      pictureWidth = 80;
-    }
-    return pictureWidth;
-  };
-
   return (
     <div>
       <Header />
@@ -69,9 +60,9 @@ const Products = ({ products, site }) => {
             const totalStock = prod.stock.reduce((acc, cur) => {
               return acc + cur.in_stock;
             }, 0);
-            if (totalStock === 0) {
+            /* if (totalStock === 0) {
               return;
-            }
+            } */
             let idx = 0;
             if (imageIndex.id === prod._id) {
               idx = 1;
@@ -86,6 +77,7 @@ const Products = ({ products, site }) => {
               ? classes.mobileProductContainer
               : classes.productContainer;
 
+            const imageBackdrop = totalStock === 0 ? `${classes.imageBackdrop}` : ""
             return (
               <div
                 className={containerStyle}
@@ -95,13 +87,14 @@ const Products = ({ products, site }) => {
                 /* onMouseDown={() => mouseDownHandler(prod._id)} */
                 onClick={() => productClickHandler(prod)}
               >
+                {totalStock === 0 && <h3 className={classes.soldOut}>SOLD OUT</h3>}
                 <div className={classes.imageContainer}>
+                  <div className={imageBackdrop}/>
                   <Image
                     width={1000}
                     height={1500}
                     src={imageUrls[idx]}
                     loader={() => imageUrls[idx]}
-                    /* containerStyle={{ width: `${getWidth()}%` }} */
                     alt=""
                   />
                 </div>

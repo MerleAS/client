@@ -10,8 +10,6 @@ import Merle from "../public/icons/SVG/merle.svg";
 
 import intro1 from "../public/videos/mp4/intro1.mp4";
 import intro2 from "../public/videos/mp4/intro2.mp4";
-import mobileIntro from "../public/videos/mp4/mobile-intro.mp4";
-import mobileIntroWebm from "../public/videos/webm/mobile-intro.webm";
 
 import { Suspense } from "react";
 
@@ -119,19 +117,14 @@ const Home = () => {
         <>
           <div className={classes.videoContainer}>
             <Suspense fallback="loading...">
-              <video
-                poster="/images/landing-page-image3.png"
-                loop
-                autoPlay
-                muted
-                playsInline
-                preload="auto"
-                type="video/mp4"
-              >
-                <source src={mobileIntro} type="video/mp4" />
-                <source src={mobileIntroWebm} type="video/webm" />
-                Your browser does not support the video tag
-              </video>
+              <Image
+                className={classes.image}
+                src="/images/landing-page-image3.png"
+                loader={() => "/images/landing-page-image3.png"}
+                layout="fill"
+                objectFit="cover"
+                priority={true}
+              />
             </Suspense>
           </div>
         </>

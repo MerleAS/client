@@ -8,10 +8,21 @@ import classes from "../styles/index.module.css";
 import Footer from "../components/layout/footer";
 import Merle from "../public/icons/SVG/merle.svg";
 
+import SlideShow from "../components/UI/slideShow";
+
 import intro1 from "../public/videos/mp4/intro1.mp4";
-import intro2 from "../public/videos/mp4/intro2.mp4";
 
 import { Suspense } from "react";
+
+const slideShowImageUrls = [
+  "/images/landing-page-slideshow1.png",
+  "/images/landing-page-slideshow2.png",
+  "/images/landing-page-slideshow3.png",
+  "/images/landing-page-slideshow4.png",
+  "/images/landing-page-slideshow5.png",
+  "/images/landing-page-slideshow6.png",
+  "/images/landing-page-slideshow7.png",
+];
 
 const Home = () => {
   const isMobile = useIsMobile();
@@ -97,18 +108,15 @@ const Home = () => {
               />
             </div>
           </div>
-          <div className={classes.videoContainer}>
-            <Suspense fallback="loading...">
-              <video
-                loop
-                autoPlay
-                muted
-                playsInline
-                preload="auto"
-                src={intro2}
-                type="video/mp4"
+          <div className={classes.slideshowContainer}>
+            <div className={classes.innerSlideshowContainer}>
+              <SlideShow
+                imgs={slideShowImageUrls}
+                width={1000}
+                height={1500}
+                navigation={true}
               />
-            </Suspense>
+            </div>
           </div>
         </>
       )}

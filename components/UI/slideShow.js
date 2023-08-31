@@ -1,13 +1,25 @@
 import Image from "next/image";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, A11y } from "swiper/modules";
+import { Pagination, A11y, Navigation } from "swiper/modules";
 
 import classes from "../../styles/components/UI/slideShow.module.css";
-import 'swiper/css';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/pagination";
+import 'swiper/css/navigation';
 
-const SlideShow = ({ imgs, width, height, containerStyle, containerClass }) => {
+const SlideShow = ({
+  imgs,
+  width,
+  height,
+  containerStyle,
+  containerClass,
+  navigation,
+}) => {
+  const modules = [Pagination, A11y, Pagination];
+  if (navigation) {
+    modules.push(Navigation);
+  }
   return (
     <div
       className={`${classes.container} ${containerClass}`}
@@ -16,7 +28,8 @@ const SlideShow = ({ imgs, width, height, containerStyle, containerClass }) => {
       <div className={classes.imageContainer}>
         <Swiper
           slidesPerView={1}
-          modules={[Pagination, A11y]}
+          modules={modules}
+          navigation={navigation}
           pagination={{ clickable: true }}
           onSlideChange={() => console.log("slide change")}
           onSwiper={(swiper) => console.log(swiper)}
@@ -28,7 +41,7 @@ const SlideShow = ({ imgs, width, height, containerStyle, containerClass }) => {
                   className={classes.image}
                   id="container"
                   loader={() => img}
-                  alt="product"
+                  alt="image"
                   src={img}
                   width={width}
                   height={height}

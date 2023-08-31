@@ -81,9 +81,9 @@ video {
   object-fit: cover;
 }
 
-/* .swiper-button-next:after {
+.swiper-button-next:after {
   color: black!important;
 }
 .swiper-button-prev::after {
   color: black!important;
-} */
+}

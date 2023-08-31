@@ -79,6 +79,7 @@ const Cart = () => {
       headerContent={headerContent}
       bodyContent={bodyContent}
       footerContent={footerContent}
+      orientation="right"
     />
   );
 };

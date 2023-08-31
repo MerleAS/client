@@ -3,6 +3,7 @@ import { useRouter } from "next/router";
 
 import axios from "axios";
 import { StateContext } from "../../context/stateContext";
+import useIsMobile from "../util/useIsMobile";
 
 import Sidebar from "../UI/sidebar";
 
@@ -17,6 +18,7 @@ const Search = () => {
   const [products, setProducts] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   /* const [brands, setBrands] = useState([]); */
+  const isMobile = useIsMobile();
 
   const searchHandler = async (e) => {
     const query = e.target.value;
@@ -97,6 +99,7 @@ const Search = () => {
       title="Search"
       headerContent={headerContent}
       bodyContent={bodyContent}
+      orientation={isMobile ? "left" : "right"}
     />
   );
 };

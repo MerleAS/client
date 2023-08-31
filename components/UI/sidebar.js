@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import classes from "../../styles/components/UI/sideModal.module.css";
+import classes from "../../styles/components/UI/sidebar.module.css";
 import useIsMobile from "../util/useIsMobile";
 
 import SearchIcon from "../../public/icons/SVG/searchIcon.svg";
@@ -14,6 +14,7 @@ const SideBar = ({
   headerContent,
   bodyContent,
   footerContent,
+  orientation,
 }) => {
   const isMobile = useIsMobile();
 
@@ -21,25 +22,29 @@ const SideBar = ({
 
   const closeModalHandler = () => {
     setIsClosing(true);
-    const time = isMobile ? 300 : 600;
     setTimeout(() => {
       setIsClosing(false);
       setIsActive(false);
-    }, time);
+    }, 600);
   };
 
   const backdropStyles = isClosing ? classes.backdropOut : classes.backdropIn;
 
-  const containerStyles = isClosing
-    ? classes.containerOut
-    : classes.containerIn;
-  const mobileContainerStyles = isClosing
-    ? classes.mobileContainerDown
-    : classes.mobileContainerUp;
+  let containerStyles;
+  if (orientation === "right") {
+    containerStyles = isClosing
+      ? classes.containerOutRight
+      : classes.containerInRight;
+  } else {
+    containerStyles = isClosing
+      ? classes.containerOutLeft
+      : classes.containerInLeft;
+  }
 
   const containerClass = isMobile
-    ? `${classes.mobileContainer} ${mobileContainerStyles}`
-    : `${classes.container} ${containerStyles}`;
+    ? `${classes.mobileContainer}`
+    : `${classes.container}`;
+
   const crossContainerClass = isMobile
     ? classes.mobileCrossContainer
     : classes.crossContainer;
@@ -52,7 +57,7 @@ const SideBar = ({
             className={`${classes.backdrop} ${backdropStyles}`}
             onClick={closeModalHandler}
           ></div>
-          <div className={containerClass}>
+          <div className={`${containerClass} ${containerStyles}`}>
             <div className={classes.line}>
               <div className={crossContainerClass}>
                 {title === "Cart" && <CartIcon width="20" height="20" />}

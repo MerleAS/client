@@ -63,15 +63,23 @@
   flex-direction: column;
 }
 
-.containerIn {
-  animation: slide-inn 600ms ease-in-out forwards;
+.containerInRight {
+  animation: slide-inn-right 600ms ease-in-out forwards;
 }
 
-.containerOut {
-  animation: slide-out 600ms ease-in-out forwards;
+.containerOutRight {
+  animation: slide-out-right 600ms ease-in-out forwards;
 }
 
-@keyframes slide-inn {
+.containerInLeft {
+  animation: slide-inn-left 600ms ease-in-out forwards;
+}
+
+.containerOutLeft {
+  animation: slide-out-left 600ms ease-in-out forwards;
+}
+
+@keyframes slide-inn-right {
   from {
     opacity: 0.5;
     transform: translateX(100%);
@@ -83,7 +91,7 @@
   }
 }
 
-@keyframes slide-out {
+@keyframes slide-out-right {
   from {
     opacity: 1;
     transform: translateX(0);
@@ -92,6 +100,30 @@
   to {
     opacity: 0.5;
     transform: translateX(100%);
+  }
+}
+
+@keyframes slide-inn-left {
+  from {
+    opacity: 0.5;
+    transform: translateX(-100%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slide-out-left {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  to {
+    opacity: 0.5;
+    transform: translateX(-100%);
   }
 }
 
@@ -122,38 +154,6 @@
   top: 0;
   right: 0;
   background-color: white;
-}
-
-.mobileContainerUp {
-  animation: slide-up 300ms ease-out forwards;
-}
-
-.mobileContainerDown {
-  animation: slide-down 300ms ease-out forwards;
-}
-
-@keyframes slide-up {
-  from {
-    opacity: 0;
-    transform: translateY(100%);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slide-down {
-  from {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  to {
-    opacity: 0;
-    transform: translateY(100%);
-  }
 }
 
 .mobileHeadingContainer {

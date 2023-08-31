@@ -165,6 +165,7 @@ const Checkout = ({ publishableKey, clientSecret, paymentIntentId }) => {
   };
 
   const updatePaymentIntent = async (type, shipping) => {
+    console.log(type, shipping);
     try {
       let discount = { ...discountCode };
       console.log("discount1", discount);

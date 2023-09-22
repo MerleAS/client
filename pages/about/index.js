@@ -3,32 +3,32 @@ import Image from "next/image";
 import Header from "../../components/layout/header";
 import Footer from "../../components/layout/footer";
 
-import classes from "../../styles/pages/about.module.css";
-
 const About = () => {
   return (
     <>
       <Header />
-      <div className={classes.container}>
-        <h2 className={classes.heading}>About Us</h2>
-        <div className={classes.textContainer}>
-          <p className={classes.paragraph}>
+      <div className="w-full p-8 md:p-16 mb-16 flex flex-col items-center justify-center">
+        <h2 className="text-xl font-light w-full flex items-center justify-center mb-16">
+          About Us
+        </h2>
+        <div className="w-4/5 md:w-2/3 lg:w-2/5 px-[2%] py-[5%] border border-black">
+          <p className="leading-8">
             We share our interest in fashion, and sell popular secondhand and
             vintage products from well known brands
           </p>
-          <p className={classes.paragraph}>
+          <p className="leading-8">
             The idea with Merle is to give you a lot of inspiration through
             Instagram, tiktok and the website. You can join the products journey
             with different outfits, styles and fashion. On MERLE´s instagram and
             tiktok you can se how to style the products and you can get a better
             view on how the product looks and the condition to the products
           </p>
-          <p className={classes.paragraph}>
+          <p className="leading-8">
             We follow the trends on tiktok and instagram and ensure that you get
             the products you are looking for.
           </p>
         </div>
-        <div className={classes.imageContainer}>
+        <div className="max-w-4/5 my-[5%]">
           <Image
             src="/images/about-us-image.png"
             loader={() => "/images/about-us-image.png"}
@@ -38,9 +38,11 @@ const About = () => {
             priority={true}
           />
         </div>
-        <h3 className={classes.heading}>Our social media</h3>
-        <div className={classes.textContainer}>
-          <p className={classes.paragraph}>
+        <h3 className="text-xl font-light w-full flex items-center justify-center mb-16">
+          Our social media
+        </h3>
+        <div className="w-4/5 md:w-2/3 lg:w-2/5 px-[2%] py-[5%] border border-black">
+          <p className="leading-8">
             The goal with our sosial media is to share content that is
             inspirational. We wont out sosial media like instagram and tiktok to
             be like a typical influencer profile, that share a lot of content,

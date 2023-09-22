@@ -4,28 +4,22 @@ import axios from "axios";
 import Footer from "../../../components/layout/footer";
 import Header from "../../../components/layout/header";
 import Cart from "../../../components/layout/cart";
-import Search from '../../../components/layout/search';
+import Search from "../../../components/layout/search";
+import Error from "../../../components/layout/error";
 
 import IncrementInput from "../../../components/UI/incrementInput";
-import Modal from "../../../components/UI/modal";
 import SlideShow from "../../../components/UI/slideShow";
 
-import useIsMobile from "../../../components/util/useIsMobile";
-import classes from "../../../styles/pages/product.module.css";
 import { StateContext } from "../../../context/stateContext";
 
-const ProductDetail = ({ product, imageUrls}) => {
+const Product = ({ product, imageUrls }) => {
   const [count, setCount] = useState(1);
   const [selectedSize, setSelectedSize] = useState({ size: "", in_stock: "" });
   const [descriptionDropdownActive, setDescriptionDropdownActive] =
     useState(false);
 
-  const [error, setError] = useState(false);
-
-  const { addToCartHandler, setCartIsActive } =
+  const { addToCartHandler, setCartIsActive, setErrorObject } =
     useContext(StateContext);
-    
-  const isMobile = useIsMobile();
 
   const countHandler = (val, type) => {
     if (count < selectedSize.in_stock && type === "increment") {
@@ -37,7 +31,7 @@ const ProductDetail = ({ product, imageUrls}) => {
 
   const cartHandler = () => {
     if (selectedSize.size === "") {
-      setError(true);
+      setErrorObject({ message: "PLEASE SELECT A SIZE", error: true });
       return;
     }
     const prod = {
@@ -57,191 +51,105 @@ const ProductDetail = ({ product, imageUrls}) => {
   };
 
   return (
-    <div className={classes.container}>
-      <Header/>
+    <div className="min-h-full flex flex-col justify-center items-center">
+      <Header />
+      <div className="w-full md:w-4/5 lg:[65%] lg/xl:w-1/2 h-[70%] flex flex-col md:flex-row space-x-8 p-4">
+        <div className="w-full md:w-1/2 max-h-full">
+          <SlideShow imgs={imageUrls} width={1000} height={1500} />
+        </div>
+        <div className="w-full md:w-1/2 h-full">
+          <p className="text-2xl font-medium my-2">
+            {product.brand} - {product.title}
+          </p>
+          <p className="py-1 text-base m-0">{product.price}Kr</p>
 
-      {!isMobile && (
-        <>
-          <div className={classes.contentContainer}>
-            <div className={classes.imageContainer}>
-              <SlideShow imgs={imageUrls} width={1000} height={1500} />
-            </div>
-            <div className={classes.infoContainer}>
-              <p className={classes.heading}>
-                {product.brand} - {product.title}
-              </p>
-              <p className={classes.text}>{product.price}Kr</p>
-
-              <div className={classes.sizeButtonsContainer}>
-                {product.stock.map((size, index) => {
-                  let style, stockStyle;
-                  let stockText = "in stock";
-                  if (size.size === selectedSize.size) {
-                    style = { backgroundColor: "e4e4e4", opacity: "0.6" };
-                  }
-                  if (size.in_stock === 0) {
-                    style = { color: "#CAC8C8", borderColor: "#CAC8C8" };
-                    stockStyle = style;
-                    stockText = "Sold out";
-                  }
-                  return (
-                    <div className={classes.sizeButtonContainer} key={index}>
-                      <div
-                        className={classes.sizeButton}
-                        style={style}
-                        onClick={() => {
-                          if (size.in_stock > 0) {
-                            setSelectedSize({
-                              size: size.size,
-                              in_stock: size.in_stock,
-                            });
-                            setCount(1);
-                          }
-                        }}
-                      >
-                        {size.size}
-                      </div>
-                      {size.in_stock > 0 && (
-                        <p className={classes.in_stock}>
-                          {size.in_stock} {stockText}
-                        </p>
-                      )}
-                      {size.in_stock === 0 && (
-                        <p className={classes.in_stock} style={stockStyle}>
-                          {stockText}
-                        </p>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className={classes.incrementContainer}>
-                <IncrementInput count={count} setCount={countHandler} />
-              </div>
-
-              <p
-                className={classes.text2}
-                onClick={() => setDescriptionDropdownActive((prev) => !prev)}
-              >
-                DESCRIPTION
-              </p>
-              {descriptionDropdownActive && (
-                <div>
-                  {product.description.map((prodDesc, index) => {
-                    return (
-                      <div key={index}>
-                        <p>{prodDesc}</p>
-                      </div>
-                    );
-                  })}
+          <div className="h-[15%] min-h-24 w-full flex items-center my-6">
+            {product.stock.map((size, index) => {
+              let style, stockStyle;
+              let stockText = "in stock";
+              if (size.size === selectedSize.size) {
+                style = { backgroundColor: "e4e4e4", opacity: "0.6" };
+              }
+              if (size.in_stock === 0) {
+                style = { color: "#CAC8C8", borderColor: "#CAC8C8" };
+                stockStyle = style;
+                stockText = "Sold out";
+              }
+              return (
+                <div
+                  className="h-full flex flex-col min-w-[15%] mr-[10%] items-center"
+                  key={index}
+                >
+                  <div
+                    className={`w-full h-fit border border-2 border-black rounded-sm px-1 py-0.5 ${
+                      size.in_stock === 0 ? "text-gray-300 border-gray-300" : ""
+                    }
+                    ${
+                      size.size === selectedSize.size
+                        ? "bg-gray-200 opacity-60"
+                        : ""
+                    }`}
+                    onClick={() => {
+                      if (size.in_stock > 0) {
+                        setSelectedSize({
+                          size: size.size,
+                          in_stock: size.in_stock,
+                        });
+                        setCount(1);
+                      }
+                    }}
+                  >
+                    {size.size}
+                  </div>
+                  {size.in_stock > 0 && (
+                    <p className="my-1 text-[10px]">
+                      {size.in_stock} {stockText}
+                    </p>
+                  )}
+                  {size.in_stock === 0 && (
+                    <p className="my-1 text-[10px]" style={stockStyle}>
+                      {stockText}
+                    </p>
+                  )}
                 </div>
-              )}
-              <p className={classes.text2} onClick={cartHandler}>
-                ADD TO CART
-              </p>
-            </div>
+              );
+            })}
           </div>
-        </>
-      )}
 
-      {isMobile && (
-        <>
-          <div className={classes.mobileContentContainer}>
-            <div className={classes.mobileImageContainer}>
-              <SlideShow imgs={imageUrls} width={1000} height={1500} />
-            </div>
-            <div className={classes.mobileInfoContainer}>
-              <p className={classes.heading}>
-                {product.brand} - {product.title}
-              </p>
-              <p className={classes.text}>{product.price}Kr</p>
-
-              <div className={classes.sizeButtonsContainer}>
-                {product.stock.map((size, index) => {
-                  let style, stockStyle;
-                  let stockText = "in stock";
-                  if (size.size === selectedSize.size) {
-                    style = { backgroundColor: "#e4e4e4", opacity: "0.6" };
-                  }
-                  if (size.in_stock === 0) {
-                    style = { color: "#CAC8C8", borderColor: "#CAC8C8" };
-                    stockStyle = style;
-                    stockText = "Sold out";
-                  }
-                  return (
-                    <div className={classes.sizeButtonContainer} key={index}>
-                      <div
-                        className={classes.sizeButton}
-                        style={style}
-                        onClick={() => {
-                          if (size.in_stock > 0) {
-                            setSelectedSize({
-                              size: size.size,
-                              in_stock: size.in_stock,
-                            });
-                            setCount(1);
-                          }
-                        }}
-                      >
-                        {size.size}
-                      </div>
-                      {size.in_stock > 0 && (
-                        <p className={classes.in_stock}>
-                          {size.in_stock} {stockText}
-                        </p>
-                      )}
-                      {size.in_stock === 0 && (
-                        <p className={classes.in_stock} style={stockStyle}>
-                          {stockText}
-                        </p>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-
-              <div className={classes.incrementContainer}>
-                <IncrementInput count={count} setCount={countHandler} />
-              </div>
-
-              <p
-                className={classes.text2}
-                onClick={() => setDescriptionDropdownActive((prev) => !prev)}
-              >
-                DESCRIPTION
-              </p>
-              {descriptionDropdownActive && (
-                <div>
-                  {product.description.map((prodDesc, index) => {
-                    return (
-                      <div key={index}>
-                        <p>{prodDesc}</p>
-                      </div>
-                    );
-                  })}
-                </div>
-              )}
-              <p className={classes.text2} onClick={cartHandler}>
-                ADD TO CART
-              </p>
-            </div>
+          <div className="w-full mb-8">
+            <IncrementInput count={count} setCount={countHandler} />
           </div>
-        </>
-      )}
+
+          <p
+            className="border-b border-b-gray-400 mt-12 text-base w-fit"
+            onClick={() => setDescriptionDropdownActive((prev) => !prev)}
+          >
+            DESCRIPTION
+          </p>
+          {descriptionDropdownActive && (
+            <div>
+              {product.description.map((prodDesc, index) => {
+                return (
+                  <div key={index}>
+                    <p>{prodDesc}</p>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+          <p
+            className="border-b border-b-gray-400 mt-12 text-base w-fit"
+            onClick={cartHandler}
+          >
+            ADD TO CART
+          </p>
+        </div>
+      </div>
 
       <Cart />
       <Footer />
       <Search />
-
-      {error && (
-        <Modal onClose={() => setError(false)}>
-          <h4>PLEASE SELECT A SIZE</h4>
-          <button className={classes.button} onClick={() => setError(false)}>
-            OK
-          </button>
-        </Modal>
-      )}
+      <Error />
     </div>
   );
 };
@@ -270,4 +178,4 @@ export async function getServerSideProps(context) {
   };
 }
 
-export default ProductDetail;
+export default Product;

@@ -2,8 +2,6 @@ import Image from "next/image";
 
 import IncrementInput from "../UI/incrementInput";
 
-import classes from "../../styles/components/views/productList.module.css";
-
 const ProductList = ({
   products,
   type,
@@ -16,8 +14,8 @@ const ProductList = ({
       {products.length > 0 &&
         products.map((prod, index) => {
           return (
-            <div className={classes.cartItemContainer} key={index}>
-              <div className={classes.imageContainer}>
+            <div className="w-full flex flex-row space-x-3 mb-4" key={index}>
+              <div className="h-full min-w-[20%]">
                 <Image
                   src={process.env.NEXT_PUBLIC_SERVER_URL + "/" + prod.imageUrls[0]}
                   loader={() => process.env.NEXT_PUBLIC_SERVER_URL + "/" + prod.imageUrls[0]}
@@ -28,11 +26,11 @@ const ProductList = ({
                 />
               </div>
 
-              <div className={classes.cartItemInfo}>
-                <p className={classes.textBold}>{prod.title}</p>
-                <p className={classes.textGrey}>{prod.size}</p>
+              <div className="w-1/2 flex flex-col justify-between">
+                <p className="text-black text-lg m-0 font-medium">{prod.title}</p>
+                <p className="text-gray-500 text-sm font-light">{prod.size}</p>
                 {type === 1 && (
-                  <p className={classes.text}>{prod.amount} item</p>
+                  <p className="text-black text-sm m-0">{prod.amount} item</p>
                 )}
                 {type === 2 && (
                   <IncrementInput
@@ -43,21 +41,21 @@ const ProductList = ({
                   />
                 )}
               </div>
-              <div className={classes.cartItemInfo2}>
-                <div className={classes.priceContainer}>
+              <div className="w-1/2 flex flex-col justify-between items-end">
+                <div className="w-fit">
                   {type === 2 && (
-                    <p className={classes.text}>
+                    <p className="text-black text-sm m-0">
                       {prod.price * prod.amount} kr
                     </p>
                   )}
                 </div>
-                <div className={classes.removeItemContainer}>
+                <div className="w-fit">
                   {type === 1 && (
-                    <p className={classes.text}>{prod.price} kr</p>
+                    <p className="text-black text-sm m-0">{prod.price} kr</p>
                   )}
                   {type === 2 && (
                     <p
-                      className={classes.removeItem}
+                      className="text-gray-500 text-sm font-light border-b border-gray-500"
                       onClick={() => removeFromCartHandler(prod)}
                     >
                       Remove

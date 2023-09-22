@@ -5,7 +5,6 @@ import Footer from "../../components/layout/footer";
 
 import ArrowUp from "../../public/icons/SVG/arrowUp.svg";
 import ArrowDown from "../../public/icons/SVG/arrowDown.svg";
-import classes from "../../styles/pages/faq.module.css";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -30,13 +29,13 @@ const FAQ = ({ initialState, questionsList, heading }) => {
   return (
     <>
       <Header />
-      <div className={classes.container}>
-        <h2 className={classes.heading}>{heading}</h2>
-        <div className={classes.contentContainer}>
+      <div className="w-full flex flex-col items-center justify-center my-[5%] space-y-16 px-8 md:px-12 lg:px-16">
+        <h2 className="w-full flex items-center justify-center text-lg md:text-2xl font-medium text-center">{heading}</h2>
+        <div className="w-full md: w-[90%] md/lg:w-4/5 grid grid-cols-1 md/lg:grid-cols-2 gap-[5%]">
           {questionsList.map((item, index) => (
-            <div key={index} className={classes.listItemContainer}>
+            <div key={index} className="w-full min-h-12 h-fit border border-gray-500 my-[4%]">
               <div
-                className={classes.questionContainer}
+                className="flex justify-between items-center h-12 px-[5%]"
                 onClick={() => listHandler(index)}
               >
                 <h5>{item.question}</h5>
@@ -44,8 +43,8 @@ const FAQ = ({ initialState, questionsList, heading }) => {
                 {listState[index] && <ArrowDown height="30" width="30" />}
               </div>
               {listState[index] && (
-                <div className={classes.awnserContainer}>
-                  <p className={classes.text}>{item.anwser}</p>
+                <div className="w-[90%] p-[5%] h-fit">
+                  <p className="leading-7">{item.anwser}</p>
                 </div>
               )}
             </div>

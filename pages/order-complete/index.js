@@ -1,9 +1,6 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 
-import useIsMobile from "../../components/util/useIsMobile";
-import classes from "../../styles/pages/order-complete.module.css";
-
 import ArrowUp from "../../public/icons/SVG/arrowUp.svg";
 import ArrowDown from "../../public/icons/SVG/arrowDown.svg";
 import Merle from "../../public/icons/SVG/merle.svg";
@@ -33,89 +30,77 @@ const OrderComplete = () => {
     order = JSON.parse(router.query.order);
     console.log(order);
   }
-  const isMobile = useIsMobile();
 
   const [dropdownActive, setDropdownActive] = useState(true);
 
-  const headerClass = isMobile ? classes.mobileHeader : classes.header;
-  const containerClass = isMobile ? classes.mobileContainer : classes.container;
-  const contentContainerClass = isMobile
-    ? classes.mobileContentContainer
-    : classes.contentContainer;
-  const orderSummaryContainerClass = isMobile
-    ? classes.mobileOrderSummaryContainer
-    : classes.orderSummaryContainer;
-
-  const contentContainerClass2 = isMobile
-    ? classes.mobileContentContainer2
-    : classes.contentContainer2;
-
   return (
     <>
-      <div className={containerClass}>
-        <div className={contentContainerClass}>
-          <div className={headerClass} onClick={() => router.push("/")}>
+      <div className="w-full md:h-full flex flex-col md:flex-row md:space-x-[10%] lg:space-x-[15%] px-[5%] md:px-[10%]">
+
+        <div className="w-full my-[5%] md:w-[45%] space-y-[5%]">
+          <div className="w-full h-[15%] flex items-center justify-center md:mt-[10%] md:mb-[5%]" onClick={() => router.push("/")}>
             <Merle height="80" width="200" />
           </div>
-          <div className={orderSummaryContainerClass}>
+          <div className="w-full h-fit max-h-[45%] overflow-scroll border border-gray-300 rounded-sm">
             <div
-              className={classes.dropdownButtonContainer}
+              className="h-10 w-full flex justify-between px-4"
               onClick={() => setDropdownActive((prev) => !prev)}
             >
-              <p className={classes.dropdownHeader}>Order Summary</p>
-              <div className={classes.arrowIconContainer}>
+              <p className="flex items-center justify-center">Order Summary</p>
+              <div className="h-full flex items-center justify-center">
                 {dropdownActive && <ArrowUp height="20" width="20" />}
                 {!dropdownActive && <ArrowDown height="20" width="20" />}
               </div>
             </div>
 
             {dropdownActive && order.cartItems.length > 0 && (
-              <div className={classes.productsContainer}>
+              <div className="space-y-12 p-4 overflow-scroll">
                 <ProductList products={order.cartItems} type={1} />
               </div>
             )}
           </div>
         </div>
 
-        <div className={contentContainerClass2}>
-          <div className={classes.customerInformationContainer}>
-            <div className={classes.innerCustomerInformationContainer}>
-              <div className={classes.customerInformationHeader}>
-                <p className={classes.heading}>Customer information</p>
+
+        <div className="w-full md:w-[40%] md:mt-[5%] md:mr-[10%] md:h-[70%]">
+          <div className="w-full h-full border border-gray-300 rounded-sm mr-[10%] flex mb-[10%]">
+            <div className="w-full h-[94%] p-4 flex flex-col justify-evenly ">
+              <div className="w-full h-[10%] flex justify-center">
+                <p className="text-lg font-medium m-0">Customer information</p>
               </div>
-              <div className={classes.infoContainer}>
-                <p className={classes.textBold}>Contact information</p>
-                <p className={classes.text}>{order.name}</p>
-                <p className={classes.text}>{order.email}</p>
-                <p className={classes.text}>{order.phone}</p>
+              <div className="w-full">
+                <p className="text-sm font-normal my-2">Contact information</p>
+                <p className="text-xs font-light my-[2px]">{order.name}</p>
+                <p className="text-xs font-light my-[2px]">{order.email}</p>
+                <p className="text-xs font-light my-[2px]">{order.phone}</p>
               </div>
-              <div className={classes.infoContainer}>
-                <p className={classes.textBold}>Shipping address</p>
-                <p className={classes.text}>{order.country}</p>
-                <p className={classes.text}>{order.city}</p>
-                <p className={classes.text}>{order.address}</p>
-                <p className={classes.text}>{order.postalCode}</p>
+              <div className="w-full">
+                <p className="text-sm font-normal my-2">Shipping address</p>
+                <p className="text-xs font-light my-[2px]">{order.country}</p>
+                <p className="text-xs font-light my-[2px]">{order.city}</p>
+                <p className="text-xs font-light my-[2px]">{order.address}</p>
+                <p className="text-xs font-light my-[2px]">{order.postalCode}</p>
               </div>
               <div>
-                <p className={classes.textBold}>Shipping method</p>
-                <p className={classes.text}>
+                <p className="text-sm font-normal my-2">Shipping method</p>
+                <p className="text-xs font-light my-[2px]">
                   {order.shipping.label} - {order.shipping.price} kr
                 </p>
               </div>
               <div>
-                <p className={classes.textBold}>Payment method</p>
-                <p className={classes.text}>{order.paymentMethod.label}</p>
+                <p className="text-sm font-normal my-2">Payment method</p>
+                <p className="text-xs font-light my-[2px]">{order.paymentMethod.label}</p>
               </div>
             </div>
           </div>
-          <div className={classes.buttonContainer}>
+          <div className="w-full flex flex-col items-center justify-center">
             <button
-              className={classes.button}
+              className="bg-black text-white w-2/5 min-w-fit h-10 px-4 py-2 border border-black rounded flex items-center justify-center"
               onClick={() => router.push("/products?site=second-hand")}
             >
               Continue Shopping
             </button>
-            <p className={classes.textGrey}>Need help? Contact us</p>
+            <p className="text-xs text-gray-400 mt-1">Need help? Contact us</p>
           </div>
         </div>
       </div>

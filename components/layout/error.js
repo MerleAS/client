@@ -1,22 +1,17 @@
 import { useContext } from "react";
 
 import { StateContext } from "../../context/stateContext";
-
 import Modal from "../UI/modal";
-
-import classes from "../../styles/components/layout/error.module.css";
 
 const Error = () => {
   const { errorObject, setErrorObject } = useContext(StateContext);
-
-  
   return (
     <>
       {errorObject.error && (
         <Modal>
-          <p className={classes.textBoldLarge}>{errorObject.message}</p>
+          <p className="text-lg font-medium my-[5%]">{errorObject.message}</p>
           <button
-            className={classes.button}
+            className="bg-black w-1/4 h-[40px] border border-black rounded-sm text-white mb-[5%]"
             onClick={() => setErrorObject({ error: false, message: "" })}
           >
             Ok

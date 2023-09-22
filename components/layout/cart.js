@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import classes from "../../styles/components/layout/cart.module.css";
 import { StateContext } from "../../context/stateContext";
 
 import Sidebar from "../UI/sidebar";
@@ -39,10 +38,10 @@ const Cart = () => {
     setButtonDisabled(cartItems.length === 0);
   }, [cartItems]);
 
-  const headerContent = <p className={classes.heading}>Your Cart</p>;
+  const headerContent = <p className="text-xl">Your Cart</p>;
 
   const bodyContent = (
-    <div className={classes.cartItemsContainer}>
+    <div className="h-[65%] w-[90%] m-[5%] overflow-scroll">
       <ProductList
         products={cartItems}
         type={2}
@@ -53,18 +52,19 @@ const Cart = () => {
   );
 
   const footerContent = (
-    <div className={classes.footer}>
-      <div className={classes.totalContainer}>
+    <div className="border-t border-gray-300 w-full h-[20%] flex flex-col items-center justify-center space-y-4 p-4">
+      <div className="flex items-center justify-start w-full">
         <p>
           TOTAL: {cartItems.length > 0 && getTotalAmount()}
           {cartItems.length === 0 && 0} Kr
         </p>
       </div>
-      <div className={classes.buttonContainer}>
+      <div className="w-full h-[80%] flex items-center justify-center">
         <button
-          className={classes.button}
-          onClick={routeHandler}
+          className="bg-black text-white text-md font-light w-[60%] h-[80%] md:h-[60%] lg:h-1/2 rounded-sm"
+          onClick={() => routeHandler()}
           disabled={buttonDisabled}
+
         >
           CHECKOUT
         </button>

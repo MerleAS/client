@@ -8,23 +8,13 @@ import Footer from "../../components/layout/footer";
 import Cart from "../../components/layout/cart";
 import Search from "../../components/layout/search";
 
-import useIsMobile from "../../components/util/useIsMobile";
-import classes from "../../styles/pages/products.module.css";
-
 const Products = ({ products, site }) => {
-  /* const { routeStackHandler } = useContext(StateContext); */
   const router = useRouter();
 
   const [imageIndex, setImageIndex] = useState({ index: 0, id: null });
 
-  const isMobile = useIsMobile();
-
   const productClickHandler = (prod) => {
     router.push(`/products/${prod._id}?site=${site}`);
-    /* routeStackHandler({
-        path: `/products/${prod._id}?site=${site}`,
-        label: prod.title,
-      }); */
   };
 
   const mouseHoverHandler = (type, id) => {
@@ -38,31 +28,15 @@ const Products = ({ products, site }) => {
     }
   };
 
-  const rep = () => {
-    let fr;
-    if (!isMobile) {
-      fr = "1fr 1fr 1fr 1fr";
-    } else {
-      fr = "1fr";
-    }
-    return fr;
-  };
-
   return (
     <div>
       <Header />
-      <div
-        className={classes.productsContainer}
-        style={{ gridTemplateColumns: `${rep()}` }}
-      >
+      <div className="relative w-full px-4 my-[5%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg/xl:grid-cols-4">
         {products.length > 0 &&
           products.map((prod, index) => {
             const totalStock = prod.stock.reduce((acc, cur) => {
               return acc + cur.in_stock;
             }, 0);
-            /* if (totalStock === 0) {
-              return;
-            } */
             let idx = 0;
             if (imageIndex.id === prod._id) {
               idx = 1;
@@ -73,23 +47,27 @@ const Products = ({ products, site }) => {
             const imageUrls = prod.imageUrls.map(
               (url) => `${process.env.NEXT_PUBLIC_SERVER_URL}/${url}`
             );
-            const containerStyle = isMobile
-              ? classes.mobileProductContainer
-              : classes.productContainer;
 
-            const imageBackdrop = totalStock === 0 ? `${classes.imageBackdrop}` : ""
+            const imageBackdrop =
+              totalStock === 0
+                ? `absolute opacity-40 bg-black w-full h-full z-5`
+                : "";
             return (
               <div
-                className={containerStyle}
+                className="w-full flex flex-col justify-center items-center space-[3%] "
                 key={index}
                 onMouseOver={() => mouseHoverHandler("over", prod._id)}
                 onMouseOut={() => mouseHoverHandler("out")}
                 /* onMouseDown={() => mouseDownHandler(prod._id)} */
                 onClick={() => productClickHandler(prod)}
               >
-                {totalStock === 0 && <h3 className={classes.soldOut}>SOLD OUT</h3>}
-                <div className={classes.imageContainer}>
-                  <div className={imageBackdrop}/>
+                {totalStock === 0 && (
+                  <h3 className="absolute h-1/5 w-full text-white text:xl md:text-2xl flex items-center justify-center z-6">
+                    SOLD OUT
+                  </h3>
+                )}
+                <div className="relative w-full m-0">
+                  <div className={imageBackdrop} />
                   <Image
                     width={1000}
                     height={1500}
@@ -98,9 +76,9 @@ const Products = ({ products, site }) => {
                     alt=""
                   />
                 </div>
-                <div className={classes.infoContainer}>
-                  <p className={classes.text}>{prod.title}</p>
-                  <p className={classes.text}>{prod.price}kr</p>
+                <div className="w-full flex items-center justify-between">
+                  <p className="m-0">{prod.title}</p>
+                  <p className="m-0">{prod.price}kr</p>
                 </div>
               </div>
             );
@@ -122,8 +100,7 @@ export async function getServerSideProps(context) {
     prods = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/products`);
   } else {
     prods = await axios.get(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/second-hand/products`
-    );
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/second-hand/products`);
   }
   const brandsList = [];
   prods.data.products.forEach((prod) => {

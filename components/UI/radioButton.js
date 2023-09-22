@@ -1,19 +1,34 @@
-import classes from '../../styles/components/UI/radioButton.module.css';
-
 const RadioButton = ({ value, radioValue, setRadioValue, price }) => {
   return (
-    <div className={classes.radioButtonContainer}>
-      <div className={classes.innerRadioButtonContainer}>
-        <label className={classes.radioButton}>
+    <div className="flex w-[10%] items-center justify-center mr-[2%]">
+      <div className="flex items-center justify-center border border-black h-[18px] w-[18px] rounded-[50%]">
+        <label
+          className={`flex items-center justify-center w-3 h-3 bg-white rounded-[50%] ${
+            radioValue.label === value || radioValue === value
+              ? "bg-white rounded-[50%] border-[3px solid black] inline-block"
+              : ""
+          }`}
+        >
           <input
             type="radio"
             id={value}
             value={value}
             name={value}
             checked={radioValue.label === value || radioValue === value}
-            onChange={(e) => setRadioValue({label: e.target.value, price: price})}
+            onChange={(e) =>
+              setRadioValue({ label: e.target.value, price: price })
+            }
+            className={`${
+              radioValue.label === value || radioValue === value ? "hidden" : "hidden"
+            }`}
           />
-          <span className={classes.radioCheckmark}></span>
+          <span
+            className={`w-3 h-3 bg-white rounded-[50%] inline-block ${
+              radioValue.label === value || radioValue === value
+                ? "!bg-black border-[3px solid white] rounded-[50%] inline-block"
+                : ""
+            } `}
+          ></span>
         </label>
       </div>
     </div>

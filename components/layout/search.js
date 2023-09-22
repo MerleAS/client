@@ -7,8 +7,6 @@ import useIsMobile from "../util/useIsMobile";
 
 import Sidebar from "../UI/sidebar";
 
-import classes from "../../styles/components/layout/search.module.css";
-
 const Search = () => {
   const { setSearchIsActive, searchIsActive } =
     useContext(StateContext);
@@ -53,10 +51,11 @@ const Search = () => {
   };
 
   const headerContent = (
-    <div className={classes.inputContainer}>
+    <div className="w-4/5 h-full flex items-center justify-center">
       <input
-        className={classes.input}
+        className="w-full outline-none text-md font-normal h-10 border-[1px solid transparent]"
         onChange={searchHandler}
+        autoFocus
         placeholder="Search"
         value={searchInput}
       />
@@ -64,13 +63,13 @@ const Search = () => {
   );
 
   const bodyContent = (
-    <div className={classes.menuOptions}>
+    <div className="w-4/5 h-4/5 my-[5%] mx-[10%] flex flex-col space-x-[1%]">
       {/* {brands.length > 0 &&
         brands.map((brand, index) => {
           return (
             <p
               key={index}
-              className={classes.menuOption}
+              className="border-b border-black w-fit text-md font-light my-3"
               onClick={() => routeHandler(`/brands/${brand.brandId}`)}
             >
               <strong>{brand.brand}</strong>
@@ -82,7 +81,7 @@ const Search = () => {
           return (
             <p
               key={index}
-              className={classes.menuOption}
+              className="border-b border-black w-fit text-md font-light my-3"
               onClick={() => routeHandler(`/products/${product._id}`)}
             >
               {product.brand} {product.type} - {product.title}

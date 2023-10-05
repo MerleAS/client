@@ -17,26 +17,26 @@ const Footer = () => {
               <Link href="/faq">FAQ</Link>
             </p>
             <p className="text-white text-[10px]">
-              <Link href="/contact">Contact</Link>
+              <Link href="/contact">Contact Us</Link>
             </p>
             <p className="text-white text-[10px]">
               <Link href="/about">About MERLE</Link>
             </p>
             <p className="text-white text-[10px]">
-              <Link href="/faq?qry=delivery-and-returns">
-                Delivery and returns
-              </Link>
+              <Link href="/terms-of-service">Terms of service</Link>
             </p>
           </div>
-          <div>
+          <div className="space-y-2">
             <h4 className="text-sm font-normal text-white">COUNTRY / REGION</h4>
             <p className="text-white text-[10px]">Norway exclusive</p>
+            <p className="text-white text-[10px]">Tlf: 97655367</p>
+            <p className="text-white text-[10px]">Mail: post@merle.no</p>
           </div>
         </div>
         <div className="">
           <div className="w-full border-b border-white my-4" />
           <div className="w-full flex flex-row items-center justify-between">
-            <p className="text-white text-[10px]">All rights reserved Merle AS 2023</p>
+            <p className="text-white text-[10px]">All rights reserved Merle AS 2023 | Org.nr. 931171887 </p>
             <div className="flex flex-row space-x-4">
               <Instagram height={20} width={20} onClick={() => window.location.href = "https://www.instagram.com/merle__no/"}/>
               <Tiktok height={20} width={20} onClick={() => window.location.href = "https://www.tiktok.com/@merle__no"}/>

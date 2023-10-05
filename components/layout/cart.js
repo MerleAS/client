@@ -29,9 +29,7 @@ const Cart = () => {
 
   const routeHandler = () => {
     setCartIsActive(false);
-    router.push(
-      `/checkout?cartItems=${encodeURIComponent(JSON.stringify(cartItems))}`
-    );
+    router.push("/checkout?cartItems");
   };
 
   useEffect(() => {
@@ -64,7 +62,6 @@ const Cart = () => {
           className="bg-black text-white text-md font-light w-[60%] h-[80%] md:h-[60%] lg:h-1/2 rounded-sm"
           onClick={() => routeHandler()}
           disabled={buttonDisabled}
-
         >
           CHECKOUT
         </button>

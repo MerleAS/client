@@ -3,8 +3,6 @@ import axios from "axios";
 
 import Footer from "../../../components/layout/footer";
 import Header from "../../../components/layout/header";
-import Cart from "../../../components/layout/cart";
-import Search from "../../../components/layout/search";
 import Error from "../../../components/layout/error";
 
 import IncrementInput from "../../../components/UI/incrementInput";
@@ -145,10 +143,7 @@ const Product = ({ product, imageUrls }) => {
           </p>
         </div>
       </div>
-
-      <Cart />
       <Footer />
-      <Search />
       <Error />
     </div>
   );

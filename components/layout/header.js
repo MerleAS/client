@@ -11,6 +11,8 @@ import CartIcon from "../../public/icons/SVG/cartIcon.svg";
 import Merle from "../../public/icons/SVG/merle.svg";
 import Menu from "../../public/icons/SVG/menu.svg";
 import SideBar from "../UI/sidebar";
+import Cart from "./cart";
+import Search from "./search";
 
 const Header = () => {
   const router = useRouter();
@@ -34,6 +36,11 @@ const Header = () => {
         <div className="text-md text-black flex items-center justify-center">
           <Link href="/about">About Merle</Link>
         </div>
+      </div>
+      <div className="h-10 flex items-center py-4">
+        <p className="text-md text-black flex items-center justify-center">
+          <Link href="/products">Products</Link>
+        </p>
       </div>
       <div className="h-10 flex items-center py-4">
         <p className="text-md text-black flex items-center justify-center">
@@ -118,6 +125,8 @@ const Header = () => {
         isActive={sidebarActive}
         setIsActive={setSidebarActive}
       />
+      <Search />
+      <Cart />
     </nav>
   );
 };

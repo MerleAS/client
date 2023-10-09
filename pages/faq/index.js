@@ -69,13 +69,13 @@ const FAQ = () => {
   };
 
   return (
-    <>
+    <div className="flex flex-col">
       <Header />
-      <div className="w-full flex flex-col items-center justify-center my-[5%] space-y-16 px-8 md:px-12 lg:px-16">
+      <div className="w-full flex flex-col items-center justify-center my-[5%] space-y-16 px-8 md:px-12 lg:px-16 pb-12 h-inherit">
         <h2 className="w-full flex items-center justify-center text-lg md:text-2xl font-medium text-center">
           FREQUENTLY ASKED QUESTIONS
         </h2>
-        <div className="w-full md: w-[90%] md/lg:w-4/5 grid grid-cols-1 md/lg:grid-cols-2 gap-[5%]">
+        <div className="w-full md:w-[90%] md/lg:w-4/5 flex flex-col md/lg:grid md/lg:grid-cols-2 gap-[5%]">
           {questionsList.map((item, index) => (
             <div
               key={index}
@@ -99,7 +99,7 @@ const FAQ = () => {
         </div>
       </div>
       <Footer />
-    </>
+    </div>
   );
 };
 

@@ -44,6 +44,8 @@ const content = [
 ];
 
 const TermsOfService = () => {
+
+  
   return (
     <>
       <Header />

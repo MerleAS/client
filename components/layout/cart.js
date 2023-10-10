@@ -9,7 +9,6 @@ import ProductList from "../views/productList";
 const Cart = () => {
   const router = useRouter();
   const [buttonDisabled, setButtonDisabled] = useState(false);
-
   const {
     cartIsActive,
     setCartIsActive,

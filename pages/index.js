@@ -22,6 +22,7 @@ const Home = () => {
 
   return (
     <div className="min-h-full w-full">
+      
       <Head>
         <title>MERLE</title>
       </Head>

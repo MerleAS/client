@@ -3,52 +3,45 @@ import Image from "next/image";
 import Link from "next/link";
 
 import useIsMobile from "../components/util/useIsMobile";
-import classes from "../styles/index.module.css";
 
 import Footer from "../components/layout/footer";
 import Merle from "../public/icons/SVG/merle.svg";
-
-import SlideShow from "../components/UI/slideShow";
 
 import intro1 from "../public/videos/mp4/intro1.mp4";
 
 import { Suspense } from "react";
 
-const slideShowImageUrls = [
-  "/images/landing-page-slideshow1.png",
-  "/images/landing-page-slideshow2.png",
-  "/images/landing-page-slideshow3.png",
-  "/images/landing-page-slideshow4.png",
-  "/images/landing-page-slideshow5.png",
-  "/images/landing-page-slideshow6.png",
-  "/images/landing-page-slideshow7.png",
+const imageUrls = [
+  "/images/landing-page-image2.png",
+  "/images/landing-page-image3.png",
+  "/images/landing-page-image.png",
 ];
 
 const Home = () => {
   const isMobile = useIsMobile();
 
   return (
-    <div className={classes.container}>
+    <div className="min-h-full w-full">
       <Head>
         <title>MERLE</title>
       </Head>
-      <div className={classes.header}>
+
+      <div className="fixed h-24 w-full flex items-center justify-center z-20 bg-white">
         <Merle height="120" width="280" />
       </div>
-      {isMobile && (
-        <div className={classes.mobileDiscoverContainer}>
-          <Link
-            href="/products?site=second-hand"
-            className={classes.mobileDiscover}
-          >
-            <a className={classes.mobileDiscover}>DISCOVER</a>
-          </Link>
-        </div>
-      )}
+
+      <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-8 py-2 rounded-sm shadow-3xl shadow-black z-10">
+        <Link
+          href="/products?site=second-hand"
+          className="cursor-pointer outline-none w-full"
+        >
+          <a className="text-lg lg:text:xl">SHOP</a>
+        </Link>
+      </div>
 
       {!isMobile && (
         <>
-          <div className={classes.videoContainer}>
+          <div className="h-full w-full">
             <Suspense fallback="loading...">
               <video
                 loop
@@ -61,100 +54,49 @@ const Home = () => {
               />
             </Suspense>
           </div>
-          <div className={classes.contentContainer}>
-            <div className={classes.textContainer}>
-              <h2 className={classes.heading}>Welcome to MERLE!</h2>
-              <p className={classes.paragraph}>
-                We share our interest in fashion, and sell popular second hand
-                and vintage products from well known brands
-              </p>
-              <div className={classes.discoverContainer}>
-                <Link
-                  href="/products?site=second-hand"
-                  className={classes.discover}
+          <div className="h-full w-full flex flex-row justify-evenly my-[5%]">
+            {imageUrls.map((imageUrl, index) => {
+              return (
+                <div
+                  className="w-[33%] h-full"
+                  /* style={{left: `calc(${index} / ${imageUrls.length} * 100%)`}} */ key={
+                    index
+                  }
                 >
-                  <a className={classes.discover}>DISCOVER</a>
-                </Link>
-              </div>
-            </div>
-            <div className={classes.imageContainer}>
-              <Image
-                className={classes.image}
-                src="/images/landing-page-image2.png"
-                loader={() => "/images/landing-page-image2.png"}
-                layout="fill"
-                objectFit="cover"
-                priority={true}
-              />
-            </div>
-            <div className={classes.imageContainer}>
-              <Image
-                className={classes.image}
-                src="/images/landing-page-image3.png"
-                loader={() => "/images/landing-page-image3.png"}
-                layout="fill"
-                objectFit="cover"
-                priority={true}
-              />
-            </div>
-            <div className={classes.imageContainer}>
-              <Image
-                className={classes.image}
-                src="/images/landing-page-image.png"
-                loader={() => "/images/landing-page-image.png"}
-                layout="fill"
-                objectFit="cover"
-                priority={true}
-              />
-            </div>
-          </div>
-          <div className={classes.slideshowContainer}>
-            <div className={classes.innerSlideshowContainer}>
-              <SlideShow
-                imgs={slideShowImageUrls}
-                width={1000}
-                height={1500}
-                navigation={true}
-              />
-            </div>
+                  <Image
+                    className="h-full w-full"
+                    src={imageUrl}
+                    loader={() => imageUrl}
+                    height={1500}
+                    width={1000}
+                    layout="responsive"
+                    objectFit="cover"
+                    priority={true}
+                  />
+                </div>
+              );
+            })}
           </div>
         </>
       )}
 
       {isMobile && (
-        <>
-          <div className={classes.videoContainer}>
-            <Suspense fallback="loading...">
-              <Image
-                className={classes.image}
-                src="/images/landing-page-image3.png"
-                loader={() => "/images/landing-page-image3.png"}
-                layout="fill"
-                objectFit="cover"
-                priority={true}
-              />
-            </Suspense>
-          </div>
-        </>
+        <div className="w-full !h-full">
+          <Image
+            className="w-full !h-full"
+            src="/images/landing-page-image3.png"
+            loader={() => "/images/landing-page-image3.png"}
+            height={1500}
+            width={1000}
+            layout="responsive"
+            objectFit="cover"
+            priority={true}
+          />
+        </div>
       )}
       <Footer />
     </div>
   );
 };
-
-/* export async function getServerSideProps() {
-  const response = await axios.get(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/home/desktop`
-  );
-  const result = await axios.get(
-    `${process.env.NEXT_PUBLIC_SERVER_URL}/home/mobile`
-  );
-  return {
-    props: {
-      pictureUrls: response.data,
-      mobilePictureUrls: result.data,
-    },
-  };
-} */
 
 export default Home;

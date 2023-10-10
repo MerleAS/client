@@ -113,9 +113,7 @@ module.exports = {
         backdropOut: "out 0.6s ease-in-out forwards",
       },
       boxShadow: {
-        stripe:
-          /* "0 0 0 1px rgba(5, 115, 225, 0.5), 0 0 0 2px rgba(5, 115, 225, 0.4), 0 0 0 3px rgba(5, 115, 225, 0.25)" */
-          "0 0 0 3px rgba(5, 115, 225, 0.25) , 0 1px 1px 0 rgba(0, 0, 0, 0.08)",
+        "3xl" : '0 15px 60px 0 rgba(0, 0, 0, 0.3)'
       },
     },
   },

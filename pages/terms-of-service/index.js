@@ -4,16 +4,22 @@ import Footer from "../../components/layout/footer";
 const content = [
   {
     heading: "Kontakt oss",
-    content: "Du kan kontakte oss på tlf: 97655367, mail: post@merle.no eller i kontaktskjemaet vårt som du finner en lenke til nederst på siden."
+    content:
+      "Du kan kontakte oss på tlf: 97655367, mail: post@merle.no eller i kontaktskjemaet vårt som du finner en lenke til nederst på siden.",
+  },
+  {
+    heading: "Pris",
+    content:
+      "Den oppgitte prisen for varen er inkludert avgifter som MVA. Den endelige summen er prisen for alle varene pluss frakt. ",
   },
   {
     heading: "Betaling",
-    content: "Ved bestilling, vil det totale beløpet bli reservert på kontoen til kjøperen. Pengene vil ikke bli trukket før bestillingen har blitt levert. du kan velge mellom å betale med kort eller med vipps.",
+    content:
+      "Ved bestilling, vil det totale beløpet bli reservert på kontoen til kjøperen. Pengene vil ikke bli trukket før bestillingen har blitt levert. du kan velge mellom å betale med kort eller med vipps.",
   },
   {
-    heading: "Mangel på varen",
-    content:
-      "Dersom varen er utsolgt vil kjøper bli informert på sms eller mail, og bli refundert det totale beløpet på den kontoen kjøperen betalte fra.",
+    heading: "Levering",
+    content: "Bestillingen levers",
   },
   {
     heading: "Angrerett og Retur",
@@ -24,6 +30,11 @@ const content = [
     heading: "Reklamasjonsrett",
     content:
       "Ved kjøp og salg av brukt varer gjelder forbruksloven § 17. Vi beskriver varenes tilstand så nøye og oppriktig som mulig, men vi kan ikke garantere produktenes tilstand utover det som er synlig ved det blotte øyet, ettersom de er brukt. Dersom produktet / produktene dere mottar er i betydelig dårligere stand enn det som ble reklamert har dere rett til å klage.",
+  },
+  {
+    heading: "Mangel på varen",
+    content:
+      "Dersom varen er utsolgt vil kjøper bli informert på sms eller mail, og bli refundert det totale beløpet på den kontoen kjøperen betalte fra.",
   },
   {
     heading: "Konfliktløsning",

@@ -14,7 +14,7 @@ import { Suspense } from "react";
 const imageUrls = [
   "/images/landing-page-image2.png",
   "/images/landing-page-image3.png",
-  "/images/landing-page-image.png",
+  
 ];
 
 const Home = () => {

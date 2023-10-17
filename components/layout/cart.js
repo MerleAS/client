@@ -37,6 +37,7 @@ const Cart = () => {
 
   const headerContent = <p className="text-xl">Your Cart</p>;
 
+  
   const bodyContent = (
     <div className="h-[65%] w-[90%] m-[5%] overflow-scroll">
       <ProductList

@@ -19,7 +19,7 @@ const content = [
   },
   {
     heading: "Levering",
-    content: "Bestillingen levers",
+    content: "Levering er skjedd når kjøperen, eller hans representant, har overtatt tingen. Hvis ikke leveringstidspunkt fremgår av bestillingsløsningen, skal selgeren levere varen til kjøper uten unødig opphold og senest 30 dager etter bestillingen fra kunden. Varen skal leveres hos kjøperen med mindre annet er særskilt avtalt mellom partene.",
   },
   {
     heading: "Angrerett og Retur",
@@ -34,7 +34,7 @@ const content = [
   {
     heading: "Mangel på varen",
     content:
-      "Dersom varen er utsolgt vil kjøper bli informert på sms eller mail, og bli refundert det totale beløpet på den kontoen kjøperen betalte fra.",
+      "Hvis det foreligger en mangel ved varen må kjøper innen rimelig tid etter at den ble oppdaget eller burde ha blitt oppdaget, gi selger melding om at han eller hun vil påberope seg mangelen. Kjøper har alltid reklamert tidsnok dersom det skjer innen 2 mnd. fra mangelen ble oppdaget eller burde blitt oppdaget. Dersom varen er utsolgt vil kjøper bli informert på sms eller mail, og bli refundert det totale beløpet på den kontoen kjøperen betalte fra.",
   },
   {
     heading: "Konfliktløsning",

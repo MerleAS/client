@@ -3,9 +3,10 @@ import Footer from "../../components/layout/footer";
 
 const content = [
   {
-    heading: "Kontakt oss",
+    heading: "Partene",
     content:
-      "Du kan kontakte oss på tlf: 97655367, mail: post@merle.no eller i kontaktskjemaet vårt som du finner en lenke til nederst på siden.",
+
+      "Selger er Merle AS, Kontaktadresse: Nardobakken 3, mail: post@merle.no, tlf: 97655367, Organisasjonsnummer: 931171887, og betegnes i det følgende som  selger/selgeren. Kjøper er den forbrukeren som foretar bestillingen, og betegnes i det følgende som  kjøper/kjøperen.",
   },
   {
     heading: "Pris",

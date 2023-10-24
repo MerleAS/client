@@ -9,7 +9,6 @@ import ProductList from "../views/productList";
 const Cart = () => {
   const router = useRouter();
   const [buttonDisabled, setButtonDisabled] = useState(false);
-
   const {
     cartIsActive,
     setCartIsActive,
@@ -38,6 +37,7 @@ const Cart = () => {
 
   const headerContent = <p className="text-xl">Your Cart</p>;
 
+  
   const bodyContent = (
     <div className="h-[65%] w-[90%] m-[5%] overflow-scroll">
       <ProductList

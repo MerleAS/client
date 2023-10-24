@@ -5,16 +5,14 @@ import Image from "next/image";
 
 import Header from "../../components/layout/header";
 import Footer from "../../components/layout/footer";
-import Cart from "../../components/layout/cart";
-import Search from "../../components/layout/search";
 
-const Products = ({ products, site }) => {
+const Products = ({ products }) => {
   const router = useRouter();
 
   const [imageIndex, setImageIndex] = useState({ index: 0, id: null });
 
   const productClickHandler = (prod) => {
-    router.push(`/products/${prod._id}?site=${site}`);
+    router.push(`/products/${prod._id}`);
   };
 
   const mouseHoverHandler = (type, id) => {
@@ -84,8 +82,6 @@ const Products = ({ products, site }) => {
             );
           })}
       </div>
-      <Search />
-      <Cart />
       <Footer />
     </div>
   );
@@ -93,15 +89,10 @@ const Products = ({ products, site }) => {
 
 // preloads products
 
-export async function getServerSideProps(context) {
-  const site = context.query.site;
-  let prods;
-  if (site === "original") {
-    prods = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/products`);
-  } else {
-    prods = await axios.get(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/second-hand/products`);
-  }
+export async function getServerSideProps() {
+  const prods = await axios.get(
+    `${process.env.NEXT_PUBLIC_SERVER_URL}/second-hand/products`
+  );
   const brandsList = [];
   prods.data.products.forEach((prod) => {
     const b = { brandId: prod.brandId, brand: prod.brand };
@@ -113,7 +104,6 @@ export async function getServerSideProps(context) {
   return {
     props: {
       products: prods.data.products,
-      site: site,
       brands: brandsList,
     },
   };

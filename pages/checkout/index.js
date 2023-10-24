@@ -124,6 +124,7 @@ const Checkout = () => {
         `${process.env.NEXT_PUBLIC_SERVER_URL}/orders/create-vipps-session`,
         order
       );
+      setIsLoading(false)
       window.location.href = response.data.url;
     } catch (error) {
       setIsLoading(false);

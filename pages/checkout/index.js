@@ -4,8 +4,6 @@ import axios from "axios";
 
 import { StateContext } from "../../context/stateContext";
 
-import Error from "../../components/layout/error";
-
 import RadioCheckbox from "../../components/views/radioCheckbox";
 import VippsForm from "../../components/views/vippsForm";
 import OrderSummary from "../../components/views/orderSummary";
@@ -190,7 +188,6 @@ const Checkout = () => {
           isLoading={isLoading}
         />
       </div>
-      <Error />
     </>
   );
 };

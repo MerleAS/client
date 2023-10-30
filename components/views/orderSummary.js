@@ -12,7 +12,7 @@ const OrderSummary = ({
   return (
     <div
       className="flex flex-col min-h-2/5 mb-[8%] p-6 border border-gray-300 rounded-sm justify-between  
-    md:fixed md:top-[4rem] md:right-[10%] md:h-4/5 md:min-w-[250px] md:w-1/4"
+    md:fixed md:top-[4rem] md:right-[10%] md:h-4/5 md:min-w-[250px] md:w-1/4 bg-white"
     >
       <div className="grid grid-cols-1 gap-x-[3%] m-0 min-h-0 max-h-3/5 overflow-scroll">
         <ProductList products={cartItems} type={1} />

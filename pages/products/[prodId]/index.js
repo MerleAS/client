@@ -1,10 +1,6 @@
 import { useContext, useState } from "react";
 import axios from "axios";
 
-import Footer from "../../../components/layout/footer";
-import Header from "../../../components/layout/header";
-import Error from "../../../components/layout/error";
-
 import IncrementInput from "../../../components/UI/incrementInput";
 import SlideShow from "../../../components/UI/slideShow";
 
@@ -49,8 +45,8 @@ const Product = ({ product, imageUrls }) => {
   };
 
   return (
-    <div className="min-h-full flex flex-col justify-center items-center">
-      <Header />
+    <div className="min-h-full flex flex-col justify-center items-center md:my-[10%]">
+      
       <div className="w-full md:w-4/5 lg:[65%] lg/xl:w-1/2 h-[70%] flex flex-col md:flex-row space-x-8 p-4">
         <div className="w-full md:w-1/2 max-h-full">
           <SlideShow imgs={imageUrls} width={1000} height={1500} />
@@ -143,8 +139,6 @@ const Product = ({ product, imageUrls }) => {
           </p>
         </div>
       </div>
-      <Footer />
-      <Error />
     </div>
   );
 };

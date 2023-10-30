@@ -1,12 +1,8 @@
 import Image from "next/image";
 
-import Footer from "../../components/layout/footer";
-import Header from "../../components/layout/header";
-
 const Authenticity = () => {
   return (
     <>
-      <Header />
       <div className="w-[90%] mx-[5%] space-y-12 px-8 md:px-12 lg:px-16">
         <h2 className="w-full flex items-center justify-center text-lg md:text-xl text-center">AUTHENTICITY</h2>
         <div className="flex justify-between my-[5%]">
@@ -31,7 +27,6 @@ const Authenticity = () => {
           <div className="w-2/5">{/* <Image /> */}</div>
         </div>
       </div>
-      <Footer />
     </>
   );
 };

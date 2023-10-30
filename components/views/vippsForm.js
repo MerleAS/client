@@ -58,7 +58,7 @@ const VippsForm = ({
         <button
           onClick={vippsHandler}
           disabled={isLoading}
-          className="bg-black w-1/4 h-8 border border-black rounded-sm text-white"
+          className="bg-black w-fit px-6 py-4 h-8 border border-black rounded-sm text-white flex items-center justify-center"
         >
           Place order
         </button>

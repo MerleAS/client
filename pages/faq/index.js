@@ -1,8 +1,5 @@
 import { useReducer } from "react";
 
-import Header from "../../components/layout/header";
-import Footer from "../../components/layout/footer";
-
 import ArrowUp from "../../public/icons/SVG/arrowUp.svg";
 import ArrowDown from "../../public/icons/SVG/arrowDown.svg";
 
@@ -70,7 +67,6 @@ const FAQ = () => {
 
   return (
     <div className="flex flex-col">
-      <Header />
       <div className="w-full flex flex-col items-center justify-center my-[5%] space-y-16 px-8 md:px-12 lg:px-16 pb-12 h-inherit">
         <h2 className="w-full flex items-center justify-center text-lg md:text-2xl font-medium text-center">
           FREQUENTLY ASKED QUESTIONS
@@ -98,7 +94,6 @@ const FAQ = () => {
           ))}
         </div>
       </div>
-      <Footer />
     </div>
   );
 };

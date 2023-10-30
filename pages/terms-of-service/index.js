@@ -1,11 +1,7 @@
-import Header from "../../components/layout/header";
-import Footer from "../../components/layout/footer";
-
 const content = [
   {
     heading: "Partene",
     content:
-
       "Selger er Merle AS, Kontaktadresse: Nardobakken 3, mail: post@merle.no, tlf: 97655367, Organisasjonsnummer: 931171887, og betegnes i det følgende som  selger/selgeren. Kjøper er den forbrukeren som foretar bestillingen, og betegnes i det følgende som  kjøper/kjøperen.",
   },
   {
@@ -20,7 +16,8 @@ const content = [
   },
   {
     heading: "Levering",
-    content: "Levering er skjedd når kjøperen, eller hans representant, har overtatt tingen. Hvis ikke leveringstidspunkt fremgår av bestillingsløsningen, skal selgeren levere varen til kjøper uten unødig opphold og senest 30 dager etter bestillingen fra kunden. Varen skal leveres hos kjøperen med mindre annet er særskilt avtalt mellom partene.",
+    content:
+      "Levering er skjedd når kjøperen, eller hans representant, har overtatt tingen. Hvis ikke leveringstidspunkt fremgår av bestillingsløsningen, skal selgeren levere varen til kjøper uten unødig opphold og senest 30 dager etter bestillingen fra kunden. Varen skal leveres hos kjøperen med mindre annet er særskilt avtalt mellom partene.",
   },
   {
     heading: "Angrerett og Retur",
@@ -45,21 +42,15 @@ const content = [
 ];
 
 const TermsOfService = () => {
-
-  
   return (
-    <>
-      <Header />
-      <ul className="min-h-full p-8 md:p-16 lg:p-24 space-y-8">
-        {content.map((item, index) => (
-          <li key={index}>
-            <h3 className="text-lg font-medium leading-8">{item.heading}</h3>
-            <p className="leading-8">{item.content}</p>
-          </li>
-        ))}
-      </ul>
-      <Footer />
-    </>
+    <ul className="min-h-full p-8 md:p-16 lg:p-24 space-y-8">
+      {content.map((item, index) => (
+        <li key={index}>
+          <h3 className="text-lg font-medium leading-8">{item.heading}</h3>
+          <p className="leading-8">{item.content}</p>
+        </li>
+      ))}
+    </ul>
   );
 };
 

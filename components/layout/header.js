@@ -1,6 +1,5 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { useRouter } from "next/router";
-import Head from "next/head";
 import Link from "next/link";
 
 import useIsMobile from "../util/useIsMobile";
@@ -16,6 +15,22 @@ import Search from "./search";
 
 const Header = () => {
   const router = useRouter();
+  const [isTop, setIsTop] = useState(true);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  const handleScroll = () => {
+    if (window.scrollY === 0) {
+      setIsTop(false);
+    } else {
+      setIsTop(true);
+    }
+  };
 
   const [sidebarActive, setSidebarActive] = useState(false);
 
@@ -53,25 +68,46 @@ const Header = () => {
   const footerContent = <div></div>;
 
   return (
-    <nav className="relative w-full h-24 z-10 flex flex-row">
-      <Head>
-        <title>MERLE</title>
-      </Head>
+    <nav className="fixed top-0 left-0 right-0 bg-white w-full border-b shadow-lg h-20 z-50 flex flex-row">
+
       {!isMobile && (
         <>
           <div
-            className="w-1/4 space-y-3 flex items-center justify-start ml-[3%]"
-            onClick={() => setSidebarActive(true)}
+            className={`fixed h-12 flex items-center justify-center top-20 w-full z-10 transition-all duration-300s ${
+              isTop ? "hidden" : "bg-white shadow-lg"
+            }`}
           >
-            <Menu height="25" width="25" />
+            <div className="flex justify-between justify-center items-center p-4">
+              <div className="flex items-center justify-center space-x-6">
+                <Link href="/products">
+                  <a className="hover:scale-105 cursor-pointer text-dark">Shop</a>
+                </Link>
+                <Link href="/contact">
+                  <a className="hover:scale-105 cursor-pointer text-dark">Our Blog</a>
+                </Link>
+                <Link href="/about">
+                  <a className="hover:scale-105 cursor-pointer text-dark">About Merle</a>
+                </Link>
+                <Link href="/contact">
+                  <a className="hover:scale-105 cursor-pointer text-dark">Contact us</a>
+                </Link>
+                <Link href="/contact">
+                  <a className="hover:scale-105 cursor-pointer text-dark">
+                    Authentication
+                  </a>
+                </Link>
+              </div>
+            </div>
           </div>
+
+          <div className="w-1/3 ml-[3%] space-y-3" />
           <div
             className="flex w-1/2 items-center justify-center"
             onClick={() => routeHandler({ path: "/", label: "Home" })}
           >
-            <Merle height="120" width="280" />
+            <Merle height="80" width="160" />
           </div>
-          <div className="w-1/4 h-full flex items-center justify-end mr-[3%]">
+          <div className="w-1/3 h-full flex items-center justify-end mr-[3%]">
             <div
               className="w-[15%] flex items-center justify-center"
               onClick={() => setSearchIsActive(true)}
@@ -105,26 +141,27 @@ const Header = () => {
             className="flex w-1/2 items-center justify-center"
             onClick={() => routeHandler({ path: "/", label: "Home" })}
           >
-            <Merle height="100" width="250" />
+            <Merle height="60" width="150" />
           </div>
-          <div className="w-1/4 space-y-3 flex items-center justify-center">
+          <div className="space-y-3 w-1/4 flex items-center justify-center">
             <CartIcon
               height="20"
               width="20"
               onClick={() => setCartIsActive(true)}
             />
           </div>
+          <SideBar
+            title=""
+            orientation="left"
+            headerContent={headerContent}
+            bodyContent={bodyContent}
+            footerContent={footerContent}
+            isActive={sidebarActive}
+            setIsActive={setSidebarActive}
+          />
         </>
       )}
-      <SideBar
-        title=""
-        orientation="left"
-        headerContent={headerContent}
-        bodyContent={bodyContent}
-        footerContent={footerContent}
-        isActive={sidebarActive}
-        setIsActive={setSidebarActive}
-      />
+
       <Search />
       <Cart />
     </nav>

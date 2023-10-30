@@ -1,8 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 
-import Footer from "../../components/layout/footer";
-import Header from "../../components/layout/header";
 import Modal from "../../components/UI/modal";
 
 const Contact = () => {
@@ -13,8 +11,6 @@ const Contact = () => {
 
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
-
-  console.log("message", message);
 
   const [modal, setModal] = useState({ isActive: false, message: "" });
 
@@ -55,11 +51,8 @@ const Contact = () => {
       });
   };
 
-  console.log(modal);
-
   return (
     <>
-      <Header />
       <div className="w-full p-8">
         <h2 className="mt-[5%] w-full flex items-center justify-center text-2xl mb-8">
           Contact
@@ -115,13 +108,15 @@ const Contact = () => {
             />
           </div>
           <div className="w-full flex items-center justify-center">
-            <button className="px-[5%] py-[1%] bg-gray-300 rounded-sm" onClick={submitHandler}>
+            <button
+              className="px-[5%] py-[1%] bg-gray-300 rounded-sm"
+              onClick={submitHandler}
+            >
               Submit
             </button>
           </div>
         </div>
       </div>
-      <Footer />
       {modal.isActive && (
         <Modal onClose={() => setModal({ isActive: false, message: "" })}>
           <p>{modal.message}</p>

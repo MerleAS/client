@@ -3,9 +3,6 @@ import { useRouter } from "next/router";
 import axios from "axios";
 import Image from "next/image";
 
-import Header from "../../components/layout/header";
-import Footer from "../../components/layout/footer";
-
 const Products = ({ products }) => {
   const router = useRouter();
 
@@ -27,9 +24,8 @@ const Products = ({ products }) => {
   };
 
   return (
-    <div>
-      <Header />
-      <div className="relative w-full px-4 my-[5%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg/xl:grid-cols-4">
+    <div className="flex flex-col">
+      <div className="relative  w-full px-4 my-[5%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg/xl:grid-cols-4">
         {products.length > 0 &&
           products.map((prod, index) => {
             const totalStock = prod.stock.reduce((acc, cur) => {
@@ -48,7 +44,7 @@ const Products = ({ products }) => {
 
             const imageBackdrop =
               totalStock === 0
-                ? `absolute opacity-40 bg-black w-full h-full z-5`
+                ? `absolute opacity-40 bg-black w-full h-full z-[5]`
                 : "";
             return (
               <div
@@ -60,7 +56,7 @@ const Products = ({ products }) => {
                 onClick={() => productClickHandler(prod)}
               >
                 {totalStock === 0 && (
-                  <h3 className="absolute h-1/5 w-full text-white text:xl md:text-2xl flex items-center justify-center z-6">
+                  <h3 className="absolute h-1/5 w-full text-white text:xl md:text-2xl flex items-center justify-center z-[6]">
                     SOLD OUT
                   </h3>
                 )}
@@ -82,7 +78,6 @@ const Products = ({ products }) => {
             );
           })}
       </div>
-      <Footer />
     </div>
   );
 };

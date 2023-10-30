@@ -66,7 +66,7 @@ const Home = () => {
         <div className="hidden md:flex md:flex-col w-full">
           <hr className="mb-4 mt-12 height-[3px] border-1bg-grey" />
           <h3 className="my-1 flex flex-col items-center text-xl justify-center">
-            THIS WEEK'S INSPIRATION
+            THIS WEEKS INSPIRATION
           </h3>
           <hr className="mb-4 mt-4" />
         </div>

@@ -51,11 +51,11 @@ const Home = () => {
                   <Image
                     className="h-[90vh] w-[49vw] overflow-hidden aspect-square object-cover object-center "
                     src={imageUrl}
-                    /* loader={() => imageUrl} */
+                    alt="image"
                     height={1500}
                     width={1000}
                     sizes="49vw"
-                    /* priority={true} */
+                
                   />
                 </div>
               );
@@ -78,6 +78,7 @@ const Home = () => {
                 <Image
                   className="hover:scale-105 cursor-pointer object-cover object-center"
                   src={"/images/landing-page-image8.png"}
+                  alt="image"
                   height={1500}
                   width={1000}
                   sizes="49vw"
@@ -95,6 +96,7 @@ const Home = () => {
                 <Image
                   className="overflow-hidden aspect-square object-cover object-center "
                   src={"/images/landing-page-image11.png"}
+                  alt="image"
                   height={1500}
                   width={1000}
                   sizes="49vw"
@@ -113,6 +115,7 @@ const Home = () => {
               <Image
                 className="h-[90vh] w-[49vw] overflow-hidden aspect-square object-cover object-center "
                 src={"/images/landing-page-image.png"}
+                alt="image"
                 height={1500}
                 width={1000}
                 sizes="49vw"
@@ -124,12 +127,12 @@ const Home = () => {
                 <Image
                   className="overflow-hidden aspect-square object-cover object-center "
                   src={"/images/landing-page-image6.png"}
+                  alt="image"
                   height={1500}
                   width={1000}
                   sizes="49vw"
                 />
                 <h3 className="flex flex-col items-center justify-center">
-                  {" "}
                   Dior
                 </h3>
                 <p className="flex flex-col mb-14 items-center text-sm mt-2 justify-center">
@@ -142,6 +145,7 @@ const Home = () => {
                 <Image
                   className="overflow-hidden aspect-square space-y-4 object-cover object-center "
                   src={"/images/landing-page-image1.png"}
+                  alt="image"
                   height={1500}
                   width={1000}
                   sizes="49vw"
@@ -177,11 +181,11 @@ const Home = () => {
                   <Image
                     className="h-[90vh] w-[49vw] overflow-hidden aspect-square object-cover object-center "
                     src={imageUrl}
-                    /* loader={() => imageUrl} */
+                    alt="image"
                     height={1500}
                     width={1000}
                     sizes="49vw"
-                    /* priority={true} */
+                  
                   />
                 </div>
               );
@@ -195,6 +199,7 @@ const Home = () => {
               className="w-full !h-full"
               src="/images/landing-page-image5.png"
               loader={() => "/images/landing-page-image5.png"}
+              alt="image"
               height={1500}
               width={1000}
               layout="responsive"

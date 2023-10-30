@@ -14,7 +14,7 @@ const About = () => {
         <p className="leading-8">
           The idea with Merle is to give you a lot of inspiration through
           Instagram, tiktok and the website. You can join the products journey
-          with different outfits, styles and fashion. On MERLE´s instagram and
+          with different outfits, styles and fashion. On MERLE's instagram and
           tiktok you can se how to style the products and you can get a better
           view on how the product looks and the condition to the products
         </p>

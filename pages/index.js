@@ -55,14 +55,13 @@ const Home = () => {
                     height={1500}
                     width={1000}
                     sizes="49vw"
-                
                   />
                 </div>
               );
             })}
           </div>
         )}
-
+        {/* 
         <div className="hidden md:flex md:flex-col w-full">
           <hr className="mb-4 mt-12 height-[3px] border-1bg-grey" />
           <h3 className="my-1 flex flex-col items-center text-xl justify-center">
@@ -83,13 +82,13 @@ const Home = () => {
                   width={1000}
                   sizes="49vw"
                 />
-               {/*  <h3 className="flex flex-col items-center justify-center">
+               <h3 className="flex flex-col items-center justify-center">
                   Fall outfit
                 </h3>
                 <p className="flex flex-col mb-12 text-sm mt-2 items-center justify-center">
                   This fall outfit with our black chanel ballerinas and dior
                   lady bag
-                </p> */}
+                </p>
               </div>
 
               <div className="hover:scale-105 cursor-pointer flex flex-col !space-y-18">
@@ -101,13 +100,13 @@ const Home = () => {
                   width={1000}
                   sizes="49vw"
                 />
-               {/*  <h3 className="flex flex-col items-center justify-center">
+               <h3 className="flex flex-col items-center justify-center">
                   Chloe Tote bag
                 </h3>
                 <p className="flex flex-col mb-14 items-center text-sm mt-2 justify-center">
                   The Chloe tote bag is perfect for every seasons, and every
                   outfits!
-                </p> */}
+                </p>
               </div>
             </div>
 
@@ -132,13 +131,13 @@ const Home = () => {
                   width={1000}
                   sizes="49vw"
                 />
-                {/* <h3 className="flex flex-col items-center justify-center">
+                <h3 className="flex flex-col items-center justify-center">
                   Dior
                 </h3>
                 <p className="flex flex-col mb-14 items-center text-sm mt-2 justify-center">
                   The Dior Trotter Boston Canvas bag is really popular atm! The
                   perfect bag for everything!
-                </p> */}
+                </p>
               </div>
 
               <div className="hover:scale-105 cursor-pointer flex flex-col !space-y-18">
@@ -150,18 +149,18 @@ const Home = () => {
                   width={1000}
                   sizes="49vw"
                 />
-                {/* <h3 className="flex flex-col items-center justify-center">
+                <h3 className="flex flex-col items-center justify-center">
                   Elegant style
                 </h3>
                 <p className="flex flex-col mb-12 text-sm mt-2 items-center justify-center">
                   How to style elegant with the Dior lady bag! Simple black
                   coat, silk scarf and you got it!
-                </p> */}
+                </p> 
               </div>
             </div>
           </div>
         )}
-
+ */}
         <div className="hidden md:flex md:flex-col w-full">
           <hr className="mb-4 mt-12 height-[3px] border-1bg-grey" />
           <h3 className="my-1 flex flex-col items-center text-xl justify-center">
@@ -185,7 +184,6 @@ const Home = () => {
                     height={1500}
                     width={1000}
                     sizes="49vw"
-                  
                   />
                 </div>
               );

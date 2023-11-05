@@ -39,14 +39,14 @@ const shippingOptions = [
     value: "helt-hjem",
     icon: <HeltHjem height="30" width="30" />,
     description: "Leveres om 4-7 virkedager",
-    price: 80,
+    price: 139,
   },
   {
     label: "Posten",
     value: "posten",
     icon: <Posten height="30" width="30" />,
     description: "Leveres om 4-7 virkedager",
-    price: 80,
+    price: 129,
   },
 ];
 

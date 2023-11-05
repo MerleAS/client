@@ -195,8 +195,8 @@ const Home = () => {
           <div className="w-full !h-full">
             <Image
               className="w-full !h-full"
-              src="/images/landing-page-image5.png"
-              loader={() => "/images/landing-page-image5.png"}
+              src="/images/landing-page-mobile.png"
+              loader={() => "/images/landing-page-mobile.png"}
               alt="image"
               height={1500}
               width={1000}

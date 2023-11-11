@@ -25,7 +25,7 @@ const Products = ({ products }) => {
 
   return (
     <div className="flex flex-col">
-      <div className="relative  w-full px-4 my-[5%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg/xl:grid-cols-4 space-x-4">
+      <div className="relative  w-full px-4 my-[5%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg/xl:grid-cols-4">
         {products.length > 0 &&
           products.map((prod, index) => {
             const totalStock = prod.stock.reduce((acc, cur) => {
@@ -48,7 +48,7 @@ const Products = ({ products }) => {
                 : "";
             return (
               <div
-                className="w-full flex flex-col justify-center items-center space-[3%]"
+                className="w-full flex flex-col justify-center items-center space-[3%] m-4"
                 key={index}
                 onMouseOver={() => mouseHoverHandler("over", prod._id)}
                 onMouseOut={() => mouseHoverHandler("out")}

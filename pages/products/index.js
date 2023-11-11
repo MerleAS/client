@@ -48,7 +48,7 @@ const Products = ({ products }) => {
                 : "";
             return (
               <div
-                className="w-full flex flex-col justify-center items-center space-[3%] m-4"
+                className="w-full overflow-x-hidden p-2 flex flex-col justify-center items-center space-[3%]"
                 key={index}
                 onMouseOver={() => mouseHoverHandler("over", prod._id)}
                 onMouseOut={() => mouseHoverHandler("out")}

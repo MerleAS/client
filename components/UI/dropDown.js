@@ -5,11 +5,12 @@ import { useState } from "react";
 import ArrowUp from "../../public/icons/SVG/arrowUp.svg";
 import ArrowDown from "../../public/icons/SVG/arrowDown.svg";
 
-const DropDown = ({ children, placeholder, className, index }) => {
+const DropDown = ({ children, placeholder, className }) => {
   const [isActive, setIsActive] = useState(false);
+
   return (
     <div
-      key={index}
+      key={placeholder}
       className={`w-full min-h-12 h-fit border border-gray-500 my-[4%] hover:scale-[102%] ${className}`}
     >
       <div

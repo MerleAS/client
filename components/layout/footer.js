@@ -4,39 +4,33 @@ import Merle2 from "../../public/icons/SVG/merle2.svg";
 import Instagram from "../../public/icons/SVG/instagram.svg";
 import Tiktok from "../../public/icons/SVG/tiktok.svg";
 
-import useIsMobile from "../util/useIsMobile";
+import IconLink from "../UI/iconLink";
 
 const Footer = () => {
-  const isMobile = useIsMobile();
   return (
     <div className="h-[35rem] w-full bg-black py-4 md:py-16 px-[4%]">
       <div className="w-full h-full flex flex-col justify-between">
         <div className="w-full flex flex-col md:flex-row justify-between">
           <div className="md:w-1/4">
-            <Merle2 height="50" width="150" className="w-full flex items-center justify-center md:justify-start" />
+            <Merle2
+              height="50"
+              width="150"
+              className="w-full flex items-center justify-center md:justify-start"
+            />
             <p className="text-white p-4 text-[12px] w-full">
               We share our interest in fashion, and sell popular secondhand and
               vintage products from well known brands!
             </p>
-            {!isMobile && (
+            <div className="hidden md:flex">
               <div className="flex flex-row space-x-4 p-4">
-                <Instagram
-                  height={20}
-                  width={20}
-                  onClick={() =>
-                    (window.location.href =
-                      "https://www.instagram.com/merle__no/")
-                  }
-                />
-                <Tiktok
-                  height={20}
-                  width={20}
-                  onClick={() =>
-                    (window.location.href = "https://www.tiktok.com/@merle__no")
-                  }
-                />
+                <IconLink href="https://www.instagram.com/merle__no/">
+                  <Instagram height={20} width={20} />
+                </IconLink>
+                <IconLink href="https://www.tiktok.com/@merle__no">
+                  <Tiktok height={20} width={20} />
+                </IconLink>
               </div>
-            )}
+            </div>
           </div>
           <div className="flex flex-row justify-between md:justify-center p-4 md:space-x-16">
             <div className="flex flex-col space-y-4">
@@ -71,25 +65,16 @@ const Footer = () => {
             <p className="text-white text-[10px]">
               All rights reserved Merle AS 2023 | Org.nr. 931171887{" "}
             </p>
-            {isMobile && (
+            <div className="flex md:hidden">
               <div className="flex flex-row space-x-4 p-4">
-                <Instagram
-                  height={20}
-                  width={20}
-                  onClick={() =>
-                    (window.location.href =
-                      "https://www.instagram.com/merle__no/")
-                  }
-                />
-                <Tiktok
-                  height={20}
-                  width={20}
-                  onClick={() =>
-                    (window.location.href = "https://www.tiktok.com/@merle__no")
-                  }
-                />
+                <IconLink href="https://www.instagram.com/merle__no/">
+                  <Instagram height={20} width={20} />
+                </IconLink>
+                <IconLink href="https://www.tiktok.com/@merle__no">
+                  <Tiktok height={20} width={20} />
+                </IconLink>
               </div>
-            )}
+            </div>
           </div>
         </div>
       </div>

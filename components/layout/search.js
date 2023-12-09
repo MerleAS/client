@@ -1,22 +1,21 @@
-import { useContext, useState } from "react";
-import { useRouter } from "next/router";
+"use client";
 
+import Link from "next/link";
+import { useState } from "react";
 import axios from "axios";
-import { StateContext } from "../../context/stateContext";
-import useIsMobile from "../util/useIsMobile";
+
+import useIsMobile from "../../util/useIsMobile";
 
 import Sidebar from "../UI/sidebar";
+import SearchIcon from "../../public/icons/SVG/searchIcon.svg";
 
 const Search = () => {
-  const { setSearchIsActive, searchIsActive } =
-    useContext(StateContext);
-
-  const router = useRouter();
+  const [searchIsActive, setSearchIsActive] = useState(false);
+  const isMobile = useIsMobile();
 
   const [products, setProducts] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   /* const [brands, setBrands] = useState([]); */
-  const isMobile = useIsMobile();
 
   const searchHandler = async (e) => {
     const query = e.target.value;
@@ -24,7 +23,7 @@ const Search = () => {
     try {
       if (query.length > 1) {
         const prods = await axios.get(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/second-hand/products?query=${query}`
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/products/products?query=${query}`
         );
         setProducts(prods.data.products);
         /* const brandsList = []
@@ -38,16 +37,11 @@ const Search = () => {
         setBrands(brandsList) */
       } else {
         setProducts([]);
-        setBrands([]);
+        /* setBrands([]); */
       }
     } catch (err) {
       console.log(err);
     }
-  };
-
-  const routeHandler = (param) => {
-    setSearchIsActive(false);
-    router.push(param);
   };
 
   const headerContent = (
@@ -79,27 +73,37 @@ const Search = () => {
       {products.length > 0 &&
         products.map((product, index) => {
           return (
-            <p
+            <Link
               key={index}
+              href={`/products/${product._id}`}
               className="border-b border-black w-fit text-md font-light my-3"
-              onClick={() => routeHandler(`/products/${product._id}`)}
+              onClick={() => setSearchIsActive(false)}
             >
               {product.brand} {product.type} - {product.title}
-            </p>
+            </Link>
           );
         })}
     </div>
   );
 
   return (
-    <Sidebar
-      isActive={searchIsActive}
-      setIsActive={setSearchIsActive}
-      title="Search"
-      headerContent={headerContent}
-      bodyContent={bodyContent}
-      orientation={isMobile ? "left" : "right"}
-    />
+    <>
+      <div
+        className="flex items-center justify-center hover:scale-105 cursor-pointer"
+        onClick={() => setSearchIsActive(true)}
+      >
+        <SearchIcon width="20" height="20" />
+      </div>
+
+      <Sidebar
+        isActive={searchIsActive}
+        setIsActive={setSearchIsActive}
+        title="Search"
+        headerContent={headerContent}
+        bodyContent={bodyContent}
+        orientation={isMobile ? "left" : "right"}
+      />
+    </>
   );
 };
 

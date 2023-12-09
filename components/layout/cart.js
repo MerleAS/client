@@ -1,50 +1,43 @@
-import { useContext, useEffect, useState } from "react";
-import { useRouter } from "next/router";
+"use client";
 
-import { StateContext } from "../../context/stateContext";
+import Link from "next/link";
+
+import { useStore } from "../../util/store";
+import { getTotalAmount } from "../../util/getTotalAmount";
 
 import Sidebar from "../UI/sidebar";
 import ProductList from "../views/productList";
+import Button from "../UI/button";
+import CartIcon from "../../public/icons/SVG/cartIcon.svg";
 
 const Cart = () => {
-  const router = useRouter();
-  const [buttonDisabled, setButtonDisabled] = useState(false);
-  const {
-    cartIsActive,
-    setCartIsActive,
-    cartItems,
-    getTotalAmount,
-    changeAmountHandler,
-    removeFromCartHandler,
-  } = useContext(StateContext);
+  const { cartItems, dispatch, cartActive } = useStore();
 
   const amountHandler = (item, type) => {
     if (type === "increment" && item.amount + 1 <= item.in_stock) {
-      changeAmountHandler(item, type);
+      dispatch({
+        type: "CHANGE_AMOUNT",
+        product: item,
+        operation: "increment",
+      });
     } else if (type === "decrement" && item.amount - 1 > 0) {
-      changeAmountHandler(item, type);
+      dispatch({
+        type: "CHANGE_AMOUNT",
+        product: item,
+        operation: "decrement",
+      });
     }
   };
 
-  const routeHandler = () => {
-    setCartIsActive(false);
-    router.push("/checkout?cartItems");
-  };
-
-  useEffect(() => {
-    setButtonDisabled(cartItems.length === 0);
-  }, [cartItems]);
-
   const headerContent = <p className="text-xl">Your Cart</p>;
 
-  
   const bodyContent = (
     <div className="h-[65%] w-[90%] m-[5%] overflow-scroll">
       <ProductList
         products={cartItems}
         type={2}
         amountHandler={amountHandler}
-        removeFromCartHandler={removeFromCartHandler}
+        dispatch={dispatch}
       />
     </div>
   );
@@ -53,31 +46,41 @@ const Cart = () => {
     <div className="border-t border-gray-300 w-full h-[20%] flex flex-col items-center justify-center space-y-4 p-4">
       <div className="flex items-center justify-start w-full">
         <p>
-          TOTAL: {cartItems.length > 0 && getTotalAmount()}
+          TOTAL: {cartItems.length > 0 && getTotalAmount(cartItems)}
           {cartItems.length === 0 && 0} Kr
         </p>
       </div>
-      <div className="w-full h-[80%] flex items-center justify-center">
-        <button
-          className="bg-black text-white text-md font-light w-[60%] h-[80%] md:h-[60%] lg:h-1/2 rounded-sm"
-          onClick={() => routeHandler()}
-          disabled={buttonDisabled}
-        >
-          CHECKOUT
-        </button>
-      </div>
+      {cartItems.length > 0 && (
+        <div className="w-full h-[80%] flex items-center justify-center">
+          <Link
+            
+            href="/checkout"
+            onClick={() => dispatch({ type: "TOGGLE_CART", bool: false })}
+          >
+            <Button>CHECKOUT</Button>
+          </Link>
+        </div>
+      )}
     </div>
   );
 
   return (
-    <Sidebar
-      isActive={cartIsActive}
-      setIsActive={setCartIsActive}
-      headerContent={headerContent}
-      bodyContent={bodyContent}
-      footerContent={footerContent}
-      orientation="right"
-    />
+    <>
+      <div
+        className="flex items-center justify-center hover:scale-105 cursor-pointer"
+        onClick={() => dispatch({ type: "TOGGLE_CART", bool: true })}
+      >
+        <CartIcon width="20" height="20" />
+      </div>
+      <Sidebar
+        isActive={cartActive}
+        setIsActive={(bool) => dispatch({ type: "TOGGLE_CART", bool: bool })}
+        headerContent={headerContent}
+        bodyContent={bodyContent}
+        footerContent={footerContent}
+        orientation="right"
+      />
+    </>
   );
 };
 

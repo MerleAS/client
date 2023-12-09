@@ -47,7 +47,7 @@ const SideBar = ({
         onClick={closeModalHandler}
       ></div>
       <div
-        className={`fixed z-[100] flex flex-col h-full bg-white top-0 w-[90%] md:w-1/2 lg:w-[35%] xl:w-[25%] shadow-2xl ${
+        className={`fixed z-[100] !m-0 flex flex-col h-full bg-white top-0 w-[90%] md:w-1/2 lg:w-[35%] xl:w-[25%] shadow-2xl ${
           orientation === "right" ? "right-0" : "left-0"
         } ${containerAnimation}`}
       >

@@ -1,3 +1,5 @@
+"use client"
+
 import Image from "next/image";
 
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -32,7 +34,7 @@ const SlideShow = ({
           navigation={navigation}
           pagination={{ clickable: true }}
           /* onSlideChange={() => console.log("slide change")} */
-          onSwiper={(swiper) => console.log(swiper)}
+          /* onSwiper={(swiper) => c} */
         >
           {imgs.map((img, idx) => {
             return (

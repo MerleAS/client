@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, 
+body,
+:root {
+  height: 100%;
+}
+ 
+@font-face {
+  font-family: "Inter";
+  font-weight: 300 500 600 700 800 900;
+  src: url("../public/fonts/Inter.var.woff2");
+}
+
+html {
+  height: 100%;
+  width: 100%;
+  font-family: "Inter";
+}
+
+.swiper-pagination-bullet {
+  height: 2px !important;
+  width: 40px !important;
+  border-radius: 0 !important;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: black !important;
+}
+
+.swiper-button-next:after {
+  color: black!important;
+}
+.swiper-button-prev::after {
+  color: black!important;
+}

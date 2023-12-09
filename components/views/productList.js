@@ -14,10 +14,7 @@ const ProductList = ({ products, type, amountHandler, dispatch }) => {
             <div className="w-full flex flex-row space-x-3 mb-4" key={index}>
               <div className="h-full min-w-[20%] max-w-[25%]">
                 <Image
-                  src={
-                    process.env.NEXT_PUBLIC_SERVER_URL + "/" + prod.imageUrls[0]
-                  }
-                  layout="responsive"
+                  src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${prod.imageUrls[0]}`}
                   width={1000}
                   height={1500}
                   alt={`${prod.title} image`}

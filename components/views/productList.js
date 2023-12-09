@@ -15,6 +15,7 @@ const ProductList = ({ products, type, amountHandler, dispatch }) => {
               <div className="h-full min-w-[20%] max-w-[25%]">
                 <Image
                   src={`${process.env.NEXT_PUBLIC_SERVER_URL}/${prod.imageUrls[0]}`}
+                  loader={() => `${process.env.NEXT_PUBLIC_SERVER_URL}/${prod.imageUrls[0]}`}
                   width={1000}
                   height={1500}
                   alt={`${prod.title} image`}

@@ -47,8 +47,8 @@ const FAQ = () => {
           FREQUENTLY ASKED QUESTIONS
         </h1>
         <div className="w-full md:w-[90%] md/lg:w-4/5 flex flex-col md/lg:grid md/lg:grid-cols-2 gap-[5%]">
-          {questionsList.map((item) => (
-            <DropDown placeholder={item.question}>
+          {questionsList.map((item, index) => (
+            <DropDown placeholder={item.question} key={index}>
               <p>{item.anwser}</p>
             </DropDown>
           ))}

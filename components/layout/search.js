@@ -23,7 +23,7 @@ const Search = () => {
     try {
       if (query.length > 1) {
         const prods = await axios.get(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/products/products?query=${query}`
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/products/get-products?query=${query}`
         );
         setProducts(prods.data.products);
         /* const brandsList = []

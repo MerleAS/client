@@ -17,7 +17,7 @@ const Select = ({ options, className, placeholder, setValue }) => {
   return (
     <div className="relative w-full">
       <div
-        className={`w-full h-12 border border-gray-500 rounded-sm ${className}`}
+        className={`w-full h-12 border border-gray-400 rounded-sm ${className}`}
       >
         <div
           className="h-12 w-full flex justify-between items-center p-4"
@@ -38,7 +38,7 @@ const Select = ({ options, className, placeholder, setValue }) => {
         </div>
       </div>
       {isActive && (
-        <div className="absolute bg-white top-16 border p-2 border-gray-500 rounded-sm w-full z-10 shadow-md space-y-1">
+        <div className="absolute bg-white top-16 border p-2 border-gray-400 rounded-sm w-full z-10 shadow-md space-y-1">
           {options.map((option, index) => (
             <p
               className="p-3 hover:bg-blue-900/10 rounded-lg"

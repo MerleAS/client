@@ -1,4 +1,12 @@
-const RadioButton = ({ value, radioValue, setRadioValue, price }) => {
+const RadioButton = ({ setValue, price, value, radioValue, id }) => {
+  const changeHandler = (e) => {
+    if (price && typeof radioValue === "object") {
+      setValue(id, { label: e.target.value, price: price });
+    } else {
+      setValue(id, e.target.value);
+    }
+  };
+
   return (
     <div className="flex w-[10%] items-center justify-center mr-[2%]">
       <div className="flex items-center justify-center border border-black h-[18px] w-[18px] rounded-[50%]">
@@ -15,13 +23,14 @@ const RadioButton = ({ value, radioValue, setRadioValue, price }) => {
             value={value}
             name={value}
             checked={radioValue.label === value || radioValue === value}
-            onChange={(e) =>
-              setRadioValue({ label: e.target.value, price: price })
-            }
+            onChange={(e) => changeHandler(e)}
             className={`${
-              radioValue.label === value || radioValue === value ? "hidden" : "hidden"
+              radioValue.label === value || radioValue === value
+                ? "hidden"
+                : "hidden"
             }`}
           />
+
           <span
             className={`w-3 h-3 bg-white rounded-[50%] inline-block ${
               radioValue.label === value || radioValue === value

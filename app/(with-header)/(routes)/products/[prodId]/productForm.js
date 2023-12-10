@@ -133,12 +133,13 @@ const ProductForm = ({ product }) => {
           })}
         </div>
       )}
-      <p
+      <button
+        disabled={getTotalStock(product.stock) === 0}
         className=" mt-12 text-base w-fit cursor-pointer"
         onClick={cartHandler}
       >
         ADD TO CART
-      </p>
+      </button>
     </>
   );
 };

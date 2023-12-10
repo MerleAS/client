@@ -1,71 +1,24 @@
 "use client";
 
 import Link from "next/link";
-
 import { useState } from "react";
 import axios from "axios";
 
 import { useStore } from "../../../../util/store";
 import { getTotalAmount } from "../../../../util/getTotalAmount";
 
-import RadioCheckbox from "./radioCheckbox";
-import VippsForm from "./vippsForm";
+import ZodForm from "./zodForm";
 import OrderSummary from "./orderSummary";
-
-import HeltHjem from "../../../../public/icons/SVG/heltHjem.svg";
-import Posten from "../../../../public/icons/SVG/posten.svg";
-import Card from "../../../../public/icons/SVG/card.svg";
-import Vipps from "../../../../public/icons/SVG/vipps.svg";
 import Merle from "../../../../public/icons/SVG/merle.svg";
 
-// Option arrays for payments and shipping
-
-const paymentOptions = [
-  {
-    label: "Card",
-    value: "card",
-    icon: <Card height="30" width="30" />,
-    description: "Ingen ekstra kostnader",
-    price: null,
-  },
-  {
-    label: "Vipps",
-    value: "vipps",
-    icon: <Vipps height="30" width="30" />,
-    description: "Ingen ekstra kostnader",
-    price: null,
-  },
-];
-
-const shippingOptions = [
-  {
-    label: "Helt Hjem",
-    value: "helt-hjem",
-    icon: <HeltHjem height="30" width="30" />,
-    description: "Leveres om 4-7 virkedager",
-    price: 139,
-  },
-  {
-    label: "Posten",
-    value: "posten",
-    icon: <Posten height="30" width="30" />,
-    description: "Leveres om 4-7 virkedager",
-    price: 129,
-  },
-];
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { schema } from "../../../../constants";
 
 const Checkout = () => {
   const { cartItems, dispatch } = useStore();
 
-  const [shippingRadioValue, setShippingRadioValue] = useState({
-    label: "",
-    price: 0,
-  });
-  const [paymentRadioValue, setPaymentRadioValue] = useState({
-    label: "card",
-    price: null,
-  });
-
+  const [isLoading, setIsLoading] = useState(false);
   const [discountCode, setDiscountCode] = useState({
     label: "",
     valid: false,
@@ -73,18 +26,10 @@ const Checkout = () => {
     _id: null,
   });
 
-  const [isLoading, setIsLoading] = useState(false);
-
-  const vippsHandler = async (customerInfo) => {
-    console.log("cc", customerInfo);
-
+  const vippsHandler = async (formData) => {
     setIsLoading(true);
     try {
-      if (
-        shippingRadioValue.label === "" ||
-        paymentRadioValue.label === "" ||
-        cartItems.length === 0
-      ) {
+      if (cartItems.length === 0) {
         dispatch({
           type: "SET_ERROR",
           value: true,
@@ -95,16 +40,16 @@ const Checkout = () => {
       }
 
       const order = {
-        email: customerInfo.email,
-        phone: customerInfo.phone,
-        name: customerInfo.name,
-        country: customerInfo.country,
-        city: customerInfo.city,
-        address: customerInfo.address,
-        address2: customerInfo.address2,
-        postalCode: customerInfo.postalCode,
-        shipping: shippingRadioValue,
-        paymentMethod: paymentRadioValue,
+        email: formData.email,
+        phone: formData.phone,
+        name: formData.name,
+        country: formData.country,
+        city: formData.city,
+        address: formData.address,
+        address2: formData.address2,
+        postalCode: formData.postalCode,
+        shipping: formData.shipping,
+        paymentMethod: formData.payment,
         cartItems: cartItems,
         discountCode: discountCode,
       };
@@ -136,6 +81,31 @@ const Checkout = () => {
     setDiscountCode(discount);
   };
 
+  const {
+    register,
+    setValue,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: null,
+      country: "",
+      city: "",
+      address: "",
+      address2: "",
+      postalCode: null,
+      shipping: {
+        label: "helt-hjem",
+        price: 139,
+      },
+      payment: "card",
+    },
+    resolver: zodResolver(schema),
+  });
+
   return (
     <>
       <Link
@@ -152,23 +122,19 @@ const Checkout = () => {
           getTotalAmount={getTotalAmount}
           validateDiscount={validateDiscount}
           cartItems={cartItems}
-          shippingRadioValue={shippingRadioValue}
+          shippingRadioValue={watch("shipping")}
         />
 
         <div className="flex flex-col space-y-[5%] w-full md:w-[55%]">
-          <RadioCheckbox
-            optionList={shippingOptions}
-            title="Shipping"
-            setRadioValue={(e) => setShippingRadioValue(e)}
-            radioValue={shippingRadioValue}
+          <ZodForm
+            register={register}
+            errors={errors}
+            watch={watch}
+            setValue={setValue}
+            handleSubmit={handleSubmit}
+            vippsHandler={vippsHandler}
+            isLoading={isLoading}
           />
-          <RadioCheckbox
-            title="Payments"
-            optionList={paymentOptions}
-            setRadioValue={(e) => setPaymentRadioValue(e)}
-            radioValue={paymentRadioValue}
-          />
-          <VippsForm vippsHandler={vippsHandler} isLoading={isLoading} />
         </div>
       </div>
     </>

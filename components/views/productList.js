@@ -1,10 +1,10 @@
+"use client"
+
 import Image from "next/image";
 
 import IncrementInput from "../UI/incrementInput";
 
 const ProductList = ({ products, type, amountHandler, dispatch }) => {
-
-  console.log(products)
 
   return (
     <>

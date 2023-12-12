@@ -56,7 +56,7 @@ const Search = () => {
   };
 
   const headerContent = (
-    <div className="w-4/5 h-full flex items-center justify-center">
+    <div className="w-[70%] h-full flex items-center justify-center">
       <input
         className="w-full outline-none text-md font-normal h-10 border-[1px solid transparent]"
         onChange={searchHandler}
@@ -68,7 +68,17 @@ const Search = () => {
   );
 
   const bodyContent = (
-    <div className="w-4/5 h-4/5 my-[5%] mx-[10%] flex flex-col space-x-[1%]">
+    <div className="w-full h-4/5 my-[5%] px-[10%] flex flex-col space-x-2">
+      <div className="w-full flex justify-between items-center space-x-4 md:hidden mb-8">
+        <SearchIcon width="25" height="25" />
+        <input
+          className="w-full outline-none text-md font-normal h-10 border-[1px solid transparent]"
+          onChange={searchHandler}
+          autoFocus
+          placeholder="Search"
+          value={searchInput}
+        />
+      </div>
       {/* {brands.length > 0 &&
         brands.map((brand, index) => {
           return (
@@ -87,7 +97,7 @@ const Search = () => {
             <Link
               key={index}
               href={`/products/${product._id}`}
-              className="border-b border-black w-fit text-md font-light my-3"
+              className="border-b border-black w-fit text-md font-light my-3 mx-0"
               onClick={() => setSearchIsActive(false)}
             >
               {product.brand} {product.type} - {product.title}

@@ -10,10 +10,8 @@ const SideBar = ({
   bodyContent,
   footerContent,
   orientation,
-  closeModalHandler
+  closeModalHandler,
 }) => {
-  
-
   let containerAnimation;
   if (orientation === "right") {
     containerAnimation = isClosing
@@ -42,13 +40,11 @@ const SideBar = ({
           orientation === "right" ? "right-0" : "left-0"
         } ${containerAnimation}`}
       >
-        
         <div className="w-full hidden md:flex  items-center justify-between border-b h-[10%] border-gray-300 ">
-          <div className="flex mx-[3%]">
-            {title === "Cart" && <CartIcon width="20" height="20" />}
-            {title === "Search" && <SearchIcon width="20" height="20" />}
-            {title !== "Search" ||
-              (title !== "Cart" && <div className="w-[20px] h-[20px]" />)}
+          <div className="flex mx-[5%]">
+            {title === "Cart" && <CartIcon width="25" height="25" />}
+            {title === "Search" && <SearchIcon width="25" height="25" />}
+            {title !== "Search" && title !== "Cart" && <div className="w-[20px] h-[20px]" />}
           </div>
           {headerContent}
           <div className="flex mx-[3%]" onClick={closeModalHandler}>

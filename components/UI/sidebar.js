@@ -1,27 +1,18 @@
-import { useState } from "react";
-
 import SearchIcon from "../../public/icons/SVG/searchIcon.svg";
 import CartIcon from "../../public/icons/SVG/cartIcon.svg";
 import Cross from "../../public/icons/SVG/cross.svg";
 
 const SideBar = ({
   isActive,
-  setIsActive,
+  isClosing,
   title,
   headerContent,
   bodyContent,
   footerContent,
   orientation,
+  closeModalHandler
 }) => {
-  const [isClosing, setIsClosing] = useState(false);
-
-  const closeModalHandler = () => {
-    setIsClosing(true);
-    setTimeout(() => {
-      setIsClosing(false);
-      setIsActive(false);
-    }, 600);
-  };
+  
 
   let containerAnimation;
   if (orientation === "right") {
@@ -41,17 +32,18 @@ const SideBar = ({
   return (
     <>
       <div
-        className={`fixed w-full h-full z-[90] top-0 left-0 bg-black ${
+        className={`hidden md:flex fixed w-full z-[90] md:h-full md:top-0 left-0 bg-black ${
           isClosing ? "animate-backdropOut " : "animate-backdropIn"
         }`}
         onClick={closeModalHandler}
       ></div>
       <div
-        className={`fixed z-[100] !m-0 flex flex-col h-full bg-white top-0 w-[90%] md:w-1/2 lg:w-[35%] xl:w-[25%] shadow-2xl ${
+        className={`fixed z-[100] !m-0 flex flex-col h-[calc(100%-5rem)] top-20 md:h-full md:top-0  bg-white w-full md:w-1/2 lg:w-[35%] xl:w-[25%] shadow-2xl ${
           orientation === "right" ? "right-0" : "left-0"
         } ${containerAnimation}`}
       >
-        <div className="border-b h-[10%] border-gray-300 w-full flex items-center justify-between">
+        
+        <div className="w-full hidden md:flex  items-center justify-between border-b h-[10%] border-gray-300 ">
           <div className="flex mx-[3%]">
             {title === "Cart" && <CartIcon width="20" height="20" />}
             {title === "Search" && <SearchIcon width="20" height="20" />}

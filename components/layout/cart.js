@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 
 import { useStore } from "../../util/store";
@@ -9,6 +10,7 @@ import Sidebar from "../UI/sidebar";
 import ProductList from "../views/productList";
 import Button from "../UI/button";
 import CartIcon from "../../public/icons/SVG/cartIcon.svg";
+import Cross from "../../public/icons/SVG/cross.svg";
 
 const Cart = () => {
   const { cartItems, dispatch, cartActive } = useStore();
@@ -29,13 +31,22 @@ const Cart = () => {
     }
   };
 
+  const [isClosing, setIsClosing] = useState(false);
+
+  const closeModalHandler = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      dispatch({ type: "TOGGLE_CART", bool: false });
+    }, 600);
+  };
+
   const headerContent = <p className="text-xl">Your Cart</p>;
 
   const bodyContent = (
     <div className="h-[65%] w-[90%] m-[5%] overflow-scroll">
       <ProductList
         products={cartItems}
-        type={2}
         amountHandler={amountHandler}
         dispatch={dispatch}
       />
@@ -53,7 +64,6 @@ const Cart = () => {
       {cartItems.length > 0 && (
         <div className="w-full h-[80%] flex items-center justify-center">
           <Link
-            
             href="/checkout"
             onClick={() => dispatch({ type: "TOGGLE_CART", bool: false })}
           >
@@ -66,18 +76,30 @@ const Cart = () => {
 
   return (
     <>
-      <div
-        className="flex items-center justify-center hover:scale-105 cursor-pointer"
-        onClick={() => dispatch({ type: "TOGGLE_CART", bool: true })}
-      >
-        <CartIcon width="20" height="20" />
-      </div>
+      {!cartActive && (
+        <div
+          className="flex items-center justify-center hover:scale-105 cursor-pointer"
+          onClick={() => dispatch({ type: "TOGGLE_CART", bool: true })}
+        >
+          <CartIcon width="20" height="20" />
+        </div>
+      )}
+      {cartActive && (
+        <Cross
+          height="20"
+          width="20"
+          onClick={() => closeModalHandler()}
+          className="hover:scale-105 cursor-pointer"
+        />
+      )}
       <Sidebar
         isActive={cartActive}
+        isClosing={isClosing}
         setIsActive={(bool) => dispatch({ type: "TOGGLE_CART", bool: bool })}
         headerContent={headerContent}
         bodyContent={bodyContent}
         footerContent={footerContent}
+        closeModalHandler={closeModalHandler}
         orientation="right"
       />
     </>

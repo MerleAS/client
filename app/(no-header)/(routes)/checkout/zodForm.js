@@ -38,7 +38,7 @@ const ZodForm = ({
           id="payment"
         />
 
-        <div className="space-y-8 border border-gray-300 p-8">
+        <div className="space-y-8 md:border md:border-gray-300 md:p-8">
           <div className="w-full space-y-1">
             <label>Fullt Navn </label>
             <input
@@ -53,7 +53,7 @@ const ZodForm = ({
             )}
           </div>
 
-          <div className="w-full flex flex-col md:flex-row md:space-x-4">
+          <div className="w-full flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-4">
             <div className="w-full md:w-1/2 space-y-1">
               <label>Epost </label>
               <input
@@ -85,7 +85,7 @@ const ZodForm = ({
             </div>
           </div>
 
-          <div className="w-full flex flex-col md:flex-row md:space-x-4">
+          <div className="w-full flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-4">
             <div className="w-full md:w-1/2 space-y-1">
               <label>Land</label>
               <Select
@@ -125,7 +125,7 @@ const ZodForm = ({
             )}
           </div>
 
-          <div className="w-full flex flex-col md:flex-row md:space-x-4">
+          <div className="w-full flex flex-col md:flex-row space-y-8 md:space-y-0 md:space-x-4">
             <div className="w-full md:w-1/2 space-y-1">
               <label>Addresse linje 2 </label>
               <input

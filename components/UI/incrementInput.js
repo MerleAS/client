@@ -12,17 +12,17 @@ const IncrementInput = ({ count, setCount }) => {
   };
 
   return (
-    <div className="h-6 w-fit flex items-center justify-between flex-row border-2 border-black rounded-sm p-2 mb-2 space-x-2">
+    <div className="h-6 w-fit flex items-center justify-between flex-row border-2 border-black rounded-sm px-2 py-1 space-x-2">
       <button
         onClick={decrementHandler}
-        className="w-4 text-black bg-transparent border-hidden"
+        className="w-4 text-black bg-transparent text-lg border-hidden"
       >
         -
       </button>
       <p className="text-md text-center outline-none border-0">{count}</p>
       <button
         onClick={incrementHandler}
-        className="w-4 text-black bg-transparent border-0"
+        className="w-4 text-black bg-transparent text-lg border-0"
       >
         +
       </button>

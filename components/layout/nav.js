@@ -42,12 +42,12 @@ const Nav = () => {
               >
                 Shop
               </Link>
-              <Link
+              {/* <Link
                 href="/contact"
                 className="hover:scale-105 cursor-pointer text-dark"
               >
                 Our Blog
-              </Link>
+              </Link> */}
               <Link
                 href="/about"
                 className="hover:scale-105 cursor-pointer text-dark"

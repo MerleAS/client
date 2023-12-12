@@ -1,5 +1,7 @@
 "use client";
 
+import { useStore } from "../../../../util/store";
+
 import ProductList from "../../../../components/views/productList";
 import Input from "../../../../components/UI/input";
 
@@ -7,18 +9,39 @@ const OrderSummary = ({
   setDiscountCode,
   getTotalAmount,
   discountCode,
-  cartItems,
   shippingRadioValue,
   validateDiscount,
 }) => {
+  const { cartItems, dispatch } = useStore();
+
+  const amountHandler = (item, type) => {
+    if (type === "increment" && item.amount + 1 <= item.in_stock) {
+      dispatch({
+        type: "CHANGE_AMOUNT",
+        product: item,
+        operation: "increment",
+      });
+    } else if (type === "decrement" && item.amount - 1 > 0) {
+      dispatch({
+        type: "CHANGE_AMOUNT",
+        product: item,
+        operation: "decrement",
+      });
+    }
+  };
+
   return (
-    <aside
-      className="w-full md:w-[35%] md:min-h-full flex flex-col"
-    >
-      <div className="w-full flex flex-col justify-between sticky border border-gray-300 rounded-sm bg-white p-6 min-h-2/5 mb-[8%] 
-      md:mb-0 md:h-[80vh] top-[10%]">
+    <aside className="w-full md:w-[45%] lg/xl:w-[35%] md:min-h-full flex flex-col">
+      <div
+        className="w-full flex flex-col justify-between sticky border border-gray-300 rounded-sm bg-white p-6 min-h-2/5 mb-[8%] 
+      md:mb-0 md:h-[80vh] top-[10%]"
+      >
         <div className="grid grid-cols-1 gap-x-[3%] m-0 min-h-0 max-h-3/5 overflow-scroll">
-          <ProductList products={cartItems} type={1} />
+          <ProductList
+            products={cartItems}
+            amountHandler={amountHandler}
+            dispatch={dispatch}
+          />
         </div>
         <div className="min-h-fit max-h-[95%] w-full flex flex-col">
           <div className="h-1/5 p-[4%] my-[4%] w-full flex flex-row items-center space-x-[5%]  ">

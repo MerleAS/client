@@ -8,6 +8,7 @@ import useIsMobile from "../../util/useIsMobile";
 
 import Sidebar from "../UI/sidebar";
 import SearchIcon from "../../public/icons/SVG/searchIcon.svg";
+import Cross from "../../public/icons/SVG/cross.svg";
 
 const Search = () => {
   const [searchIsActive, setSearchIsActive] = useState(false);
@@ -16,6 +17,16 @@ const Search = () => {
   const [products, setProducts] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   /* const [brands, setBrands] = useState([]); */
+
+  const [isClosing, setIsClosing] = useState(false);
+
+  const closeModalHandler = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      setSearchIsActive(false);
+    }, 600);
+  };
 
   const searchHandler = async (e) => {
     const query = e.target.value;
@@ -88,20 +99,32 @@ const Search = () => {
 
   return (
     <>
-      <div
-        className="flex items-center justify-center hover:scale-105 cursor-pointer"
-        onClick={() => setSearchIsActive(true)}
-      >
-        <SearchIcon width="20" height="20" />
-      </div>
+      {!searchIsActive && (
+        <div
+          className="flex items-center justify-center hover:scale-105 cursor-pointer"
+          onClick={() => setSearchIsActive(true)}
+        >
+          <SearchIcon width="20" height="20" />
+        </div>
+      )}
+      {searchIsActive && (
+        <Cross
+          height="20"
+          width="20"
+          onClick={() => closeModalHandler()}
+          className="hover:scale-105 cursor-pointer"
+        />
+      )}
 
       <Sidebar
         isActive={searchIsActive}
+        isClosing={isClosing}
         setIsActive={setSearchIsActive}
         title="Search"
         headerContent={headerContent}
         bodyContent={bodyContent}
         orientation={isMobile ? "left" : "right"}
+        closeModalHandler={closeModalHandler}
       />
     </>
   );

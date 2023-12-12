@@ -54,8 +54,8 @@ const ProductForm = ({ product }) => {
   }, []);
 
   return (
-    <>
-      <div className="h-[15%] min-h-24 w-full flex items-center my-6">
+    <div className="w-full h-full flex flex-col justify-between space-y-10">
+      <div className="h-[15%] min-h-24 w-full flex items-center mt-6">
         {product.stock.length > 1 &&
           product.stock.map((size, index) => {
             let style, stockStyle;
@@ -70,11 +70,11 @@ const ProductForm = ({ product }) => {
             }
             return (
               <div
-                className="h-full flex flex-col min-w-[15%] mr-[10%] items-center"
+                className="h-full flex flex-col min-w-[10%] mr-[10%] items-center"
                 key={index}
               >
                 <div
-                  className={`w-full h-fit border-2 border-black rounded-sm px-1 py-0.5 ${
+                  className={`w-20 flex items-center justify-center h-fit border-2 border-black rounded-sm px-1 py-0.5 cursor-pointer ${
                     size.in_stock === 0 ? "text-gray-300 border-gray-300" : ""
                   }
                     ${
@@ -82,6 +82,7 @@ const ProductForm = ({ product }) => {
                         ? "bg-gray-200 opacity-60"
                         : ""
                     }`}
+
                   onClick={() => {
                     if (size.in_stock > 0) {
                       setSelectedSize({
@@ -110,14 +111,15 @@ const ProductForm = ({ product }) => {
           })}
       </div>
 
+
       {getTotalStock(product.stock) > 1 && (
-        <div className="w-full mb-8">
+        <div className="w-full flex items-center">
           <IncrementInput count={count} setCount={countHandler} />
         </div>
       )}
 
       <p
-        className="mt-12 text-base w-fit cursor-pointer"
+        className="text-base w-fit cursor-pointer flex items-center"
         onClick={() => setDescriptionDropdownActive((prev) => !prev)}
       >
         DESCRIPTION
@@ -134,13 +136,13 @@ const ProductForm = ({ product }) => {
         </div>
       )}
       <button
-        disabled={getTotalStock(product.stock) === 0}
-        className=" mt-12 text-base w-fit cursor-pointer"
+        disabled={getTotalStock(product.stock) === 0 || selectedSize.size === ""}
+        className="text-base w-fit cursor-pointer flex items-center"
         onClick={cartHandler}
       >
         ADD TO CART
       </button>
-    </>
+    </div>
   );
 };
 

@@ -115,7 +115,8 @@ const Checkout = () => {
         <Merle height="80" width="200" />
       </Link>
 
-      <div className="flex flex-col md:flex-row-reverse w-full gap-x-[10%] mt-8 px-[5%] md:px-[10%] pb-[15%] h-fit ">
+      <div className="flex flex-col md:flex-row-reverse w-full gap-x-[5%] lg:gap-x-[10%] mt-8 px-[5%] lg:px-[10%] pb-[15%] h-fit ">
+
         <OrderSummary
           discountCode={discountCode}
           setDiscountCode={setDiscountCode}
@@ -125,7 +126,7 @@ const Checkout = () => {
           shippingRadioValue={watch("shipping")}
         />
 
-        <div className="flex flex-col space-y-[5%] w-full md:w-[55%]">
+        <div className="flex flex-col space-y-[5%] w-full md:w-[50%] lg/xl:w-[55%]">
           <ZodForm
             register={register}
             errors={errors}

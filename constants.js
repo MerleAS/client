@@ -60,3 +60,5 @@ export const shippingOptions = [
 ];
 
 export const COUNTRIES = ["Norge"];
+
+export const CLIENT_URL = "https://www.merle.no"

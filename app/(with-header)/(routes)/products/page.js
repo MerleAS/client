@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 
 import { getProducts } from "../../../../actions/getProducts";
@@ -17,11 +16,6 @@ const Products = async () => {
             const imageUrls = prod.imageUrls.map(
               (url) => `${process.env.NEXT_PUBLIC_SERVER_URL}/${url}`
             );
-
-            const imageBackdrop =
-              getTotalStock(prod.stock) === 0
-                ? `absolute opacity-40 bg-black w-full h-full z-[5]`
-                : "";
             return (
               <div className="w-full" key={index}>
                 <Link
@@ -34,7 +28,9 @@ const Products = async () => {
                     </h3>
                   )}
                   <div className="relative w-full m-0">
-                    <div className={imageBackdrop} />
+                    {getTotalStock(prod.stock) === 0 && (
+                      <div className="absolute opacity-40 bg-black w-full h-full z-[5]" />
+                    )}
                     <SwitchImage
                       imageUrls={imageUrls}
                       alt={prod.title}

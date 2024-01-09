@@ -1,4 +1,4 @@
-import { CLIENT_URL } from "@/constants";
+import { CLIENT_URL } from "../constants";
 
 export default function robots() {
   return {

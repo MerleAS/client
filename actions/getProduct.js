@@ -1,6 +1,7 @@
 import axios from "axios";
+import { cache } from "react";
 
-export const getProductById = async (id) => {
+export const getProductById = cache(async (id) => {
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/products/get-product/${id}`
@@ -9,4 +10,4 @@ export const getProductById = async (id) => {
   } catch (error) {
     console.log(error);
   }
-};
+});

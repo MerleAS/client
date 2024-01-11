@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import Image from "next/image";
 
@@ -7,7 +7,7 @@ import { Pagination, A11y, Navigation } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/pagination";
-import 'swiper/css/navigation';
+import "swiper/css/navigation";
 
 const SlideShow = ({
   imgs,
@@ -23,18 +23,13 @@ const SlideShow = ({
   }
 
   return (
-    <div
-      className={`w-full ${containerClass}`}
-      style={containerStyle}
-    >
-      <div >
+    <div className={`w-full ${containerClass}`} style={containerStyle}>
+      <div>
         <Swiper
           slidesPerView={1}
           modules={modules}
           navigation={navigation}
           pagination={{ clickable: true }}
-          /* onSlideChange={() => console.log("slide change")} */
-          /* onSwiper={(swiper) => c} */
         >
           {imgs.map((img, idx) => {
             return (

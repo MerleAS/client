@@ -4,38 +4,39 @@ import DropDown from "../../../../components/UI/dropDown";
 
 const questionsList = [
   {
-    question: "Authenticity",
+    question: "Autentisering",
     anwser:
-      "We have a team of experts that authenticates all the pieces on the website",
+      "Vi samarbeider med Legitgrails. Legitgrails autentiserer alle våre produkter, og sammen med de gir vi dere et autensitetsbevis fra Merle. Les mer om dette på vår autensitets side. ",
   },
   {
-    question: "Shipping time",
-    anwser: "Shipping usually takes between 3-7 days",
+    question: "Leveringstid ",
+    anwser:
+      "Alle våre pakker blir sendt med posten eller helthjem. Både Posten og helthjem har en leveringstid på 2- 5 dager   ",
   },
   {
-    question: "Products",
+    question: "Våre produkter",
     anwser:
-      "The products sold on this platform are secondhand products, but we make sure to only sell products which are in great condition",
+      "Produktene våre er nøye fotografert, hvor vi prøver å vise så nøyaktig som mulig hvilke stand produktene er i. Vær oppmerksom på at vintage varer kan ha mindre flekker enn hva som kommer frem i teksten eller på bildene. Les mer om dette på “Om oss” siden. ",
   },
   {
-    question: "SHIPPING",
+    question: "Frakt ",
     anwser:
-      "You can choose between different shipping agencies such as helthjem and posten. Helthjem deliveres packages between 2-5 days, and posten in 1-3 working days",
+      "Vi sender våre bestillinger med Helthjem eller Posten, etter hva du foretrekker. Posten og Helthjem er to kjente og trygge frakt byråer, hvor du får sporing på pakken din og rask levering",
   },
   {
-    question: "RETURN",
+    question: "Retur",
     anwser:
-      "If you regret a purchase from us, the Right of Cancellation Act applies. We have a 14-day right of withdrawal from the date of purchase. If you want to return the item, you must send an email to post@MERLE.no and inform us that you wish to return the item. The package must be sent back to us with tracking from the post office (you pay the shipping cost for the return) and you must send us the tracking number so that we can track the package.All tags and original garment tag/thread must still be attached to the item when returning. We have carefully photographed the item before sending it out and require the item to be returned in the same condition as it was received. We do not tolerate taking back items that have been used or where the tag is no longer attached to the item. We transfer the money back to the card that was used when ordering the item - and you will have the money back 4-10 working days after we have received the item in return.​",
+      "Angrer du på et kjøp fra oss, gjelder angrerettloven. Vi har 14 dagers angrerett fra kjøpsdato. Dersom du ønsker å returnere varen, må du sende en epost til post@MERLE.no og informere oss om at du ønsker å returnere varen. Pakken må sendes tilbake til oss med sporing fra postkontoret (du betaler fraktkostnaden for returen) og du må sende oss sporingsnummeret slik at vi kan spore pakken. Alle merker og original plaggmerke/tråd må fortsatt festes til varen ved retur. Vi har nøye fotografert varen før vi sender den ut og krever at varen returneres i samme stand som den ble mottatt. Vi tolererer ikke å ta tilbake varer som har vært brukt eller hvor lappen ikke lenger er festet til varen. Vi overfører pengene tilbake til kortet som ble brukt ved bestilling av varen - og du får pengene tilbake 4-10 virkedager etter at vi har mottatt varen i retur.​",
   },
   {
-    question: "DELIVERY",
+    question: "Levering",
     anwser:
-      "Your package will be delivered to your home or a package box near by.",
+      "Pakken din vil bli levert til der du bor eller til en butikk eller pakke boks nærme der du bor. Alt dette blir oppdatert med frakt byrået som frakter din pakke",
   },
   {
-    question: "IF YOU DONT COLLECT YOUR PACKAGE",
+    question: "Hvis du ikke henter pakken din og forholder deg passiv ",
     anwser:
-      "If you do not collect the order and are otherwise completely passive, this will not give us any indication as to why the package has not been collected. You will then not have met the requirements set for you in accordance with § 11 and § 13 of the Right of Cancellation Act, and thus lose the right to withdraw from the agreement. When the order is returned as undelivered it will be credited in full (minus the handling charge) and the item(s) will be returned to stock. The handling cost includes postage two ways (NOK 80 x 2), plus an uncollected fee of NOK. 500 - a total of NOK 660.",
+      "Dersom du ikke henter bestillingen og ellers er helt passiv, vil dette ikke gi oss noen indikasjon på hvorfor pakken ikke er hentet. Du vil da ikke ha oppfylt kravene som stilles til deg i henhold til § 11 og § 13 i angrerettloven, og mister dermed retten til å si opp avtalen. Når bestillingen er returnert som ikke levert, vil den bli kreditert i sin helhet (minus håndteringsgebyr) og varen(e) vil bli returnert til lager. Håndteringskostnaden inkluderer porto to veier (kr 80 x 2) pluss et uavkrevet gebyr på kr. 500 - totalt 660 kr.",
   },
 ];
 
@@ -44,12 +45,12 @@ const FAQ = () => {
     <div className="flex flex-col">
       <div className="w-full flex flex-col items-center justify-center my-[5%] space-y-16 px-8 md:px-12 lg:px-16 pb-12 h-inherit">
         <h1 className="w-full flex items-center justify-center text-lg md:text-2xl font-medium text-center">
-          FREQUENTLY ASKED QUESTIONS
+          Ofte stilte spørsmål
         </h1>
         <div className="w-full md:w-[90%] md/lg:w-4/5 flex flex-col md/lg:grid md/lg:grid-cols-2 gap-[5%]">
           {questionsList.map((item, index) => (
             <DropDown placeholder={item.question} key={index}>
-              <p>{item.anwser}</p>
+              <p className="leading-8 font-light">{item.anwser}</p>
             </DropDown>
           ))}
         </div>

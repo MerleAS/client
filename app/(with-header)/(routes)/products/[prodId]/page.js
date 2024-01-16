@@ -1,3 +1,5 @@
+"use server"
+
 import SlideShow from "../../../../../components/UI/slideShow";
 import { getProductById } from "../../../../../actions/getProduct";
 import { getTotalStock } from "../../../../../util/getTotalStock";

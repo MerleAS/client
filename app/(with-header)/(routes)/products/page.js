@@ -8,6 +8,7 @@ import SwitchImage from "../../../../components/UI/switchImage";
 const Products = async () => {
   const products = await getProducts();
 
+  console.log("produdcts", products)
   return (
     <div className="flex flex-col">
       <div className="relative  w-full px-4 my-[5%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg/xl:grid-cols-4 gap-2">

@@ -1,7 +1,6 @@
 "use server"
 
 import axios from "axios";
-import { cache } from "react";
 
 export const getProductById = cache(async (id) => {
   try {

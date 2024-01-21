@@ -1,6 +1,6 @@
-"use client";
+'use client'
 
-import RadioButton from "../../../../components/UI/radioButton";
+import RadioButton from '../../../../components/UI/radioButton'
 
 const RadioCheckbox = ({ optionList, title, setValue, radioValue, id }) => {
   return (
@@ -28,18 +28,19 @@ const RadioCheckbox = ({ optionList, title, setValue, radioValue, id }) => {
                 </div>
                 <div className="w-1/5 flex items-center justify-end mr-[2%]">
                   <p className="text-md m-0 font-light">
-                    {option.price} {title === "Shipping" && "kr"}
+                    {option.price === 0 ? 'Gratis' : title === "Shipping" ? `${option.price}` : ""}
+                    {title === 'Shipping' && option.price !== 0 && 'kr'}
                   </p>
                 </div>
                 <div className="w-[10%] flex items-center justify-center">
                   {option.icon}
                 </div>
               </div>
-            );
+            )
           })}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default RadioCheckbox;
+export default RadioCheckbox

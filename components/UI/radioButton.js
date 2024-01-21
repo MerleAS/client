@@ -1,6 +1,6 @@
 const RadioButton = ({ setValue, price, value, radioValue, id }) => {
   const changeHandler = (e) => {
-    if (price && typeof radioValue === "object") {
+    if (typeof price === "number" && typeof radioValue === "object") {
       setValue(id, { label: e.target.value, price: price });
     } else {
       setValue(id, e.target.value);

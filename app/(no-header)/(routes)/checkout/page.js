@@ -99,7 +99,7 @@ const Checkout = () => {
       postalCode: null,
       shipping: {
         label: "helt-hjem",
-        price: 139,
+        price: 0,
       },
       payment: "card",
     },

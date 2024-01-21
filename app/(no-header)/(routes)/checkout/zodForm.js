@@ -24,14 +24,14 @@ const ZodForm = ({
     <section className="w-full space-y-8">
       <form className="w-full space-y-8" onSubmit={handleSubmit(vippsHandler)}>
         <RadioCheckbox
+          title="Frakt"
           optionList={shippingOptions}
-          title="Shipping"
           radioValue={watch("shipping")}
           setValue={setValue}
           id="shipping"
         />
         <RadioCheckbox
-          title="Payment"
+          title="Betaling"
           optionList={paymentOptions}
           radioValue={watch("payment")}
           setValue={setValue}

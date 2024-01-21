@@ -70,16 +70,16 @@ const OrderSummary = ({
             </p>
           </div>
           <div className="w-[90%] m-[5%] flex justify-between">
-            <p className="text-sm m-0 font-light">Shipping</p>
+            <p className="text-sm m-0 font-light">Frakt</p>
             <p className="text-sm m-0 font-light">
               {shippingRadioValue.price
                 ? shippingRadioValue.price + " kr"
-                : "?"}
+                : typeof shippingRadioValue.price === "number" ? "Gratis": "?"}
             </p>
           </div>
           {discountCode.valid && (
             <div className="w-[90%] m-[5%] flex justify-between">
-              <p className="text-sm m-0 font-light">Discount</p>
+              <p className="text-sm m-0 font-light">Rabatt</p>
               <p className="text-sm m-0 font-light">
                 -{getTotalAmount(cartItems) * discountCode.value + " kr"}
               </p>
@@ -90,7 +90,7 @@ const OrderSummary = ({
           <div className="w-[90%] m-[5%] flex justify-between">
             <p className="text-sm m-0 font-light">Total</p>
             <p className="text-sm m-0 font-light">
-              {shippingRadioValue.price
+              {typeof shippingRadioValue.price === "number"
                 ? parseInt(getTotalAmount(cartItems)) *
                     (1 - discountCode.value) +
                   parseInt(shippingRadioValue.price) +

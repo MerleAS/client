@@ -9,6 +9,7 @@ import SwitchImage from '../../../../components/UI/switchImage'
 import Pagination from './pagination'
 
 const Products = async ({ searchParams: { page } }) => {
+  if (!page) page = 1
   const data = await getProducts(page)
   const products = data.products
   const totalPages = data.totalPages

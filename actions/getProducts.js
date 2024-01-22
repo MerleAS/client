@@ -20,7 +20,7 @@ export const getProducts = async (query) => {
 
 export const getLimitedProducts = async (page) => {
   try {
-    if (typeof page !== "number") page = 1
+    if (typeof parseInt(page) !== "number") page = 1
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/products/get-products/${page}`,
       { cache: 'no-store' },

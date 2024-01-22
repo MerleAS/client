@@ -2,6 +2,7 @@
 
 export const getProducts = async (page) => {
   try {
+    if (typeof page !== "number") page = 1
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_SERVER_URL}/products/get-products/${page}`,
       { cache: 'no-store' },

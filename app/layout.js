@@ -1,22 +1,22 @@
-import "./globals.css";
+import './globals.css'
 
-import Footer from "../components/layout/footer";
-/* import Error from "../components/layout/error"; */
+import Footer from '../components/layout/footer'
+import Error from '../components/layout/error'
 
 export const metadata = {
-  title: "MERLE",
+  title: 'MERLE',
   description:
-    "Merle er en norsk nettbutikk som selger moterelaterte vintageprodukter som klær, vesker og annet tilbehør",
-};
+    'Merle er en norsk nettbutikk som selger moterelaterte vintageprodukter som klær, vesker og annet tilbehør',
+}
 
 export default function RootLayout({ children }) {
   return (
     <html lang="no">
       <body>
         {children}
-        {/* <Error /> */}
+        <Error />
         <Footer />
       </body>
     </html>
-  );
+  )
 }

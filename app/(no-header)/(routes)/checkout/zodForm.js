@@ -19,6 +19,7 @@ const ZodForm = ({
   handleSubmit,
   vippsHandler,
   isLoading,
+  disabled
 }) => {
   return (
     <section className="w-full space-y-8">
@@ -167,7 +168,7 @@ const ZodForm = ({
           </div>
 
           <div className="w-full flex items-center justify-center">
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading || disabled}>
               Place order
             </Button>
           </div>

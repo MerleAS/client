@@ -1,85 +1,63 @@
-"use client";
+'use client'
 
-import Link from "next/link";
-import { useState } from "react";
-import axios from "axios";
+import Link from 'next/link'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-import { useStore } from "../../../../util/store";
-import { getTotalAmount } from "../../../../util/getTotalAmount";
+import { useStore } from '../../../../util/store'
+import { getTotalAmount } from '../../../../util/getTotalAmount'
+import { validateDiscount } from '../../../../actions/validateDiscount'
+import { postOrder } from '../../../../actions/postOrder'
 
-import ZodForm from "./zodForm";
-import OrderSummary from "./orderSummary";
-import Merle from "../../../../public/icons/SVG/merle.svg";
+import ZodForm from './zodForm'
+import OrderSummary from './orderSummary'
+import Merle from '../../../../public/icons/SVG/merle.svg'
 
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { schema } from "../../../../constants";
+import { schema } from '../../../../constants'
 
 const Checkout = () => {
-  const { cartItems, dispatch } = useStore();
+  const { cartItems, dispatch } = useStore()
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false)
   const [discountCode, setDiscountCode] = useState({
-    label: "",
+    label: '',
     valid: false,
     value: 0,
     _id: null,
-  });
+  })
 
   const vippsHandler = async (formData) => {
-    setIsLoading(true);
+    setIsLoading(true)
     try {
-      if (cartItems.length === 0) {
+      const response = await postOrder(formData, cartItems, discountCode)
+      setIsLoading(false)
+
+      if (
+        response.data.soldOutProducts &&
+        response.data.soldOutProducts.length > 0
+      ) {
+        const soldOutProducts = response.data.soldOutProducts
+
         dispatch({
-          type: "SET_ERROR",
+          type: 'SET_ERROR',
+          message: `Dessverre ble følgende produkter nettopp kjøpt av noen andre: ${soldOutProducts.map(
+            (prod) => `${prod.title},`,
+          )}`,
           value: true,
-          message: "Please fill in all the input forms",
-        });
-        setIsLoading(false);
-        return;
+        })
+      } else {
+        window.location.href = response.data.url
       }
-
-      const order = {
-        email: formData.email,
-        phone: formData.phone,
-        name: formData.name,
-        country: formData.country,
-        city: formData.city,
-        address: formData.address,
-        address2: formData.address2,
-        postalCode: formData.postalCode,
-        shipping: formData.shipping,
-        paymentMethod: formData.payment,
-        cartItems: cartItems,
-        discountCode: discountCode,
-      };
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/orders/create-vipps-session`,
-        order
-      );
-      setIsLoading(false);
-      window.location.href = response.data.url;
     } catch (error) {
-      setIsLoading(false);
+      setIsLoading(false)
       dispatch({
-        type: "SET_ERROR",
-        message: "Something went wrong, please try again",
+        type: 'SET_ERROR',
+        message: 'Noe gikk galt, prøv på nytt.',
         value: true,
-      });
+      })
     }
-  };
-
-  const validateDiscount = async () => {
-    console.log(discountCode);
-    const response = await axios.post(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/discount/validate-discount-code`,
-      {
-        discountCode: discountCode,
-      }
-    );
-    const discount = response.data.discount;
-    setDiscountCode(discount);
-  };
+  }
 
   const {
     register,
@@ -89,22 +67,22 @@ const Checkout = () => {
     formState: { errors },
   } = useForm({
     defaultValues: {
-      name: "",
-      email: "",
+      name: '',
+      email: '',
       phone: null,
-      country: "",
-      city: "",
-      address: "",
-      address2: "",
+      country: '',
+      city: '',
+      address: '',
+      address2: '',
       postalCode: null,
       shipping: {
-        label: "helt-hjem",
+        label: 'helt-hjem',
         price: 0,
       },
-      payment: "card",
+      payment: 'card',
     },
     resolver: zodResolver(schema),
-  });
+  })
 
   return (
     <>
@@ -116,14 +94,13 @@ const Checkout = () => {
       </Link>
 
       <div className="flex flex-col md:flex-row-reverse w-full gap-x-[5%] lg:gap-x-[10%] mt-8 px-[5%] lg:px-[10%] pb-[15%] h-fit ">
-
         <OrderSummary
           discountCode={discountCode}
           setDiscountCode={setDiscountCode}
           getTotalAmount={getTotalAmount}
-          validateDiscount={validateDiscount}
+          validateDiscount={() => validateDiscount(discountCode, setDiscountCode)}
           cartItems={cartItems}
-          shippingRadioValue={watch("shipping")}
+          shippingRadioValue={watch('shipping')}
         />
 
         <div className="flex flex-col space-y-[5%] w-full md:w-[50%] lg/xl:w-[55%]">
@@ -135,11 +112,12 @@ const Checkout = () => {
             handleSubmit={handleSubmit}
             vippsHandler={vippsHandler}
             isLoading={isLoading}
+            disabled={cartItems.length === 0}
           />
         </div>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Checkout;
+export default Checkout

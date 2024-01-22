@@ -1,9 +1,9 @@
 'use server'
 
-export const getProducts = async () => {
+export const getProducts = async (page) => {
   try {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_SERVER_URL}/products/get-products`,
+      `${process.env.NEXT_PUBLIC_SERVER_URL}/products/get-products/${page}`,
       { cache: 'no-store' },
     )
 
@@ -12,7 +12,7 @@ export const getProducts = async () => {
     }
 
     const data = await response.json()
-    return data.products
+    return data
   } catch (error) {
     console.error('There was a problem with the fetch operation:', error)
   }

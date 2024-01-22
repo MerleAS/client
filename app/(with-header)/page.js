@@ -21,7 +21,7 @@ const Home = () => {
         {isMobile && (
           <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/3 bg-white px-8 py-2 rounded-sm shadow-3xl shadow-black z-10">
             <Link
-              href="/products"
+              href="/products?page=1"
               className="cursor-pointer outline-none w-full text-lg lg:text:xl"
             >
               SHOP

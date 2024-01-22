@@ -16,7 +16,6 @@ const Search = () => {
 
   const [products, setProducts] = useState([]);
   const [searchInput, setSearchInput] = useState("");
-  /* const [brands, setBrands] = useState([]); */
 
   const [isClosing, setIsClosing] = useState(false);
 
@@ -33,22 +32,12 @@ const Search = () => {
     setSearchInput(query);
     try {
       if (query.length > 1) {
-        const prods = await axios.get(
+        const response = await axios.get(
           `${process.env.NEXT_PUBLIC_SERVER_URL}/products/get-products?query=${query}`
         );
-        setProducts(prods.data.products);
-        /* const brandsList = []
-        prods.data.products.forEach(prod => {
-          const b = { brandId: prod.brandId, brand: prod.brand };
-          const brandExists = brandsList.find(br => br.brandId === b.brandId)
-          if (!brandExists) {
-            brandsList.push(b)
-          }
-        });
-        setBrands(brandsList) */
+        setProducts(response.data.products);
       } else {
         setProducts([]);
-        /* setBrands([]); */
       }
     } catch (err) {
       console.log(err);
@@ -79,18 +68,6 @@ const Search = () => {
           value={searchInput}
         />
       </div>
-      {/* {brands.length > 0 &&
-        brands.map((brand, index) => {
-          return (
-            <p
-              key={index}
-              className="border-b border-black w-fit text-md font-light my-3"
-              onClick={() => routeHandler(`/brands/${brand.brandId}`)}
-            >
-              <strong>{brand.brand}</strong>
-            </p>
-          );
-        })} */}
       {products.length > 0 &&
         products.map((product, index) => {
           return (
@@ -100,7 +77,7 @@ const Search = () => {
               className="border-b border-black w-fit text-md font-light my-3 mx-0"
               onClick={() => setSearchIsActive(false)}
             >
-              {product.brand} {product.type} - {product.title}
+              {product.brand.label} {product.type} - {product.title}
             </Link>
           );
         })}

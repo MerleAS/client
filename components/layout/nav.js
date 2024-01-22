@@ -37,7 +37,7 @@ const Nav = () => {
           <div className="flex justify-center items-center p-4">
             <div className="flex items-center justify-center space-x-6">
               <Link
-                href="/products"
+                href="/products?page=1"
                 className="hover:scale-105 cursor-pointer text-dark"
               >
                 Shop

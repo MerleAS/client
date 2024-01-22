@@ -1,14 +1,17 @@
-"use server"
+'use server'
 
-import Link from "next/link";
+import Link from 'next/link'
 
-import { getProducts } from "../../../../actions/getProducts";
-import { getTotalStock } from "../../../../util/getTotalStock";
+import { getProducts } from '../../../../actions/getProducts'
+import { getTotalStock } from '../../../../util/getTotalStock'
 
-import SwitchImage from "../../../../components/UI/switchImage";
+import SwitchImage from '../../../../components/UI/switchImage'
+import Pagination from './pagination'
 
-const Products = async () => {
-  const products = await getProducts();
+const Products = async ({ searchParams: { page } }) => {
+  const data = await getProducts(page)
+  const products = data.products
+  const totalPages = data.totalPages
 
   return (
     <div className="flex flex-col">
@@ -16,8 +19,8 @@ const Products = async () => {
         {products.length > 0 &&
           products.map((prod, index) => {
             const imageUrls = prod.imageUrls.map(
-              (url) => `${process.env.NEXT_PUBLIC_SERVER_URL}/${url}`
-            );
+              (url) => `${process.env.NEXT_PUBLIC_SERVER_URL}/${url}`,
+            )
             return (
               <div className="w-full" key={index}>
                 <Link
@@ -46,11 +49,12 @@ const Products = async () => {
                   </div>
                 </Link>
               </div>
-            );
+            )
           })}
       </div>
+      <Pagination page={page} totalPages={totalPages}/>
     </div>
-  );
-};
+  )
+}
 
-export default Products;
+export default Products

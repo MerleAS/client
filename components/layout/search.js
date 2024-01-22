@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import axios from "axios";
 
 import useIsMobile from "../../util/useIsMobile";
 
 import Sidebar from "../UI/sidebar";
 import SearchIcon from "../../public/icons/SVG/searchIcon.svg";
 import Cross from "../../public/icons/SVG/cross.svg";
+import { getProducts } from "../../actions/getProducts";
 
 const Search = () => {
   const [searchIsActive, setSearchIsActive] = useState(false);
@@ -32,10 +32,8 @@ const Search = () => {
     setSearchInput(query);
     try {
       if (query.length > 1) {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_SERVER_URL}/products/get-products?query=${query}`
-        );
-        setProducts(response.data.products);
+        const prods = await getProducts(query)
+        setProducts(prods);
       } else {
         setProducts([]);
       }

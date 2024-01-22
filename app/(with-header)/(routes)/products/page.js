@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 
-import { getProducts } from '../../../../actions/getProducts'
+import { getLimitedProducts } from '../../../../actions/getProducts'
 import { getTotalStock } from '../../../../util/getTotalStock'
 
 import SwitchImage from '../../../../components/UI/switchImage'
@@ -10,7 +10,7 @@ import Pagination from './pagination'
 
 const Products = async ({ searchParams: { page } }) => {
   if (!page) page = 1
-  const data = await getProducts(page)
+  const data = await getLimitedProducts(page)
   const products = data.products
   const totalPages = data.totalPages
 

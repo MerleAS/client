@@ -1,47 +1,54 @@
-"use client";
+'use client'
 
-import { useState } from "react";
-import Link from "next/link";
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
 
-import { useStore } from "../../util/store";
-import { getTotalAmount } from "../../util/getTotalAmount";
+import { useStore } from '../../util/store'
+import { getTotalAmount } from '../../util/getTotalAmount'
 
-import Sidebar from "../UI/sidebar";
-import ProductList from "../views/productList";
-import Button from "../UI/button";
-import CartIcon from "../../public/icons/SVG/cartIcon.svg";
-import Cross from "../../public/icons/SVG/cross.svg";
+import Sidebar from '../UI/sidebar'
+import ProductList from '../views/productList'
+import Button from '../UI/button'
+import CartIcon from '../../public/icons/SVG/cartIcon.svg'
+import Cross from '../../public/icons/SVG/cross.svg'
 
 const Cart = () => {
-  const { cartItems, dispatch, cartActive } = useStore();
+  const { cartItems, dispatch, cartActive } = useStore()
 
   const amountHandler = (item, type) => {
-    if (type === "increment" && item.amount + 1 <= item.in_stock) {
+    if (type === 'increment' && item.amount + 1 <= item.in_stock) {
       dispatch({
-        type: "CHANGE_AMOUNT",
+        type: 'CHANGE_AMOUNT',
         product: item,
-        operation: "increment",
-      });
-    } else if (type === "decrement" && item.amount - 1 > 0) {
+        operation: 'increment',
+      })
+    } else if (type === 'decrement' && item.amount - 1 > 0) {
       dispatch({
-        type: "CHANGE_AMOUNT",
+        type: 'CHANGE_AMOUNT',
         product: item,
-        operation: "decrement",
-      });
+        operation: 'decrement',
+      })
     }
-  };
+  }
 
-  const [isClosing, setIsClosing] = useState(false);
+  const [isClosing, setIsClosing] = useState(false)
 
   const closeModalHandler = () => {
-    setIsClosing(true);
+    setIsClosing(true)
     setTimeout(() => {
-      setIsClosing(false);
-      dispatch({ type: "TOGGLE_CART", bool: false });
-    }, 600);
-  };
+      setIsClosing(false)
+      dispatch({ type: 'TOGGLE_CART', bool: false })
+    }, 600)
+  }
 
-  const headerContent = <p className="text-xl">Your Cart</p>;
+  useEffect(() => {
+    const c = localStorage.getItem('cartItems')
+    if (c) {
+      dispatch({ type: 'EXISTING', cartItems: JSON.parse(c) })
+    }
+  }, [])
+
+  const headerContent = <p className="text-xl">Your Cart</p>
 
   const bodyContent = (
     <div className="h-[65%] w-[90%] m-[5%] overflow-scroll">
@@ -51,7 +58,7 @@ const Cart = () => {
         dispatch={dispatch}
       />
     </div>
-  );
+  )
 
   const footerContent = (
     <div className="border-t border-gray-300 w-full h-[20%] flex flex-col items-center justify-center space-y-4 p-4">
@@ -65,21 +72,21 @@ const Cart = () => {
         <div className="w-full h-[80%] flex items-center justify-center">
           <Link
             href="/checkout"
-            onClick={() => dispatch({ type: "TOGGLE_CART", bool: false })}
+            onClick={() => dispatch({ type: 'TOGGLE_CART', bool: false })}
           >
             <Button>CHECKOUT</Button>
           </Link>
         </div>
       )}
     </div>
-  );
+  )
 
   return (
     <>
       {!cartActive && (
         <div
           className="flex items-center justify-center hover:scale-105 cursor-pointer"
-          onClick={() => dispatch({ type: "TOGGLE_CART", bool: true })}
+          onClick={() => dispatch({ type: 'TOGGLE_CART', bool: true })}
         >
           <CartIcon width="20" height="20" />
         </div>
@@ -95,7 +102,7 @@ const Cart = () => {
       <Sidebar
         isActive={cartActive}
         isClosing={isClosing}
-        setIsActive={(bool) => dispatch({ type: "TOGGLE_CART", bool: bool })}
+        setIsActive={(bool) => dispatch({ type: 'TOGGLE_CART', bool: bool })}
         headerContent={headerContent}
         bodyContent={bodyContent}
         footerContent={footerContent}
@@ -103,7 +110,7 @@ const Cart = () => {
         orientation="right"
       />
     </>
-  );
-};
+  )
+}
 
-export default Cart;
+export default Cart

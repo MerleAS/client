@@ -1,7 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { useState } from 'react'
+import { useSearchParams } from 'next/navigation'
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -17,6 +18,8 @@ import Merle from '../../../../public/icons/SVG/merle.svg'
 import { schema } from '../../../../constants'
 
 const Checkout = () => {
+
+  const searchParams = useSearchParams()
   const { cartItems, dispatch } = useStore()
 
   const [isLoading, setIsLoading] = useState(false)
@@ -39,6 +42,8 @@ const Checkout = () => {
       ) {
         const soldOutProducts = response.data.soldOutProducts
 
+        // filter out soldoutProducts from localstorage
+
         dispatch({
           type: 'SET_ERROR',
           message: `Dessverre ble følgende produkter nettopp kjøpt av noen andre: ${soldOutProducts.map(
@@ -47,6 +52,7 @@ const Checkout = () => {
           value: true,
         })
       } else {
+        localStorage.removeItem("cartItems")
         window.location.href = response.data.url
       }
     } catch (error) {
@@ -83,6 +89,16 @@ const Checkout = () => {
     },
     resolver: zodResolver(schema),
   })
+
+  useEffect(() => {
+    const params = searchParams.get("order")
+    if (params) {
+      const order = JSON.parse(params)
+      console.log("c", order.cartItems)
+      localStorage.setItem("cartItems", JSON.stringify(order.cartItems))
+      dispatch({type: "EXISTING", cartItems: order.cartItems})
+    }
+  }, [])
 
   return (
     <>

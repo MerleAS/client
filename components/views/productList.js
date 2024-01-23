@@ -1,7 +1,7 @@
-"use client";
+'use client'
 
-import Image from "next/image";
-import IncrementInput from "../UI/incrementInput";
+import Image from 'next/image'
+import IncrementInput from '../UI/incrementInput'
 
 const ProductList = ({ products, amountHandler, dispatch }) => {
   return (
@@ -44,17 +44,17 @@ const ProductList = ({ products, amountHandler, dispatch }) => {
                   )}
                   <p
                     className="text-gray-500 text-sm font-light border-b border-gray-500 cursor-pointer"
-                    onClick={() => dispatch({ type: "REMOVE", product: prod })}
+                    onClick={() => dispatch({ type: 'REMOVE', product: prod })}
                   >
                     Remove
                   </p>
                 </div>
               </div>
             </div>
-          );
+          )
         })}
     </>
-  );
-};
+  )
+}
 
-export default ProductList;
+export default ProductList

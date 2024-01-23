@@ -6,9 +6,9 @@ import Link from "next/link";
 import useIsMobile from "../../util/useIsMobile";
 
 const imageUrls = [
-  "/images/landing1.png",
-  "/images/landing2.png",
-  "/images/landing3.png",
+  "/images/landing1.webp",
+  "/images/landing2.webp",
+  "/images/landing3.webp",
 ];
 
 const Home = () => {

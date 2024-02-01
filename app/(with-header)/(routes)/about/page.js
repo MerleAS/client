@@ -22,7 +22,7 @@ const About = () => {
         </div>
         <div className="w-full md:w-[45%]">
           <Image
-            src="/images/about/about1.png"
+            src="/images/about/about1.webp"
             alt="image"
             width={495}
             height={703}
@@ -51,7 +51,7 @@ const About = () => {
         </div>
         <div className="w-full md:w-[45%]">
           <Image
-            src="/images/about/about2.png"
+            src="/images/about/about2.webp"
             alt="image"
             width={495}
             height={703}
@@ -63,7 +63,7 @@ const About = () => {
       <section className="w-full flex flex-col-reverse md:flex-row space-y-12 md:space-y-0 md:space-x-[10%]">
         <div className="w-full md:w-[45%] hidden md:flex">
           <Image
-            src="/images/about/about3.png"
+            src="/images/about/about3.webp"
             alt="image"
             width={495}
             height={703}

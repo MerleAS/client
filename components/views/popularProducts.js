@@ -19,7 +19,7 @@ const PopularProducts = ({ products, containerClass }) => {
 
 
   return (
-    <div className={`hidden md:flex md:flex-col px-4 md:px-6 space-y-12 w-full max-w-[100vw] py-12 ${containerClass}`}>
+    <div className={`hidden md:flex md:flex-col px-4 md:px-6 space-y-12 w-full max-w-[100vw] py-12 bg-dark/5`}>
       <h4 className="w-full flex items-center justify-center font-medium text-2xl">
         Populære Produkter
       </h4>

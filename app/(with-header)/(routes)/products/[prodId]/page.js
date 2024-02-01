@@ -25,7 +25,7 @@ const Product = async ({ params: { prodId } }) => {
       : ''
 
   return (
-    <div className="min-h-full flex flex-col justify-center items-center space-y-8 mb-20">
+    <div className="min-h-full flex flex-col justify-center items-center space-y-8">
       <div className="w-full md:w-[90%] lg:4/5 lg/xl:w-[75%] h-[70%] flex flex-col md:flex-row md:space-x-8 space-y-8 md:space-y-0 p-8 md:p-4">
         <div className="relative w-full md:w-[55%] md/lg:w-1/2 lg:w-[45%] xl:w-2/5 max-h-full h-fit">
           {getTotalStock(product.stock) === 0 && (

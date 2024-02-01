@@ -2,9 +2,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 const imageUrls = [
-  '/images/landing1.png',
-  '/images/landing2.png',
-  '/images/landing3.png',
+  '/images/landing1.webp',
+  '/images/landing2.webp',
+  '/images/landing3.webp',
 ]
 
 import { getAvaliableProducts } from '../../actions/getProducts'

@@ -17,17 +17,18 @@ const PopularProducts = ({ products, containerClass }) => {
   const nextRef = useRef(null)
   const width = useIsMobile('dynamic')
 
-
   return (
-    <div className={`hidden md:flex md:flex-col px-4 md:px-6 space-y-12 w-full max-w-[100vw] py-12 bg-dark/5`}>
-      <h4 className="w-full flex items-center justify-center font-medium text-2xl">
+    <div
+      className={`flex flex-col md:px-6 space-y-12 w-full max-w-[100vw] py-12 bg-dark/5`}
+    >
+      <h4 className="w-full flex items-center justify-center font-medium text-lg md:text-2xl">
         Populære Produkter
       </h4>
 
       <div className="flex items-center">
         <span
           className={`swiper-button-prev`}
-          style={{ position: 'relative', marginRight: '32px' }}
+          style={{ position: 'relative', marginRight: width > 800 ? '32px' : "22px"}}
           ref={prevRef}
         />
         <Swiper
@@ -44,8 +45,11 @@ const PopularProducts = ({ products, containerClass }) => {
         >
           {products.map((prod, idx) => {
             return (
-              <SwiperSlide key={idx} className="w-full h-full px-2">
-                <Link href={`/products/${prod._id}`} className="w-full h-full space-y-2">
+              <SwiperSlide key={idx} className="w-full h-full md:px-2">
+                <Link
+                  href={`/products/${prod._id}`}
+                  className="w-full h-full space-y-2"
+                >
                   <Image
                     className=""
                     id="container"
@@ -59,9 +63,9 @@ const PopularProducts = ({ products, containerClass }) => {
                     objectFit="cover"
                     draggable={false}
                   />
-                  <p className="font-medium text-lg">{prod.title}</p>
-                  <p className="text-dark opacity-70">{prod.description}</p>
-                  <p className="font-semibold">{prod.price} kr</p>
+                  <p className="font-medium text-base md:text-lg">{prod.title}</p>
+
+                  <p className="font-semibold text-sm md:text-base">{prod.price} kr</p>
                 </Link>
               </SwiperSlide>
             )
@@ -70,7 +74,7 @@ const PopularProducts = ({ products, containerClass }) => {
         <span
           className="swiper-button-next"
           ref={nextRef}
-          style={{ position: 'relative', marginLeft: '32px' }}
+          style={{ position: 'relative', marginLeft: width > 800 ? '32px' : "22px" }}
         />
       </div>
     </div>

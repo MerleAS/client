@@ -45,8 +45,7 @@ const Home = async () => {
       <div className="w-full !h-full md:hidden">
         <Image
           className="w-full !h-full"
-          src="/images/landing2.png"
-          /* loader={() => '/images/landing2.png'} */
+          src="/images/landing2.webp"
           alt="image"
           height={1500}
           width={1000}

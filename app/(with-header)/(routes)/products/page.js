@@ -15,7 +15,7 @@ const Products = async ({ searchParams: { page } }) => {
   const totalPages = data.totalPages
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col mb-20">
       <div className="relative  w-full px-4 my-[5%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 lg/xl:grid-cols-4 gap-2">
         {products.length > 0 &&
           products.map((prod, index) => {

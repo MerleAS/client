@@ -10,7 +10,7 @@ export default function WithHeaderLayout({ children }) {
   return (
     <>
       <Nav />
-      <div className="mt-20 md:mt-40 mb-20">{children}</div>
+      <div className="mt-20 md:mt-40">{children}</div>
     </>
   );
 }

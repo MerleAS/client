@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
+import Button from "../../../../components/UI/button";
 
 import Modal from "../../../../components/UI/modal";
 
@@ -110,12 +111,12 @@ const Contact = () => {
             />
           </div>
           <div className="w-full flex items-center justify-center">
-            <button
-              className="px-[5%] py-[1%] bg-gray-300 rounded-sm"
+            <Button
+              className="px-[5%] py-[1%] bg-dark hover:opacity-80 rounded-sm"
               onClick={submitHandler}
             >
               Submit
-            </button>
+            </Button>
           </div>
         </div>
       </div>

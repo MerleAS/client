@@ -17,23 +17,32 @@ const PopularProducts = ({ products, containerClass }) => {
   const nextRef = useRef(null)
   const width = useIsMobile('dynamic')
 
+  const modules = [A11y]
+
+  if (width > 800) modules.push(Navigation)
   return (
     <div
-      className={`flex flex-col md:px-6 space-y-12 w-full max-w-[100vw] py-12 bg-dark/5`}
+      className={`flex flex-col md:px-6 space-y-12 w-full max-w-[100vw] py-12 bg-dark/5 ${width < 800 ? "px-8" : ""}`}
     >
       <h4 className="w-full flex items-center justify-center font-medium text-lg md:text-2xl">
         Populære Produkter
       </h4>
 
       <div className="flex items-center">
-        <span
-          className={`swiper-button-prev`}
-          style={{ position: 'relative', marginRight: width > 800 ? '32px' : "22px"}}
-          ref={prevRef}
-        />
+        {width > 800 && (
+          <span
+            className={`swiper-button-prev`}
+            style={{
+              position: 'relative',
+              marginRight: width > 800 ? '32px' : '22px',
+            }}
+            ref={prevRef}
+          />
+        )}
+
         <Swiper
           slidesPerView={width > 1100 ? 3 : width > 800 ? 2 : 1}
-          modules={[A11y, Navigation]}
+          modules={modules}
           navigation={{
             prevEl: prevRef.current,
             nextEl: nextRef.current,
@@ -63,19 +72,28 @@ const PopularProducts = ({ products, containerClass }) => {
                     objectFit="cover"
                     draggable={false}
                   />
-                  <p className="font-medium text-base md:text-lg">{prod.title}</p>
+                  <p className="font-medium text-base md:text-lg">
+                    {prod.title}
+                  </p>
 
-                  <p className="font-semibold text-sm md:text-base">{prod.price} kr</p>
+                  <p className="font-semibold text-sm md:text-base">
+                    {prod.price} kr
+                  </p>
                 </Link>
               </SwiperSlide>
             )
           })}
         </Swiper>
-        <span
-          className="swiper-button-next"
-          ref={nextRef}
-          style={{ position: 'relative', marginLeft: width > 800 ? '32px' : "22px" }}
-        />
+        {width > 800 && (
+          <span
+            className="swiper-button-next"
+            ref={nextRef}
+            style={{
+              position: 'relative',
+              marginLeft: width > 800 ? '32px' : '22px',
+            }}
+          />
+        )}
       </div>
     </div>
   )

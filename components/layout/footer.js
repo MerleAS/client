@@ -53,7 +53,7 @@ const Footer = () => {
                 COUNTRY / REGION
               </h4>
               <p className="text-white text-[12px]">Norway exclusive</p>
-              <p className="text-white text-[12px]">Tlf: 97655367</p>
+              {/* <p className="text-white text-[12px]">Tlf: 97655367</p> */}
               <p className="text-white text-[12px]">Mail: post@merle.no</p>
             </div>
           </div>
